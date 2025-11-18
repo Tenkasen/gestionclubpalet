@@ -7,6 +7,7 @@
 |
 */
 
+const SeasonsController = () => import('#controllers/seasons_controller')
 import router from '@adonisjs/core/services/router'
 
 router.get('/', async () => {
@@ -14,3 +15,4 @@ router.get('/', async () => {
     message: 'API is running',
   }
 })
+router.get('/seasons', [SeasonsController, 'index'])
