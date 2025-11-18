@@ -16,10 +16,10 @@ export default class Season extends BaseModel {
   declare date_debut: Date
 
   @column()
-  declare date_fin: Date
+  declare date_fin: Date | null
 
   @column()
-  declare club_id: number
+  declare club_id: number | null
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
