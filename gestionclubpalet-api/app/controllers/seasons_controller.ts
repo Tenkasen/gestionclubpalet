@@ -19,4 +19,8 @@ export default class SeasonsController {
     const season = await Season.create(data)
     return season
   }
+  async show({ params }: HttpContext) {
+    const season = await Season.findOrFail(params.id)
+    return season
+  }
 }

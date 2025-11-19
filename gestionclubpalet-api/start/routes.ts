@@ -19,3 +19,4 @@ router.get('/', async () => {
 // Seasons routes
 router.get('/seasons', [SeasonsController, 'index'])
 router.post('/seasons', [SeasonsController, 'store'])
+router.get('/seasons/:id', [SeasonsController, 'show'])
