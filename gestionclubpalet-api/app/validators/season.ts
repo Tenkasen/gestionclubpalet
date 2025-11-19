@@ -7,7 +7,7 @@ export const createSeasonValidator = vine.compile(
     type: vine.enum(SeasonType),
     dateDebut: vine.date(),
     dateFin: vine.date().nullable().optional(),
-    ClubId: vine.number().positive().withoutDecimals().optional().nullable(),
+    clubId: vine.number().positive().withoutDecimals().optional().nullable(),
   })
 )
 
