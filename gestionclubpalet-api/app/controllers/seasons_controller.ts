@@ -2,8 +2,21 @@ import type { HttpContext } from '@adonisjs/core/http'
 import Season from '#models/season'
 
 export default class SeasonsController {
-  async index({}: HttpContext) {
-    const seasons = await Season.query().orderBy('date_debut', 'desc')
+  async index({ request }: HttpContext) {
+    const type = request.qs().type
+    const query = Season.query().orderBy('date_debut', 'desc')
+
+    if (type) {
+      query.where('type', type)
+    }
+
+    const seasons = await query
     return seasons
+  }
+
+  async store({ request }: HttpContext) {
+    const data = request.only(['nom', 'type', 'dateDebut', 'dateFin', 'clubId'])
+    const season = await Season.create(data)
+    return season
   }
 }

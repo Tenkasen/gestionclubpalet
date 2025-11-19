@@ -15,4 +15,7 @@ router.get('/', async () => {
     message: 'API is running',
   }
 })
+
+// Seasons routes
 router.get('/seasons', [SeasonsController, 'index'])
+router.post('/seasons', [SeasonsController, 'store'])
