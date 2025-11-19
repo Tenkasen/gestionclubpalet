@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Season from '#models/season'
+import { createSeasonValidator, updateSeasonValidator } from '#validators/season'
 
 export default class SeasonsController {
   async index({ request }: HttpContext) {
@@ -15,7 +16,7 @@ export default class SeasonsController {
   }
 
   async store({ request }: HttpContext) {
-    const data = request.only(['nom', 'type', 'dateDebut', 'dateFin', 'clubId'])
+    const data = await request.validateUsing(createSeasonValidator)
     const season = await Season.create(data)
     return season
   }
@@ -26,7 +27,7 @@ export default class SeasonsController {
 
   async update({ params, request }: HttpContext) {
     const season = await Season.findOrFail(params.id)
-    const data = request.only(['nom', 'type', 'dateDebut', 'dateFin', 'clubId'])
+    const data = await request.validateUsing(updateSeasonValidator)
     season.merge(data)
     await season.save()
     return season
