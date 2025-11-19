@@ -20,3 +20,4 @@ router.get('/', async () => {
 router.get('/seasons', [SeasonsController, 'index'])
 router.post('/seasons', [SeasonsController, 'store'])
 router.get('/seasons/:id', [SeasonsController, 'show'])
+router.patch('/seasons/:id', [SeasonsController, 'update'])

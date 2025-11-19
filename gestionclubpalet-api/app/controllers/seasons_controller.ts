@@ -23,4 +23,11 @@ export default class SeasonsController {
     const season = await Season.findOrFail(params.id)
     return season
   }
+  async update({ params, request }: HttpContext) {
+    const season = await Season.findOrFail(params.id)
+    const data = request.only(['nom', 'type', 'dateDebut', 'dateFin', 'clubId'])
+    season.merge(data)
+    await season.save()
+    return season
+  }
 }
