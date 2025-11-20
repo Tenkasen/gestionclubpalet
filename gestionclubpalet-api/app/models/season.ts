@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import { SeasonType } from '../enums/season_type.js'
+import SeasonRegistration from './season_registration.js'
+import type { HasMany } from '@adonisjs/lucid/types/relations'
 
 export default class Season extends BaseModel {
   @column({ isPrimary: true })
@@ -26,4 +28,8 @@ export default class Season extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  // Relations
+  @hasMany(() => SeasonRegistration)
+  declare registrations: HasMany<typeof SeasonRegistration>
 }
