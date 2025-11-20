@@ -9,6 +9,7 @@
 
 import router from '@adonisjs/core/services/router'
 import SeasonRoutes from './routes/seasons.js'
+import PlayerRoutes from './routes/players.js'
 
 router.get('/', async () => {
   return {
@@ -18,3 +19,4 @@ router.get('/', async () => {
 
 // Routes import
 SeasonRoutes()
+PlayerRoutes()
