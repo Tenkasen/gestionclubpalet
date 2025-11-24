@@ -50,6 +50,22 @@ export default class extends BaseSeeder {
       { nom: 'DABRETEAU', prenom: 'Jacky' },
       { nom: 'GIRAUDET', prenom: 'Stéphane' },
       { nom: 'BOUCARD', prenom: 'Antonio' },
+      { nom: 'BARGEOT', prenom: 'Hugo' },
+      { nom: 'BAUDRY', prenom: 'Ghislain' },
+      { nom: 'BLAIN', prenom: 'Olivier' },
+      { nom: 'DABRETEAU', prenom: 'Antoine' },
+      { nom: 'DABURON', prenom: 'Matéo' },
+      { nom: 'DABURON', prenom: 'Thierry' },
+      { nom: 'DURANTEAU', prenom: 'Jocelyn' },
+      { nom: 'MERCERON', prenom: 'Sacha' },
+      { nom: 'NAULLEAU', prenom: 'Enzo' },
+      { nom: 'NAULLEAU', prenom: 'Hugo' },
+      { nom: 'PADIOLLEAU', prenom: 'Régis' },
+      { nom: 'PONTOIZEAU', prenom: 'Yannick' },
+      { nom: 'POUCLET', prenom: 'Tom' },
+      { nom: 'ROBIN', prenom: 'Jean-Claude' },
+      { nom: 'THOMAS', prenom: 'Christophe' },
+      { nom: 'ZIMMERMANN', prenom: 'Tom' },
     ])
   }
 }
