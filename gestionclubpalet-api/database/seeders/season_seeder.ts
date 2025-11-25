@@ -2,7 +2,7 @@ import Season from '#models/season'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import { SeasonType } from '../../app/enums/season_type.js'
 
-export default class extends BaseSeeder {
+export default class SeasonSeeder extends BaseSeeder {
   async run() {
     await Season.createMany([
       {
