@@ -4,5 +4,6 @@ import router from '@adonisjs/core/services/router'
 export default function PlayerRoutes() {
   router.group(() => {
     router.get('/players', [PlayersController, 'index'])
+    router.post('/players', [PlayersController, 'store'])
   })
 }

@@ -21,4 +21,10 @@ export default class PlayersController {
     // Get all players sort by name
     return await Player.query().orderBy('nom').orderBy('prenom')
   }
+
+  async store({ request }: HttpContext) {
+    const data = request.only(['nom', 'prenom', 'isGuest', 'clubId'])
+    const player = await Player.create(data)
+    return player
+  }
 }
