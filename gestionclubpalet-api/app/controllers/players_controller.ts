@@ -10,10 +10,12 @@ export default class PlayersController {
       // Get one season registration
       const registrations = await SeasonRegistration.query()
         .where('season_id', seasonId)
-        .preload('player', (query) => {
-          query.orderBy('nom').orderBy('prenom')
-        })
-      return registrations.map((registration) => registration.player)
+        //load associated players
+        .preload('player')
+      const players = registrations.map((register) => register.player)
+
+      // Sort players
+      return players.sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
     }
 
     // Get all players sort by name
