@@ -10,6 +10,7 @@
 import router from '@adonisjs/core/services/router'
 const PlayersController = () => import('#controllers/players_controller')
 const SeasonsController = () => import('#controllers/seasons_controller')
+const SeasonRegistrationsController = () => import('#controllers/season_registrations_controller')
 
 router.get('/', async () => {
   return {
@@ -17,20 +18,26 @@ router.get('/', async () => {
   }
 })
 
-// Seasons routes
+// Seasons Routes
 router.get('/seasons', [SeasonsController, 'index'])
 router.post('/seasons', [SeasonsController, 'store'])
 router.get('/seasons/:id', [SeasonsController, 'show'])
 router.patch('/seasons/:id', [SeasonsController, 'update'])
 router.delete('/seasons/:id', [SeasonsController, 'destroy'])
 
-// Players routes
+// Players Routes
 router.get('/players', [PlayersController, 'index'])
 router.post('/players', [PlayersController, 'store'])
 router.get('/players/:id', [PlayersController, 'show'])
 router.patch('/players/:id', [PlayersController, 'update'])
 router.delete('/players/:id', [PlayersController, 'destroy'])
-router.post('/seasons/:seasonId/players', [PlayersController, 'register'])
+
+// Season Registrations Routes
+router.get('/seasons/:seasonId/players', [SeasonRegistrationsController, 'index'])
+router.post('/seasons/:seasonId/players', [SeasonRegistrationsController, 'store'])
+router.get('/seasons/:seasonId/players/:playerId', [SeasonRegistrationsController, 'show'])
+router.patch('/seasons/:seasonId/players/:playerId', [SeasonRegistrationsController, 'update'])
+router.delete('/seasons/:seasonId/players/:playerId', [SeasonRegistrationsController, 'destroy'])
 
 // Routes import
 // SeasonRoutes()
