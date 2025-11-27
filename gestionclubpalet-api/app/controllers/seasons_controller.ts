@@ -15,8 +15,21 @@ export default class SeasonsController {
     return seasons
   }
 
-  async store({ request }: HttpContext) {
+  async store({ request, response }: HttpContext) {
     const data = await request.validateUsing(createSeasonValidator)
+
+    // check existing season name in the club
+    const existingSeason = await Season.query()
+      .where('nom', data.nom)
+      .where('type', data.type)
+      .first()
+
+    if (existingSeason) {
+      return response.conflict({
+        message: `Une saison "${data.nom}" de type "${data.type}" existe déjà`,
+        player: existingSeason,
+      })
+    }
     const season = await Season.create(data)
     return season
   }

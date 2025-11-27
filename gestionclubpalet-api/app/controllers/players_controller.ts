@@ -25,7 +25,7 @@ export default class PlayersController {
   async store({ request, response }: HttpContext) {
     const data = request.only(['nom', 'prenom', 'isGuest', 'clubId'])
 
-    // check existing user
+    // check existing player in the club
     const existingPlayer = await Player.query()
       .where('nom', data.nom)
       .where('prenom', data.prenom)
@@ -45,7 +45,7 @@ export default class PlayersController {
   async register({ params, request, response }: HttpContext) {
     const { playerId } = request.only(['playerId'])
 
-    // check existing user
+    // check existing player in this season
     const existingPlayer = await SeasonRegistration.query()
       .where('seasonId', params.seasonId)
       .where('playerId', playerId)
