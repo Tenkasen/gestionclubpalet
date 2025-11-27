@@ -27,6 +27,10 @@ router.delete('/seasons/:id', [SeasonsController, 'destroy'])
 // Players routes
 router.get('/players', [PlayersController, 'index'])
 router.post('/players', [PlayersController, 'store'])
+router.get('/players/:id', [PlayersController, 'show'])
+router.patch('/players/:id', [PlayersController, 'update'])
+router.delete('/players/:id', [PlayersController, 'destroy'])
+router.post('/seasons/:seasonId/players', [PlayersController, 'register'])
 
 // Routes import
 // SeasonRoutes()

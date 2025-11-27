@@ -38,7 +38,35 @@ export default class PlayersController {
       })
     }
     const player = await Player.create(data)
+    return {
+      message: 'Joueur ajouté avec succès',
+      player,
+    }
+  }
+
+  async show({ params }: HttpContext) {
+    const player = await Player.findOrFail(params.id)
     return player
+  }
+
+  async update({ params, request }: HttpContext) {
+    const player = await Player.findOrFail(params.id)
+    const data = request.only(['nom', 'prenom', 'isGuest', 'clubId'])
+    player.merge(data)
+    await player.save()
+    return {
+      message: 'Joueur modifié avec succès',
+      player,
+    }
+  }
+
+  async destroy({ params }: HttpContext) {
+    const player = await Player.findOrFail(params.id)
+    player.delete()
+    return {
+      message: 'Joueur supprimé avec succès',
+      player,
+    }
   }
 
   // Register a player in a specific season
@@ -52,7 +80,9 @@ export default class PlayersController {
       .first()
 
     if (existingPlayer) {
-      return response.conflict({ message: 'Ce joueur est déjà inscrit pour cette saison' })
+      return response.conflict({
+        message: 'Ce joueur est déjà inscrit pour cette saison',
+      })
     }
 
     const registration = await SeasonRegistration.create({

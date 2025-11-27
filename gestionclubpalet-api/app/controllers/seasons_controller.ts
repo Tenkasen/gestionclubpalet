@@ -51,6 +51,7 @@ export default class SeasonsController {
     season.delete()
     return {
       message: 'Saison supprimée avec succès',
+      season,
     }
   }
 }
