@@ -8,8 +8,8 @@
 */
 
 import router from '@adonisjs/core/services/router'
-import SeasonRoutes from './routes/seasons.js'
-import PlayerRoutes from './routes/players.js'
+const PlayersController = () => import('#controllers/players_controller')
+const SeasonsController = () => import('#controllers/seasons_controller')
 
 router.get('/', async () => {
   return {
@@ -17,6 +17,16 @@ router.get('/', async () => {
   }
 })
 
+// Seasons routes
+router.get('/seasons', [SeasonsController, 'index'])
+router.post('/seasons', [SeasonsController, 'store'])
+router.get('/seasons/:id', [SeasonsController, 'show'])
+router.patch('/seasons/:id', [SeasonsController, 'update'])
+router.delete('/seasons/:id', [SeasonsController, 'destroy'])
+
+// Players routes
+router.get('/players', [PlayersController, 'index'])
+router.post('/players', [PlayersController, 'store'])
+
 // Routes import
-SeasonRoutes()
-PlayerRoutes()
+// SeasonRoutes()

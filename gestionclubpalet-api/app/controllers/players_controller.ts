@@ -1,7 +1,6 @@
 import Player from '#models/player'
 import SeasonRegistration from '#models/season_registration'
 import type { HttpContext } from '@adonisjs/core/http'
-import { error } from 'console'
 
 export default class PlayersController {
   async index({ request }: HttpContext) {
@@ -23,12 +22,26 @@ export default class PlayersController {
     return await Player.query().orderBy('nom').orderBy('prenom')
   }
 
-  async store({ request }: HttpContext) {
+  async store({ request, response }: HttpContext) {
     const data = request.only(['nom', 'prenom', 'isGuest', 'clubId'])
+
+    // check existing user
+    const existingPlayer = await Player.query()
+      .where('nom', data.nom)
+      .where('prenom', data.prenom)
+      .first()
+
+    if (existingPlayer) {
+      return response.conflict({
+        message: 'Un joueur avec ce nom et prénom existe déjà',
+        player: existingPlayer,
+      })
+    }
     const player = await Player.create(data)
     return player
   }
 
+  // Register a player in a specific season
   async register({ params, request, response }: HttpContext) {
     const { playerId } = request.only(['playerId'])
 
@@ -39,7 +52,7 @@ export default class PlayersController {
       .first()
 
     if (existingPlayer) {
-      return response.conflict({ error: 'Ce joueur est déjà inscrit pour cette saison' })
+      return response.conflict({ message: 'Ce joueur est déjà inscrit pour cette saison' })
     }
 
     const registration = await SeasonRegistration.create({
