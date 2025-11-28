@@ -51,9 +51,22 @@ export default class SeasonRegistrationsController {
     return response.created(registration)
   }
 
-  async show({ request, params }: HttpContext) {}
+  async show({ params }: HttpContext) {
+    const registration = await SeasonRegistration.query()
+      .preload('player')
+      .preload('season')
+      .where('season_id', params.seasonId)
+      .where('player_id', params.playerId)
+      .firstOrFail()
 
-  async update({ request, params }: HttpContext) {}
+    return {
+      player: registration.player,
+      season: registration.season,
+      registrationDate: registration.createdAt, // ou autres infos de l'inscription
+    }
+  }
 
-  async destroy({ request, params }: HttpContext) {}
+  // async update({ request, params }: HttpContext) {}
+
+  // async destroy({ request, params }: HttpContext) {}
 }
