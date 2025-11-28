@@ -2,7 +2,29 @@ import type { HttpContext } from '@adonisjs/core/http'
 import SeasonRegistration from '#models/season_registration'
 
 export default class SeasonRegistrationsController {
-  async index({ request }: HttpContext) {}
+  async index({ params }: HttpContext) {
+    // Get one season registration
+    const registrations = await SeasonRegistration.query()
+      .where('season_id', params.seasonId)
+      //load associated players
+      .preload('player')
+      .preload('season')
+
+    if (registrations.length === 0) {
+      return {
+        message: 'Aucun joueur inscrit pour cette saison',
+        playersList: [],
+      }
+    }
+    const players = registrations.map((register) => register.player)
+    const season = registrations[0].season
+    const playersList = players.sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
+    // Sort players
+    return {
+      message: `Liste des joueurs de la saison "${season?.nom} - ${season?.type}"`,
+      playersList,
+    }
+  }
 
   // Register a player in a specific season
   async store({ params, request, response }: HttpContext) {
