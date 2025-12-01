@@ -46,7 +46,7 @@ export default class PlayersController {
 
   async destroy({ params }: HttpContext) {
     const player = await Player.findOrFail(params.id)
-    player.delete()
+    await player.delete()
     return {
       message: 'Joueur supprimé avec succès',
       player,

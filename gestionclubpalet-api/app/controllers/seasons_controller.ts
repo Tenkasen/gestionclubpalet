@@ -48,7 +48,7 @@ export default class SeasonsController {
 
   async destroy({ params }: HttpContext) {
     const season = await Season.findOrFail(params.id)
-    season.delete()
+    await season.delete()
     return {
       message: 'Saison supprimée avec succès',
       season,

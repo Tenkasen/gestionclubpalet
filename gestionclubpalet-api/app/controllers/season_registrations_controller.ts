@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import SeasonRegistration from '#models/season_registration'
+import Season from '#models/season'
 
 export default class SeasonRegistrationsController {
   async index({ params }: HttpContext) {
@@ -66,7 +67,51 @@ export default class SeasonRegistrationsController {
     }
   }
 
-  // async update({ request, params }: HttpContext) {}
+  async update({ request, params, response }: HttpContext) {
+    const registration = await SeasonRegistration.query()
+      .where('season_id', params.seasonId)
+      .where('player_id', params.playerId)
+      .firstOrFail()
+    const newSeasonId = request.input('seasonId')
 
-  // async destroy({ request, params }: HttpContext) {}
+    if (newSeasonId && Number(newSeasonId) !== Number(params.seasonId)) {
+      const seasonId = Number(newSeasonId)
+      if (Number.isNaN(seasonId)) {
+        return response.badRequest({ error: 'seasonId doit être un nombre' })
+      }
+      await Season.findOrFail(newSeasonId)
+
+      const existingRegistration = await SeasonRegistration.query()
+        .where('season_id', seasonId)
+        .where('player_id', params.playerId)
+        .first()
+
+      if (existingRegistration) {
+        return response.conflict({
+          error: 'Le joueur est déjà inscrit dans cette saison',
+        })
+      }
+
+      registration.merge({ seasonId: seasonId })
+      await registration.save()
+    }
+    await registration.load('season')
+    await registration.load('player')
+    return {
+      message: 'Inscription modifiée avec succès',
+      registration,
+    }
+  }
+
+  async destroy({ params }: HttpContext) {
+    const registration = await SeasonRegistration.query()
+      .where('season_id', params.seasonId)
+      .where('player_id', params.playerId)
+      .firstOrFail()
+    await registration.delete()
+    return {
+      message: 'Inscription supprimée avec succès',
+      registration,
+    }
+  }
 }
