@@ -9,7 +9,7 @@ export default class extends BaseSchema {
       table.string('nom').notNullable()
       table.string('prenom').notNullable()
       table.boolean('is_guest').defaultTo(false)
-      table.integer('club_id')
+      table.integer('club_id').nullable()
 
       // To sort
       table.index(['nom', 'prenom'])

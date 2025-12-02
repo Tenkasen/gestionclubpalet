@@ -14,7 +14,7 @@ export default class Player extends BaseModel {
   declare prenom: string
 
   @column()
-  declare isGuest: boolean
+  declare isGuest: boolean = false
 
   @column()
   declare clubId: number | null
