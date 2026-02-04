@@ -35,7 +35,10 @@ export default class SeasonsController {
   }
   async show({ params }: HttpContext) {
     const season = await Season.findOrFail(params.id)
-    return season
+    return {
+      message: 'Joueur ajouté avec succès',
+      season,
+    }
   }
 
   async update({ params, request }: HttpContext) {

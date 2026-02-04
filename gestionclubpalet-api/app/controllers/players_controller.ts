@@ -1,4 +1,5 @@
 import Player from '#models/player'
+import { createPlayerValidator, updatePlayerValidator } from '#validators/player'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class PlayersController {
@@ -7,7 +8,7 @@ export default class PlayersController {
   }
 
   async store({ request, response }: HttpContext) {
-    const data = request.only(['nom', 'prenom', 'isGuest', 'clubId'])
+    const data = await request.validateUsing(createPlayerValidator)
 
     // check existing player in the club
     const existingPlayer = await Player.query()
@@ -35,7 +36,7 @@ export default class PlayersController {
 
   async update({ params, request }: HttpContext) {
     const player = await Player.findOrFail(params.id)
-    const data = request.only(['nom', 'prenom', 'isGuest', 'clubId'])
+    const data = await request.validateUsing(updatePlayerValidator)
     player.merge(data)
     await player.save()
     return {
