@@ -34,11 +34,13 @@ export default class SeasonsController {
     return season
   }
   async show({ params }: HttpContext) {
-    const season = await Season.findOrFail(params.id)
-    return {
-      message: 'Joueur ajouté avec succès',
-      season,
-    }
+    const season = await Season.query()
+      .where('id', params.id)
+      .preload('registrations', (query) => {
+        query.preload('player')
+      })
+      .firstOrFail()
+    return season
   }
 
   async update({ params, request }: HttpContext) {
