@@ -3,6 +3,7 @@ import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import { SeasonType } from '../enums/season_type.js'
 import SeasonRegistration from './season_registration.js'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
+import Day from './day.js'
 
 export default class Season extends BaseModel {
   @column({ isPrimary: true })
@@ -32,4 +33,7 @@ export default class Season extends BaseModel {
   // Relations
   @hasMany(() => SeasonRegistration)
   declare registrations: HasMany<typeof SeasonRegistration>
+
+  @hasMany(() => Day)
+  declare days: HasMany<typeof Day>
 }
