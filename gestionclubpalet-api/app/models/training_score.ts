@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, beforeSave, belongsTo, column } from '@adonisjs/lucid/orm'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Day from './day.js'
 import Player from './player.js'
@@ -34,4 +34,10 @@ export default class TrainingScore extends BaseModel {
 
   @belongsTo(() => Player)
   declare player: BelongsTo<typeof Player>
+
+  // calcul automatically goal average and save
+  @beforeSave()
+  static async calculateGoalAverage(trainingScore: TrainingScore) {
+    trainingScore.goalAverage = trainingScore.pointsPour - trainingScore.pointsContre
+  }
 }
