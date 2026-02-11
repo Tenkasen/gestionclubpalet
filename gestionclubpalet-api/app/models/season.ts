@@ -16,10 +16,10 @@ export default class Season extends BaseModel {
   declare type: SeasonType
 
   @column()
-  declare dateDebut: DateTime
+  declare dateDebut: Date
 
   @column()
-  declare dateFin: DateTime | null
+  declare dateFin: Date | null
 
   @column()
   declare clubId: number | null

@@ -15,7 +15,7 @@ export default class Day extends BaseModel {
   declare indexJour: number
 
   @column()
-  declare date: DateTime
+  declare date: Date
 
   @column()
   status: ScoreStatus = ScoreStatus.DRAFT

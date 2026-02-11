@@ -33,8 +33,8 @@ export default class SeasonRegistrationsController {
 
     // check existing player in this season
     const existingPlayer = await SeasonRegistration.query()
-      .where('seasonId', params.seasonId)
-      .where('playerId', playerId)
+      .where('season_id', params.seasonId)
+      .where('player_id', playerId)
       .first()
 
     if (existingPlayer) {
