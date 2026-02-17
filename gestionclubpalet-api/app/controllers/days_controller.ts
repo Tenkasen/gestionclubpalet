@@ -1,5 +1,6 @@
 import Day from '#models/day'
 import type { HttpContext } from '@adonisjs/core/http'
+import { ScoreStatus } from '../enums/score_status.js'
 
 export default class DaysController {
   async index({ params }: HttpContext) {
@@ -7,10 +8,25 @@ export default class DaysController {
     return days
   }
 
-  async store({ request }) {
+  async store({ request, params, response }: HttpContext) {
     const { date } = request.only(['date'])
 
     // get last day
     const lastDay = await Day.query()
+      .where('season_id', params.seasonId)
+      .orderBy('index_jour', 'desc')
+      .first()
+
+    const indexJour = lastDay ? lastDay.indexJour + 1 : 1
+
+    const day = await Day.create({
+      seasonId: params.seasonId,
+      indexJour,
+      date,
+      status: ScoreStatus.DRAFT,
+      closed: false,
+    })
+
+    return response.created(day)
   }
 }
