@@ -22,16 +22,16 @@ router.get('/', async () => {
 // Seasons Routes
 router.get('/seasons', [SeasonsController, 'index'])
 router.post('/seasons', [SeasonsController, 'store'])
-router.get('/seasons/:id', [SeasonsController, 'show'])
-router.patch('/seasons/:id', [SeasonsController, 'update'])
-router.delete('/seasons/:id', [SeasonsController, 'destroy'])
+router.get('/seasons/:seasonId', [SeasonsController, 'show'])
+router.patch('/seasons/:seasonId', [SeasonsController, 'update'])
+router.delete('/seasons/:seasonId', [SeasonsController, 'destroy'])
 
 // Players Routes
 router.get('/players', [PlayersController, 'index'])
 router.post('/players', [PlayersController, 'store'])
-router.get('/players/:id', [PlayersController, 'show'])
-router.patch('/players/:id', [PlayersController, 'update'])
-router.delete('/players/:id', [PlayersController, 'destroy'])
+router.get('/players/:playerId', [PlayersController, 'show'])
+router.patch('/players/:playerId', [PlayersController, 'update'])
+router.delete('/players/:playerId', [PlayersController, 'destroy'])
 
 // Season Registrations Routes
 router.get('/seasons/:seasonId/players', [SeasonRegistrationsController, 'index'])
@@ -43,7 +43,11 @@ router.delete('/seasons/:seasonId/players/:playerId', [SeasonRegistrationsContro
 // Days  Routes
 router.get('/days', [DaysController, 'index'])
 router.post('/days', [DaysController, 'store'])
-router.get('/days/:id', [DaysController, 'show'])
+router.get('/days/:dayId', [DaysController, 'show'])
+
+// Training Scores  Routes
+router.get('/days/:dayId/training-scores', [DaysController, 'index'])
+router.post('/days/:dayId/training-scores', [DaysController, 'store'])
 
 // Routes import
 // SeasonRoutes()
