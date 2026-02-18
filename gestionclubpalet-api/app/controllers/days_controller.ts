@@ -9,19 +9,19 @@ export default class DaysController {
     return days
   }
 
-  async store({ request, params, response }: HttpContext) {
-    const { date } = request.only(['date'])
+  async store({ request, response }: HttpContext) {
+    const { date, seasonId } = request.only(['date', 'seasonId'])
 
     // get last day
     const lastDay = await Day.query()
-      .where('season_id', params.seasonId)
+      .where('season_id', seasonId)
       .orderBy('index_jour', 'desc')
       .first()
 
     const indexJour = lastDay ? lastDay.indexJour + 1 : 1
 
     const day = await Day.create({
-      seasonId: params.seasonId,
+      seasonId: seasonId,
       indexJour,
       date,
       status: ScoreStatus.DRAFT,
