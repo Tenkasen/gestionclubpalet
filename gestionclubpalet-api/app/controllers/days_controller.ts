@@ -32,6 +32,13 @@ export default class DaysController {
   }
 
   async show({ params }: HttpContext) {
-    const day = await Day.query().where('id', params.id).preload('training')
+    const day = await Day.query()
+      .where('id', params.id)
+      .preload('trainingScores', (query) => {
+        query.preload('player')
+      })
+      .firstOrFail()
+
+    return day
   }
 }
