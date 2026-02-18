@@ -38,7 +38,6 @@ export default class DaysController {
         query.preload('player')
       })
       .firstOrFail()
-
     return day
   }
 }

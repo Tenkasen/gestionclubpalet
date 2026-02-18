@@ -7,6 +7,7 @@
 |
 */
 
+import DaysController from '#controllers/days_controller'
 import router from '@adonisjs/core/services/router'
 const PlayersController = () => import('#controllers/players_controller')
 const SeasonsController = () => import('#controllers/seasons_controller')
@@ -38,6 +39,11 @@ router.post('/seasons/:seasonId/players', [SeasonRegistrationsController, 'store
 router.get('/seasons/:seasonId/players/:playerId', [SeasonRegistrationsController, 'show'])
 router.patch('/seasons/:seasonId/players/:playerId', [SeasonRegistrationsController, 'update'])
 router.delete('/seasons/:seasonId/players/:playerId', [SeasonRegistrationsController, 'destroy'])
+
+// Days  Routes
+router.get('/days', [DaysController, 'index'])
+router.post('/days', [DaysController, 'store'])
+router.get('/days/:id', [DaysController, 'show'])
 
 // Routes import
 // SeasonRoutes()
