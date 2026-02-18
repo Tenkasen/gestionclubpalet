@@ -5,6 +5,7 @@ import { ScoreStatus } from '../enums/score_status.js'
 export default class DaysController {
   async index({ params }: HttpContext) {
     const days = await Day.query().where('season_id', params.seasonId).orderBy('index_jour', 'asc')
+
     return days
   }
 
@@ -28,5 +29,9 @@ export default class DaysController {
     })
 
     return response.created(day)
+  }
+
+  async show({ params }: HttpContext) {
+    const day = await Day.query().where('id', params.id).preload('training')
   }
 }
