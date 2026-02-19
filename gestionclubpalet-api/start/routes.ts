@@ -41,13 +41,17 @@ router.patch('/seasons/:seasonId/players/:playerId', [SeasonRegistrationsControl
 router.delete('/seasons/:seasonId/players/:playerId', [SeasonRegistrationsController, 'destroy'])
 
 // Days  Routes
-router.get('/days', [DaysController, 'index'])
-router.post('/days', [DaysController, 'store'])
-router.get('/days/:dayId', [DaysController, 'show'])
+router
+  .group(() => {
+    router.get('days', [DaysController, 'index'])
+    router.post('days', [DaysController, 'store'])
+    router.get('days/:dayId', [DaysController, 'show'])
 
-// Training Scores  Routes
-router.get('/days/:dayId/training-scores', [DaysController, 'index'])
-router.post('/days/:dayId/training-scores', [DaysController, 'store'])
+    // Training Scores Routes
+    router.get('days/:dayId/training-scores', [DaysController, 'index'])
+    router.post('days/:dayId/training-scores', [DaysController, 'store'])
+  })
+  .prefix(':seasonId')
 
 // Routes import
 // SeasonRoutes()
