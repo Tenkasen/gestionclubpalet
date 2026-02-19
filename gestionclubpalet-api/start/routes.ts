@@ -7,6 +7,7 @@
 |
 */
 
+import TrainingScoresController from '#controllers/training_scores_controller'
 import router from '@adonisjs/core/services/router'
 const PlayersController = () => import('#controllers/players_controller')
 const SeasonsController = () => import('#controllers/seasons_controller')
@@ -48,8 +49,8 @@ router
     router.get('days/:dayId', [DaysController, 'show'])
 
     // Training Scores Routes
-    router.get('days/:dayId/training-scores', [DaysController, 'index'])
-    router.post('days/:dayId/training-scores', [DaysController, 'store'])
+    router.get('days/:dayId/training-scores', [TrainingScoresController, 'index'])
+    router.post('days/:dayId/training-scores', [TrainingScoresController, 'store'])
   })
   .prefix(':seasonId')
 

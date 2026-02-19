@@ -9,19 +9,19 @@ export default class DaysController {
     return days
   }
 
-  async store({ request, response }: HttpContext) {
-    const { date, seasonId } = request.only(['date', 'seasonId'])
+  async store({ request, response, params }: HttpContext) {
+    const { date } = request.only(['date'])
 
     // get last day
     const lastDay = await Day.query()
-      .where('season_id', seasonId)
+      .where('season_id', params.seasonId)
       .orderBy('index_jour', 'desc')
       .first()
 
     const indexJour = lastDay ? lastDay.indexJour + 1 : 1
 
     const day = await Day.create({
-      seasonId: seasonId,
+      seasonId: params.seasonId,
       indexJour,
       date,
       status: ScoreStatus.DRAFT,
@@ -33,7 +33,7 @@ export default class DaysController {
 
   async show({ params }: HttpContext) {
     const day = await Day.query()
-      .where('id', params.id)
+      .where('id', params.dayId)
       .preload('trainingScores', (query) => {
         query.preload('player')
       })
