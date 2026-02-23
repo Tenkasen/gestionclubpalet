@@ -4,5 +4,3 @@
 
 - controller **DaysController** validation des données du body pour store
   - pas 2 fois la même date
-
-- controller **TrainingController** validation des données du body pour store
