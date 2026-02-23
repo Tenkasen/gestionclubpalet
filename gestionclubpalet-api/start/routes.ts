@@ -7,12 +7,12 @@
 |
 */
 
-import TrainingScoresController from '#controllers/training_scores_controller'
 import router from '@adonisjs/core/services/router'
 const PlayersController = () => import('#controllers/players_controller')
 const SeasonsController = () => import('#controllers/seasons_controller')
 const SeasonRegistrationsController = () => import('#controllers/season_registrations_controller')
 const DaysController = () => import('#controllers/days_controller')
+const TrainingScoresController = () => import('#controllers/training_scores_controller')
 
 router.get('/', async () => {
   return {
