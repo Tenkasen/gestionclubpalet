@@ -13,6 +13,15 @@ export default class DaysController {
   async store({ request, response, params }: HttpContext) {
     const data = await request.validateUsing(createDayValidator)
 
+    // check existing day with same date
+    const existingDate = await Day.query().where('date', data.date).first()
+
+    if (existingDate) {
+      return response.conflict({
+        message: `Une journée entraînement à la date "${data.date}" existe déjà`,
+        date: existingDate,
+      })
+    }
     // get last day
     const lastDay = await Day.query()
       .where('season_id', params.seasonId)
