@@ -7,7 +7,7 @@
 |
 */
 
-import RankingsController from '#controllers/rankings_controller'
+const RankingsController = () => import('#controllers/rankings_controller')
 import router from '@adonisjs/core/services/router'
 const PlayersController = () => import('#controllers/players_controller')
 const SeasonsController = () => import('#controllers/seasons_controller')
@@ -56,7 +56,7 @@ router
   .prefix(':seasonId')
 
 // ranking routes
-router.get('/rankings/days/:dayId', [RankingsController, 'dayRanking'])
+router.get('/rankings/:seasonId/days/:dayId', [RankingsController, 'dayRanking'])
 router.get('/rankings/seasons/:seasonId', [RankingsController, 'seasonRanking'])
 
 // Routes import
