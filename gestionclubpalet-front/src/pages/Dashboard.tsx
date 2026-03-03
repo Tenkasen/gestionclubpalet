@@ -10,7 +10,7 @@ export default function Dashboard() {
   return (
     <div>
       <div>
-        <h1>Gestion Palet</h1>;
+        <h1>Gestion Palet</h1>
         <div>
           <Link to="/">
             <div>🎯</div>
@@ -33,7 +33,7 @@ export default function Dashboard() {
       ) : (
         <ul>
           {seasons.map((season) => (
-            <li>
+            <li key={season.id}>
               <h3>{season.nom}</h3>
               <p>{season.type}</p>
               <p>
