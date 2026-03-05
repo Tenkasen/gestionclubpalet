@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
+import type { IPlayer } from "../../types";
 
 interface IProps {
-  player: Player;
+  player: IPlayer;
   onSave: (score: { pour: number; contre: number }) => void;
   onNext: () => void;
   currentScore?: { pour: number; contre: number };
