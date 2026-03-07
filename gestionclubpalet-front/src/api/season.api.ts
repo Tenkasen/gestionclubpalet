@@ -20,4 +20,14 @@ export const seasonsAPI = {
     );
     return createdSeason;
   },
+  async update(data: Partial<ISeason>): Promise<ISeason> {
+    const { data: updatedSeason } = await api.patch<ISeason>(
+      "/seasons",
+      data,
+    );
+    return updatedSeason;
+  },
+  async destroy(id: number): Promise<ISeason> {
+    return await api.delete(`/seasons/${id}`);
+  },
 };

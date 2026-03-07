@@ -25,6 +25,6 @@ export const playerAPI = {
     return updatedPlayer;
   },
   async delete(id: number): Promise<IPlayer> {
-    return api.delete(`/players/${id}`);
+    return await api.delete(`/players/${id}`);
   },
 };
