@@ -4,6 +4,12 @@
 
 - dans la migration **'training_scores'** les points peuvent être null dans le cas ne fais pas la journée en question ?
 
+  <br>
+
 ## Côté FRONT
 
-- refactor dashboard page avec un component pour les liens identiques
+<br>
+
+### Prochaine étape
+
+Composant de saisie entraînement : front API [day, player, trainingScore] pour la page trainingscore entry
