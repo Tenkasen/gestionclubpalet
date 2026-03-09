@@ -17,14 +17,14 @@ export const playerAPI = {
     );
     return createdPlayer;
   },
-  async update(data: Partial<IPlayer>): Promise<IPlayer> {
+  async update(id: number, data: Partial<IPlayer>): Promise<IPlayer> {
     const { data: updatedPlayer } = await api.patch<IPlayer>(
-      `/players`,
+      `/players/${id}`,
       data,
     );
     return updatedPlayer;
   },
-  async delete(id: number): Promise<IPlayer> {
+  async delete(id: number): Promise<void> {
     return await api.delete(`/players/${id}`);
   },
 };

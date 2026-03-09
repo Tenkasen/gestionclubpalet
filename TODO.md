@@ -12,4 +12,4 @@
 
 ### Prochaine étape
 
-Composant de saisie entraînement : front API [day, player, trainingScore] pour la page trainingscore entry
+Composant de saisie entraînement : front API [day] pour la page trainingscore entry
