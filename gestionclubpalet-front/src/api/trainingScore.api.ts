@@ -2,9 +2,12 @@ import type { ITrainingScore } from "../types";
 import { api } from "./client";
 
 export const trainingScoreApi = {
-  async getAll(dayId: number): Promise<ITrainingScore[]> {
+  async getAll(
+    seasonId: number,
+    dayId: number,
+  ): Promise<ITrainingScore[]> {
     const { data } = await api.get<ITrainingScore[]>(
-      `/days/${dayId}/training-scores`,
+      `/${seasonId}/days/${dayId}/training-scores`,
     );
     return data;
   },

@@ -11,5 +11,3 @@
 <br>
 
 ### Prochaine étape
-
-Composant de saisie entraînement : front API [day] pour la page trainingscore entry
