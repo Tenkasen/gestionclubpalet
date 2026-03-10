@@ -30,12 +30,12 @@ export default class PlayersController {
   }
 
   async show({ params }: HttpContext) {
-    const player = await Player.findOrFail(params.id)
+    const player = await Player.findOrFail(params.playerId)
     return player
   }
 
   async update({ params, request }: HttpContext) {
-    const player = await Player.findOrFail(params.id)
+    const player = await Player.findOrFail(params.playerId)
     const data = await request.validateUsing(updatePlayerValidator)
     player.merge(data)
     await player.save()
@@ -46,7 +46,7 @@ export default class PlayersController {
   }
 
   async destroy({ params }: HttpContext) {
-    const player = await Player.findOrFail(params.id)
+    const player = await Player.findOrFail(params.playerId)
     await player.delete()
     return {
       message: 'Joueur supprimé avec succès',

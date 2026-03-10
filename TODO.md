@@ -11,3 +11,5 @@
 <br>
 
 ### Prochaine étape
+
+revoir les appels api coté front avec les bonnes réponses et les bonnes interfaces de typage

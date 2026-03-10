@@ -27,7 +27,7 @@ export default class SeasonsController {
     if (existingSeason) {
       return response.conflict({
         message: `Une saison "${data.nom}" de type "${data.type}" existe déjà`,
-        player: existingSeason,
+        season: existingSeason,
       })
     }
     const season = await Season.create(data)
@@ -35,7 +35,7 @@ export default class SeasonsController {
   }
   async show({ params }: HttpContext) {
     const season = await Season.query()
-      .where('id', params.id)
+      .where('id', params.seasonId)
       .preload('registrations', (query) => {
         query.preload('player')
       })
@@ -44,7 +44,7 @@ export default class SeasonsController {
   }
 
   async update({ params, request }: HttpContext) {
-    const season = await Season.findOrFail(params.id)
+    const season = await Season.findOrFail(params.seasonId)
     const data = await request.validateUsing(updateSeasonValidator)
     season.merge(data)
     await season.save()
@@ -52,7 +52,7 @@ export default class SeasonsController {
   }
 
   async destroy({ params }: HttpContext) {
-    const season = await Season.findOrFail(params.id)
+    const season = await Season.findOrFail(params.seasonId)
     await season.delete()
     return {
       message: 'Saison supprimée avec succès',
