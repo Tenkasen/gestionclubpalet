@@ -73,14 +73,14 @@ export const seasonsAPI = {
     }
   },
 
-  async destroy(id: number): Promise<void> {
+  async delete(id: number): Promise<string | null> {
     try {
       const { data } = await api.delete(`/seasons/${id}`);
-      return data;
+      return data.message;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response?.status === 404) {
         console.warn(`La saison avec l'ID ${id} n'existe pas.`);
-        return;
+        return null;
       }
       console.error(
         "Erreur lors de la récupération de la saison :",
