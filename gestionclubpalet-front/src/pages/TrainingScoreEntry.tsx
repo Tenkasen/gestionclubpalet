@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { IDay, IPlayer } from "../types";
 import { dayApi } from "../api/day.api";
+import { seasonRegistrationApi } from "../api/seasonRegistration.api";
 
 export default function TrainingScoreEntry() {
   const { seasonId, dayId } = useParams();
@@ -13,11 +14,16 @@ export default function TrainingScoreEntry() {
 
   useEffect(() => {
     async function loadData() {
-      const dayData = await dayApi.getOne(
-        seasonIdNumber,
-        dayIdNumber,
-      );
-      setDay(dayData);
+      try {
+        const dayData = await dayApi.getOne(
+          seasonIdNumber,
+          dayIdNumber,
+        );
+        setDay(dayData);
+        const players =
+          await seasonRegistrationApi.getAll(seasonIdNumber);
+        setPlayers(response.players.playersList);
+      } catch (error) {}
     }
     loadData();
   }, []);

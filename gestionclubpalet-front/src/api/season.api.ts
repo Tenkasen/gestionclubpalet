@@ -1,4 +1,4 @@
-import type { ISeason } from "../types";
+import type { ISeason, ISeasonWithPlayers } from "../types/season";
 import { api } from "./client";
 
 export const seasonsAPI = {
@@ -8,8 +8,10 @@ export const seasonsAPI = {
     });
     return data;
   },
-  async getOne(id: number): Promise<ISeason> {
-    const { data } = await api.get<ISeason>(`/seasons/${id}`);
+  async getOne(id: number): Promise<ISeasonWithPlayers> {
+    const { data } = await api.get<ISeasonWithPlayers>(
+      `/seasons/${id}`,
+    );
     return data;
   },
 
