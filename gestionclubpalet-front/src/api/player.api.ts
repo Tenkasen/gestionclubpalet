@@ -1,4 +1,4 @@
-import type { IPlayer } from "../types";
+import type { IPlayer } from "../types/player";
 import { api } from "./client";
 
 export const playerAPI = {
