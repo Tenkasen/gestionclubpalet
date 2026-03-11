@@ -22,7 +22,7 @@ export default function TrainingScoreEntry() {
         setDay(dayData);
         const players =
           await seasonRegistrationApi.getAll(seasonIdNumber);
-        setPlayers(response.players.playersList);
+        setPlayers(players.playersList);
       } catch (error) {}
     }
     loadData();

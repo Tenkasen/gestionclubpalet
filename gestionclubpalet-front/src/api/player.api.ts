@@ -17,7 +17,7 @@ export const playerAPI = {
         return null;
       }
       console.error(
-        "Erreur lors de la récupération du joueur :",
+        "Erreur lors de la récupération du joueur (playerAPI.getOne) :",
         error,
       );
       throw error;
@@ -37,7 +37,7 @@ export const playerAPI = {
         return error.response.data.player;
       }
       console.error(
-        "Erreur lors de la récupération du joueur :",
+        "Erreur lors de la récupération du joueur (playerAPI.create):",
         error,
       );
       throw error;
@@ -55,7 +55,7 @@ export const playerAPI = {
         return error.response.data.player;
       }
       console.error(
-        "Erreur lors de la récupération du joueur :",
+        "Erreur lors de la récupération du joueur (playerAPI.update):",
         error,
       );
       throw error;
@@ -71,7 +71,7 @@ export const playerAPI = {
         return null;
       }
       console.error(
-        "Erreur lors de la récupération du joueur :",
+        "Erreur lors de la récupération du joueur (playerAPI.delete):",
         error,
       );
       throw error;
