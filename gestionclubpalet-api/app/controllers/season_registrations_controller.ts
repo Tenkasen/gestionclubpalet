@@ -3,7 +3,14 @@ import SeasonRegistration from '#models/season_registration'
 import Season from '#models/season'
 
 export default class SeasonRegistrationsController {
-  async index({ params }: HttpContext) {
+  async index({ params, response }: HttpContext) {
+    const existingSeason = await Season.find(params.seasonId)
+    if (!existingSeason) {
+      return response.notFound({
+        message: 'Aucune saison ne correspond à cet ID',
+        seasonId: params.seasonId,
+      })
+    }
     // Get one season registration
     const registrations = await SeasonRegistration.query()
       .where('season_id', params.seasonId)
