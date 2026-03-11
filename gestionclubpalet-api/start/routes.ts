@@ -9,6 +9,7 @@
 
 const RankingsController = () => import('#controllers/rankings_controller')
 import router from '@adonisjs/core/services/router'
+import { middleware } from './kernel.js'
 const PlayersController = () => import('#controllers/players_controller')
 const SeasonsController = () => import('#controllers/seasons_controller')
 const SeasonRegistrationsController = () => import('#controllers/season_registrations_controller')
@@ -45,15 +46,16 @@ router.delete('/seasons/:seasonId/players/:playerId', [SeasonRegistrationsContro
 // Days  Routes
 router
   .group(() => {
-    router.get('days', [DaysController, 'index'])
-    router.post('days', [DaysController, 'store'])
-    router.get('days/:dayId', [DaysController, 'show'])
+    router.get('/days', [DaysController, 'index'])
+    router.post('/days', [DaysController, 'store'])
+    router.get('/days/:dayId', [DaysController, 'show'])
 
     // Training Scores Routes
-    router.get('days/:dayId/training-scores', [TrainingScoresController, 'index'])
-    router.post('days/:dayId/training-scores', [TrainingScoresController, 'store'])
+    router.get('/days/:dayId/training-scores', [TrainingScoresController, 'index'])
+    router.post('/days/:dayId/training-scores', [TrainingScoresController, 'store'])
   })
-  .prefix(':seasonId')
+  .prefix('/seasons/:seasonId')
+  .use(middleware.CheckExistingSeason())
 
 // ranking routes
 router.get('/rankings/:seasonId/days/:dayId', [RankingsController, 'dayRanking'])
