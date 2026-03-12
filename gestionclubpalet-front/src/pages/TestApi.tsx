@@ -12,7 +12,7 @@ const body: Partial<IPlayer> = {
 export default function TestApi() {
   useEffect(() => {
     const test = async () => {
-      const data = await seasonRegistrationApi.getAll(555);
+      const data = await seasonRegistrationApi.getOne(60, 10);
       console.log(data);
     };
 
