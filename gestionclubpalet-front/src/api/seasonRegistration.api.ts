@@ -1,7 +1,10 @@
 import { isAxiosError } from "axios";
 import type { IPlayer } from "../types/player";
 import { api } from "./client";
-import type { IPlayerRegistration } from "../types/seasonRegistration";
+import type {
+  IPlayerRegistration,
+  ISeasonRegistration,
+} from "../types/seasonRegistration";
 
 export const seasonRegistrationApi = {
   async getAll(seasonId: number): Promise<IPlayer[] | null> {
@@ -50,13 +53,29 @@ export const seasonRegistrationApi = {
   async create(
     seasonId: number,
     data: Partial<ISeasonRegistration>,
-  ): Promise<ISeasonRegistration> {
-    const { data: createdRegistration } =
-      await api.post<ISeasonRegistration>(
-        `/seasons/${seasonId}/players`,
-        data,
+  ): Promise<ISeasonRegistration | null> {
+    try {
+      const { data: createdRegistration } =
+        await api.post<ISeasonRegistration>(
+          `/seasons/${seasonId}/players`,
+          data,
+        );
+      return createdRegistration;
+    } catch (error) {
+      if (isAxiosError(error) && error.response?.status === 404) {
+        console.warn("La saison et/ou le joueur n'existe pas.");
+        return null;
+      }
+      if (isAxiosError(error) && error.response?.status === 409) {
+        console.warn("Ce joueur est déjà inscrit pour cette saison");
+        return null;
+      }
+      console.error(
+        "Erreur lors de la récupération des inscriptions à cette saison (seasonRegistrationApi.create)",
+        error,
       );
-    return createdRegistration;
+      throw error;
+    }
   },
   async update(
     seasonId: number,

@@ -7,6 +7,7 @@ export interface ISeasonRegistration {
   playerId: number;
   createdAt: string;
   updatedAt: string;
+  player: IPlayer;
 }
 
 export interface IPlayerRegistration {

@@ -4,15 +4,15 @@ import type { IPlayer } from "../types/player";
 import type { ISeason } from "../types/season";
 import { seasonsAPI } from "../api/season.api";
 import { seasonRegistrationApi } from "../api/seasonRegistration.api";
+import type { ISeasonRegistration } from "../types/seasonRegistration";
 
-const body: Partial<IPlayer> = {
-  nom: "BOURDET",
-  prenom: "test",
+const body: Partial<ISeasonRegistration> = {
+  playerId: 6,
 };
 export default function TestApi() {
   useEffect(() => {
     const test = async () => {
-      const data = await seasonRegistrationApi.getOne(60, 10);
+      const data = await seasonRegistrationApi.create(10, body);
       console.log(data);
     };
 
