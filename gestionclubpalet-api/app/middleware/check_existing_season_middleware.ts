@@ -5,7 +5,6 @@ import type { NextFn } from '@adonisjs/core/types/http'
 export default class CheckExistingSeason {
   async handle({ params, response, request }: HttpContext, next: NextFn) {
     //find season
-    console.log('middleware season exécuté')
     const season = await Season.find(params.seasonId)
     // if not found --> 404
     if (!season) {

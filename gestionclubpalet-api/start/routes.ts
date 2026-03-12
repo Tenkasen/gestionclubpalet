@@ -36,16 +36,16 @@ router.get('/players/:playerId', [PlayersController, 'show'])
 router.patch('/players/:playerId', [PlayersController, 'update'])
 router.delete('/players/:playerId', [PlayersController, 'destroy'])
 
-// Season Registrations Routes
-router.get('/seasons/:seasonId/players', [SeasonRegistrationsController, 'index'])
-router.post('/seasons/:seasonId/players', [SeasonRegistrationsController, 'store'])
-router.get('/seasons/:seasonId/players/:playerId', [SeasonRegistrationsController, 'show'])
-router.patch('/seasons/:seasonId/players/:playerId', [SeasonRegistrationsController, 'update'])
-router.delete('/seasons/:seasonId/players/:playerId', [SeasonRegistrationsController, 'destroy'])
-
-// Days  Routes
 router
   .group(() => {
+    // Season Registrations Routes
+    router.get('/players', [SeasonRegistrationsController, 'index'])
+    router.post('/players', [SeasonRegistrationsController, 'store'])
+    router.get('/players/:playerId', [SeasonRegistrationsController, 'show'])
+    router.patch('/players/:playerId', [SeasonRegistrationsController, 'update'])
+    router.delete('/players/:playerId', [SeasonRegistrationsController, 'destroy'])
+
+    // Days  Routes
     router.get('/days', [DaysController, 'index'])
     router.post('/days', [DaysController, 'store'])
     router.get('/days/:dayId', [DaysController, 'show'])
@@ -58,8 +58,11 @@ router
   .use(middleware.CheckExistingSeason())
 
 // ranking routes
-router.get('/rankings/:seasonId/days/:dayId', [RankingsController, 'dayRanking'])
-router.get('/rankings/seasons/:seasonId', [RankingsController, 'seasonRanking'])
-
+router
+  .group(() => {
+    router.get('/rankings/:seasonId/days/:dayId', [RankingsController, 'dayRanking'])
+    router.get('/rankings/seasons/:seasonId', [RankingsController, 'seasonRanking'])
+  })
+  .use(middleware.CheckExistingSeason())
 // Routes import
 // SeasonRoutes()
