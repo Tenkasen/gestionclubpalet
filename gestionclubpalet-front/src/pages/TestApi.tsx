@@ -6,14 +6,15 @@ import { seasonsAPI } from "../api/season.api";
 import { seasonRegistrationApi } from "../api/seasonRegistration.api";
 import type { ISeasonRegistration } from "../types/seasonRegistration";
 import { dayApi } from "../api/day.api";
+import type { IDay } from "../types/day";
 
-const body: Partial<ISeasonRegistration> = {
-  playerId: 6,
+const body: Partial<IDay> = {
+  date: "29-11-2024",
 };
 export default function TestApi() {
   useEffect(() => {
     const test = async () => {
-      const data = await dayApi.getOne(6, 1);
+      const data = await dayApi.create(6, body);
       console.log(data);
     };
 

@@ -98,7 +98,7 @@ export const seasonRegistrationApi = {
         return null;
       }
       console.error(
-        "Erreur lors de la récupération des inscriptions à cette saison (seasonRegistrationApi.create)",
+        "Erreur lors de la récupération des inscriptions à cette saison (seasonRegistrationApi.update)",
         error,
       );
       throw error;
@@ -119,7 +119,7 @@ export const seasonRegistrationApi = {
         return null;
       }
       console.error(
-        "Erreur lors de la récupération du joueur (playerAPI.delete):",
+        "Erreur lors de la récupération du joueur (seasonRegistration.delete):",
         error,
       );
       throw error;

@@ -17,7 +17,7 @@ export const dayApi = {
         return null;
       }
       console.error(
-        "Erreur lors de la récupération des inscriptions à cette saison (seasonRegistrationApi.getALL)",
+        "Erreur lors de la récupération des inscriptions à cette saison (dayApi.getALL)",
         error,
       );
       throw error;
@@ -38,17 +38,38 @@ export const dayApi = {
         return null;
       }
       console.error(
-        "Erreur lors de la récupération des inscriptions à cette saison (seasonRegistrationApi.getALL)",
+        "Erreur lors de la récupération des inscriptions à cette saison (dayApi.getOne)",
         error,
       );
       throw error;
     }
   },
-  async create(seasonId: number, data: Partial<IDay>): Promise<IDay> {
-    const { data: createdDay } = await api.post<IDay>(
-      `/${seasonId}/days`,
-      data,
-    );
-    return createdDay;
+  async create(
+    seasonId: number,
+    data: Partial<IDay>,
+  ): Promise<IDay | null> {
+    try {
+      const { data: createdDay } = await api.post<IDay>(
+        `/seasons/${seasonId}/days`,
+        data,
+      );
+      return createdDay;
+    } catch (error) {
+      if (isAxiosError(error) && error.response?.status === 404) {
+        console.warn(`La saison ou la journée n'existe pas`);
+        return null;
+      }
+      if (isAxiosError(error) && error.response?.status === 409) {
+        console.warn(
+          `Une journée entraînement à la date "${data.date}" existe déjà`,
+        );
+        return null;
+      }
+      console.error(
+        "Erreur lors de la récupération des inscriptions à cette saison (dayApi.create)",
+        error,
+      );
+      throw error;
+    }
   },
 };
