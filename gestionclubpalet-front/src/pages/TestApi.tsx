@@ -12,7 +12,7 @@ const body: Partial<ISeasonRegistration> = {
 export default function TestApi() {
   useEffect(() => {
     const test = async () => {
-      const data = await seasonRegistrationApi.create(10, body);
+      const data = await seasonRegistrationApi.delete(2, 5);
       console.log(data);
     };
 

@@ -80,17 +80,49 @@ export const seasonRegistrationApi = {
   async update(
     seasonId: number,
     data: Partial<ISeasonRegistration>,
-  ): Promise<ISeasonRegistration> {
-    const { data: updatedRegistration } =
-      await api.post<ISeasonRegistration>(
-        `/seasons/${seasonId}/players`,
-        data,
+  ): Promise<ISeasonRegistration | null> {
+    try {
+      const { data: updatedRegistration } =
+        await api.post<ISeasonRegistration>(
+          `/seasons/${seasonId}/players`,
+          data,
+        );
+      return updatedRegistration;
+    } catch (error) {
+      if (isAxiosError(error) && error.response?.status === 404) {
+        console.warn("La saison et/ou le joueur n'existe pas.");
+        return null;
+      }
+      if (isAxiosError(error) && error.response?.status === 409) {
+        console.warn("Ce joueur est déjà inscrit pour cette saison");
+        return null;
+      }
+      console.error(
+        "Erreur lors de la récupération des inscriptions à cette saison (seasonRegistrationApi.create)",
+        error,
       );
-    return updatedRegistration;
+      throw error;
+    }
   },
-  async delete(seasonId: number, playerId: number): Promise<void> {
-    return await api.delete(
-      `/seasons/${seasonId}/players/${playerId}`,
-    );
+  async delete(
+    seasonId: number,
+    playerId: number,
+  ): Promise<string | null> {
+    try {
+      const { data } = await api.delete(
+        `/seasons/${seasonId}/players/${playerId}`,
+      );
+      return data.message;
+    } catch (error: unknown) {
+      if (isAxiosError(error) && error.response?.status === 404) {
+        console.warn("La saison et/ou le joueur n'existe pas.");
+        return null;
+      }
+      console.error(
+        "Erreur lors de la récupération du joueur (playerAPI.delete):",
+        error,
+      );
+      throw error;
+    }
   },
 };
