@@ -1,3 +1,5 @@
+import type { ITrainingScore } from "./trainingScore";
+
 export interface IDay {
   id: number;
   seasonId: number;
@@ -7,4 +9,5 @@ export interface IDay {
   closed: boolean;
   createdAt: string;
   updatedAt: string;
+  trainingScores?: ITrainingScore[];
 }

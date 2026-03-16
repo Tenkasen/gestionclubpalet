@@ -13,7 +13,7 @@ const body: Partial<ISeasonRegistration> = {
 export default function TestApi() {
   useEffect(() => {
     const test = async () => {
-      const data = await dayApi.getAll(3);
+      const data = await dayApi.getOne(6, 1);
       console.log(data);
     };
 
