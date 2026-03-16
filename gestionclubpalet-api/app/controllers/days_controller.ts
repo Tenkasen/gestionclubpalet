@@ -6,7 +6,12 @@ import { createDayValidator } from '#validators/day'
 export default class DaysController {
   async index({ params }: HttpContext) {
     const days = await Day.query().where('season_id', params.seasonId).orderBy('index_jour', 'asc')
-
+    if (days.length < 1) {
+      return {
+        message: 'Aucune journée créée pour cette saison',
+        days: [],
+      }
+    }
     return days
   }
 
@@ -43,7 +48,8 @@ export default class DaysController {
 
   async show({ params }: HttpContext) {
     const day = await Day.query()
-      .where('id', params.dayId)
+      .where('season_id', params.seasonId)
+      .where('index_jour', params.dayId)
       .preload('trainingScores', (query) => {
         query.preload('player')
       })
