@@ -19,7 +19,17 @@ export default class TrainingScoresController {
     return scores
   }
 
-  async store({ request, params }: HttpContext) {
+  async store({ request, params, response }: HttpContext) {
+    const existingDay = await Day.query()
+      .where('season_id', params.seasonId)
+      .where('id', params.dayId)
+      .first()
+
+    if (!existingDay) {
+      return response.notFound({
+        message: `Cette journée n'existe pas dans cette saison`,
+      })
+    }
     const data = await request.validateUsing(createTrainingScoreValidator)
 
     const score = await TrainingScore.updateOrCreate(
