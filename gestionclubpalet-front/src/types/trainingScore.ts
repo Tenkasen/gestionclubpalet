@@ -9,5 +9,5 @@ export interface ITrainingScore {
   goalAverage: number;
   createdAt: string;
   updatedAt: string;
-  player: IPlayer;
+  player?: IPlayer;
 }

@@ -7,6 +7,7 @@ import { seasonRegistrationApi } from "../api/seasonRegistration.api";
 import type { ISeasonRegistration } from "../types/seasonRegistration";
 import { dayApi } from "../api/day.api";
 import type { IDay } from "../types/day";
+import { trainingScoreApi } from "../api/trainingScore.api";
 
 const body: Partial<IDay> = {
   date: "29-11-2024",
@@ -14,7 +15,7 @@ const body: Partial<IDay> = {
 export default function TestApi() {
   useEffect(() => {
     const test = async () => {
-      const data = await dayApi.create(6, body);
+      const data = await trainingScoreApi.getAll(60, 1);
       console.log(data);
     };
 
