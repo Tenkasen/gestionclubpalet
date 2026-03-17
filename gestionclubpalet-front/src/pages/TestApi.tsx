@@ -10,12 +10,14 @@ import type { IDay } from "../types/day";
 import { trainingScoreApi } from "../api/trainingScore.api";
 
 const body: Partial<IDay> = {
-  date: "29-11-2024",
+  playerId: 9,
+  pointsPour: 10,
+  pointsContre: 3,
 };
 export default function TestApi() {
   useEffect(() => {
     const test = async () => {
-      const data = await trainingScoreApi.getAll(60, 1);
+      const data = await trainingScoreApi.create(6, 1, body);
       console.log(data);
     };
 

@@ -27,14 +27,29 @@ export const trainingScoreApi = {
     }
   },
   async create(
+    seasonId: number,
     dayId: number,
     data: Partial<ITrainingScore>,
-  ): Promise<ITrainingScore> {
-    const { data: createdTrainingScore } =
-      await api.post<ITrainingScore>(
-        `/days/${dayId}/training-scores`,
-        data,
+  ): Promise<ITrainingScore | null> {
+    try {
+      const { data: createdTrainingScore } =
+        await api.post<ITrainingScore>(
+          `/seasons/${seasonId}/days/${dayId}/training-scores`,
+          data,
+        );
+      return createdTrainingScore;
+    } catch (error) {
+      if (isAxiosError(error) && error.response?.status === 404) {
+        console.warn(
+          `Cette saison et/ou cette journée dans cette saison n'existe pas`,
+        );
+        return null;
+      }
+      console.error(
+        "Erreur lors de la récupération des inscriptions à cette saison (trainingScoreApi.create)",
+        error,
       );
-    return createdTrainingScore;
+      throw error;
+    }
   },
 };
