@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { seasonsAPI } from "../api/season.api";
-import type { ISeason } from "../types";
+import type { ISeason } from "../types/season";
 
 export function useSeasons(type?: string) {
   const [seasons, setSeasons] = useState<ISeason[]>([]);

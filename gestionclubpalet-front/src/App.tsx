@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import "./index.css";
 import Dashboard from "./pages/Dashboard";
 import TestApi from "./pages/TestApi";
+import TrainingScoreEntry from "./pages/TrainingScoreEntry";
 
 export default function App() {
   return (
@@ -9,6 +10,10 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/test" element={<TestApi />} />
+        <Route
+          path="/seasons/:seasonId/days/:dayId/training"
+          element={<TrainingScoreEntry />}
+        />
       </Routes>
     </div>
   );

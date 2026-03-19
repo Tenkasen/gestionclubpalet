@@ -17,7 +17,7 @@ const body: Partial<IDay> = {
 export default function TestApi() {
   useEffect(() => {
     const test = async () => {
-      const data = await trainingScoreApi.create(6, 1, body);
+      const data = await trainingScoreApi.getAll(6, 1);
       console.log(data);
     };
 
