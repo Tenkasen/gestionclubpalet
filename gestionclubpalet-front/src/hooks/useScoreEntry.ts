@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { IPlayer } from "../types/player";
 
-interface IScore {
+export interface IScore {
   pointsPour: number;
   pointsContre: number;
 }
