@@ -99,14 +99,17 @@ export default function TrainingScoreInput({
         <button
           type="button"
           className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
+          onClick={onPrev}
+          disabled={isFirst}
         >
-          Précédent
+          Joueur précédent
         </button>
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
+          disabled={isLast}
         >
-          Suivant (Entrer)
+          Joueur suivant
         </button>
       </div>
     </form>
