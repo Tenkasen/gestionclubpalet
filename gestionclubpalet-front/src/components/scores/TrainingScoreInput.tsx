@@ -1,35 +1,48 @@
 import { useState, useRef, useEffect } from "react";
-import type { IPlayer } from "../../types";
+import type { IPlayer } from "../../types/player";
 
 interface IProps {
   player: IPlayer;
-  onSave: (score: { pour: number; contre: number }) => void;
-  onNext: () => void;
-  currentScore?: { pour: number; contre: number };
+  onSave: (score: {
+    pointsPour: number;
+    pointsContre: number;
+  }) => void;
+  onPrev: () => void;
+  currentScore?: { pointsPour: number; pointsContre: number };
+  isFirst: boolean;
+  isLast: boolean;
 }
 
 export default function TrainingScoreInput({
   player,
   onSave,
-  onNext,
+  onPrev,
   currentScore,
+  isFirst,
+  isLast,
 }: IProps) {
-  const [pour, SetPour] = useState(currentScore?.pour || 0);
-  const [contre, SetContre] = useState(currentScore?.contre || 0);
-  const goalAverage = pour - contre;
+  const [pointsPour, SetPointsPour] = useState(
+    currentScore?.pointsPour || 0,
+  );
+  const [pointsContre, SetPointsContre] = useState(
+    currentScore?.pointsContre || 0,
+  );
+  const goalAverage = pointsPour - pointsContre;
 
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
-    onSave({ pour, contre });
-    onNext();
+    onSave({ pointsPour, pointsContre });
   };
 
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
+    SetPointsPour(currentScore?.pointsPour ?? 0);
+    SetPointsContre(currentScore?.pointsContre ?? 0);
     if (inputRef.current) {
       inputRef.current.focus();
+      inputRef.current.select();
     }
-  }, []);
+  }, [player]);
 
   return (
     <form
@@ -46,10 +59,10 @@ export default function TrainingScoreInput({
           </label>
           <input
             type="number"
-            value={pour}
+            value={pointsPour}
             min={0}
             max={20}
-            onChange={(e) => SetPour(Number(e.target.value))}
+            onChange={(e) => SetPointsPour(Number(e.target.value))}
             ref={inputRef}
             required
             className="w-full px-4 py-2 border rounded-lg"
@@ -60,11 +73,11 @@ export default function TrainingScoreInput({
           <label>Points CONTRE</label>
           <input
             type="number"
-            value={contre}
+            value={pointsContre}
             min={0}
             max={20}
             required
-            onChange={(e) => SetContre(Number(e.target.value))}
+            onChange={(e) => SetPointsContre(Number(e.target.value))}
             className="w-full px-4 py-2 border rounded-lg"
           />
         </div>
@@ -83,6 +96,12 @@ export default function TrainingScoreInput({
           </p>
         </div>
 
+        <button
+          type="button"
+          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
+        >
+          Précédent
+        </button>
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"

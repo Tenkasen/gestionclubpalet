@@ -1,9 +1,9 @@
 import { useState } from "react";
-import type { IPlayer } from "../types";
+import type { IPlayer } from "../types/player";
 
 interface IScore {
-  pour: number;
-  contre: number;
+  pointsPour: number;
+  pointsContre: number;
 }
 
 export default function useScoreEntry(players: IPlayer[]) {
@@ -33,5 +33,6 @@ export default function useScoreEntry(players: IPlayer[]) {
     saveScore,
     scores,
     isLast: currentIndex === players.length - 1,
+    isFirst: currentIndex === 0,
   };
 }
