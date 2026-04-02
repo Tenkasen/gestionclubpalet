@@ -93,9 +93,9 @@ export default function TrainingScoreEntry() {
     );
   if (error) return <div>{error}</div>;
   return (
-    <div className="container mx-auto p-6 max-w-2xl">
+    <div className="container mx-auto py-10 max-w-md">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">
+        <h1 className="text-3xl font-bold pb-2">
           Saisie Entraînement J{dayIdNumber}
         </h1>
         <p className="text-gray-600">

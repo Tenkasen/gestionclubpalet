@@ -38,79 +38,87 @@ export default function TrainingScoreInput({
   useEffect(() => {
     SetPointsPour(currentScore?.pointsPour ?? 0);
     SetPointsContre(currentScore?.pointsContre ?? 0);
-    if (inputRef.current) {
-      inputRef.current.focus();
-      inputRef.current.select();
-    }
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+        inputRef.current.select();
+      }
+    }, 50);
   }, [player]);
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-6 rounded-lg shadow"
+      className="bg-white p-8 rounded-xl shadow-md w-full max-w-md mx-auto mt-6"
     >
-      <h3 className="text-xl font-bold mb-4">
+      <h3 className="text-xl font-bold mb-6 text-center">
         {player.nom} {player.prenom}
       </h3>
-      <div className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium mb-2">
-            Points POUR
-          </label>
-          <input
-            type="number"
-            value={pointsPour}
-            min={0}
-            max={20}
-            onChange={(e) => SetPointsPour(Number(e.target.value))}
-            ref={inputRef}
-            required
-            className="w-full px-4 py-2 border rounded-lg"
-          />
+
+      <div className="space-y-6">
+        <div className="flex gap-6 justify-center">
+          <div className="flex flex-col items-center gap-2">
+            <label className="text-sm font-medium text-gray-600">
+              Points POUR
+            </label>
+            <input
+              type="number"
+              value={pointsPour}
+              min={0}
+              max={20}
+              onChange={(e) => SetPointsPour(Number(e.target.value))}
+              ref={inputRef}
+              required
+              className="w-20 text-center px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <label className="text-sm font-medium text-gray-600">
+              Points CONTRE
+            </label>
+            <input
+              type="number"
+              value={pointsContre}
+              min={0}
+              max={20}
+              required
+              onChange={(e) =>
+                SetPointsContre(Number(e.target.value))
+              }
+              className="w-20 text-center px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
         </div>
 
-        <div>
-          <label>Points CONTRE</label>
-          <input
-            type="number"
-            value={pointsContre}
-            min={0}
-            max={20}
-            required
-            onChange={(e) => SetPointsContre(Number(e.target.value))}
-            className="w-full px-4 py-2 border rounded-lg"
-          />
+        <div className="pt-4 border-t text-center">
+          <p className="text-sm text-gray-500 mb-1">Goal Average</p>
+          <span
+            className={`text-2xl font-bold ${
+              goalAverage >= 0 ? "text-green-600" : "text-red-600"
+            }`}
+          >
+            {goalAverage > 0 ? "+" : ""}
+            {goalAverage}
+          </span>
         </div>
 
-        <div className="pt-4 border-t">
-          <p className="text-lg">
-            Goal Average :
-            <span
-              className={`font-bold ml-2 ${
-                goalAverage >= 0 ? "text-green-600" : "text-red-600"
-              }`}
-            >
-              {goalAverage > 0 ? "+" : ""}
-              {goalAverage}
-            </span>
-          </p>
+        <div className="flex gap-3 pt-2">
+          <button
+            type="button"
+            className="flex-1 bg-gray-100 text-gray-700 px-3 py-2 rounded-lg hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+            onClick={onPrev}
+            disabled={isFirst}
+          >
+            ← Joueur précédent
+          </button>
+          <button
+            type="submit"
+            className="flex-1 bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+            disabled={isLast}
+          >
+            Joueur suivant →
+          </button>
         </div>
-
-        <button
-          type="button"
-          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
-          onClick={onPrev}
-          disabled={isFirst}
-        >
-          Joueur précédent
-        </button>
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
-          disabled={isLast}
-        >
-          Joueur suivant
-        </button>
       </div>
     </form>
   );
