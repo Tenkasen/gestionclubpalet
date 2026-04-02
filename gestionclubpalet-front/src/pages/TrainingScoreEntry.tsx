@@ -96,7 +96,10 @@ export default function TrainingScoreEntry() {
     <div className="container mx-auto py-10 max-w-md">
       <div className="mb-6">
         <h1 className="text-3xl font-bold pb-2">
-          Saisie Entraînement J{dayIdNumber}
+          Saisie Entraînement J{dayIdNumber} -{" "}
+          {day?.date
+            ? new Date(day.date).toLocaleDateString("fr-FR")
+            : ""}{" "}
         </h1>
         <p className="text-gray-600">
           Joueur {currentIndex + 1} / {players.length}
