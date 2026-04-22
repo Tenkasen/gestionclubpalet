@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import type { IPlayer } from "../../types/player";
+import { Save } from "lucide-react";
 
 interface IProps {
   player: IPlayer;
@@ -119,6 +120,17 @@ export default function TrainingScoreInput({
             Joueur suivant →
           </button>
         </div>
+        {isLast && (
+          <div className="flex items-center justify-center">
+            <button
+              type="button"
+              className="flex gap-4 bg-teal-600 text-white px-3 py-2 rounded-lg hover:bg-teal-700 cursor-pointer text-sm font-medium"
+            >
+              <Save />
+              Sauvegarder la journée
+            </button>
+          </div>
+        )}
       </div>
     </form>
   );
