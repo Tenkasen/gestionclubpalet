@@ -8,11 +8,15 @@ import { trainingScoreApi } from "../api/trainingScore.api";
 import type { IDay } from "../types/day";
 import type { IPlayer } from "../types/player";
 import TrainingScoreInput from "../components/scores/TrainingScoreInput";
+import type { ITrainingScore } from "../types/trainingScore";
 
 export default function TrainingScoreEntry() {
   const { seasonId, dayId } = useParams();
   const [day, setDay] = useState<IDay | null>(null);
   const [players, setPlayers] = useState<IPlayer[]>([]);
+  const [initialScores, setInitialScores] = useState<
+    ITrainingScore[] | null
+  >(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const dayIdNumber = Number(dayId);
@@ -46,8 +50,14 @@ export default function TrainingScoreEntry() {
           return;
         }
 
+        const existingScores = await trainingScoreApi.getAll(
+          seasonIdNumber,
+          dayIdNumber,
+        );
+
         setDay(dayData);
         setPlayers(playersData);
+        setInitialScores(existingScores);
       } catch (error) {
         setError("Erreur lors de la récupération des données");
         console.error(error);
@@ -57,6 +67,19 @@ export default function TrainingScoreEntry() {
     }
     loadData();
   }, [seasonIdNumber, dayIdNumber]);
+
+  // Load previously entered scores when the page is refreshed
+  useEffect(() => {
+    if (players.length === 0) return;
+    if (initialScores === null) return;
+
+    initialScores.forEach((score) => {
+      saveScore(score.playerId, {
+        pointsPour: score.pointsPour,
+        pointsContre: score.pointsContre,
+      });
+    });
+  }, [players, initialScores]);
 
   const handleSave = async (score: IScore) => {
     if (!currentPlayer) return;

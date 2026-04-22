@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
-import type { ITrainingScore } from "../types";
 import { api } from "./client";
+import type { ITrainingScore } from "../types/trainingScore";
 
 export const trainingScoreApi = {
   async getAll(
