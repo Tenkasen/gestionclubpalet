@@ -175,9 +175,9 @@ export default function RankingTables({ type }: IProps) {
               <td
                 className={[
                   "px-3 py-3 text-center font-bold border-r border-gray-300",
-                  index === 0 && "bg-yellow-200 text-yellow-900",
-                  index === 1 && "bg-slate-200 text-slate-700",
-                  index === 2 && "bg-orange-200 text-orange-900",
+                  index === 0 && "bg-[#ffd700] text-yellow-900",
+                  index === 1 && "bg-[#b7e1cd] text-slate-700",
+                  index === 2 && "bg-[#614e1a] text-orange-900",
                 ]
                   .filter(Boolean)
                   .join(" ")}
@@ -202,16 +202,15 @@ export default function RankingTables({ type }: IProps) {
               <td className="px-3 py-3 text-center border-r border-gray-300">
                 {entry.goalAverage}
               </td>
-
-              {type === "championship" && (
-                <td className="px-3 py-3 text-center border-r border-gray-300">
-                  {entry.partiesGagnees}
-                </td>
-              )}
-
               <td className="px-3 py-3 text-center font-bold text-gray-900">
                 {entry.points}
               </td>
+
+              {type === "championship" && (
+                <td className="px-3 py-3 text-center border-r border-gray-300">
+                  {entry.nbVictoires}
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
