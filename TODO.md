@@ -8,40 +8,20 @@
 
 - méthode 'delete' pour **training_scores_controller** à créer au besoin ?
 
+- table **day_registration** sur le meme modèle que season_registration pour gérer les joueurs présent lors d'une journée et ne pas parcourir tout le club pour la saisie des scores
+
+- createmany pour ajouter plusieurs joueurs d'un coup et aussi pour ajouter plusieurs joueurs dans une saison
+
   <br>
 
 ## Côté FRONT
+
+- sauvegarde des scores meme si refresh de la page
+-
 
 <br>
 
 ### Prochaine étape
 
-TrainingScoreEntry — Création complète
-
-1. Les imports nécessaires
-
-Hook de navigation, APIs (day, seasonRegistration, trainingScore), composant
-
-2. Les states
-   ts// Lesquels ? day, players, loading, error
-   // Quels types ?
-3. Les IDs depuis l'URL
-   ts// useParams → convertir en number
-4. Brancher le hook
-   ts// Juste après les states
-   // Déstructurer : currentPlayer, currentIndex, nextPlayer, prevPlayer, saveScore, scores, isLast, isFirst
-5. Le useEffect
-   ts// Promise.all avec les deux appels
-   // Guard si null
-   // finally → setLoading
-   // Dépendances ?
-6. Le handleSave
-   ts// Guard currentPlayer
-   // Appel API
-   // Guard si null → setError
-   // saveScore + nextPlayer ou handleValidateDay si isLast
-7. Le JSX
-   tsx// if loading → spinner
-   // if error → message
-   // Barre de progression avec currentIndex et players.length
-   // <TrainingScoreInput> avec toutes ses props
+- table DayPresence pour sélectionner les joueurs présent à cette journée ==> plus tard
+- hook useRankings

@@ -208,7 +208,7 @@ export default function RankingTables({ type }: IProps) {
 
               {type === "championship" && (
                 <td className="px-3 py-3 text-center border-r border-gray-300">
-                  {entry.nbVictoires}
+                  {entry.nbVictoires} // todo : pour championnat
                 </td>
               )}
             </tr>
