@@ -24,4 +24,4 @@
 ### Prochaine étape
 
 - table DayPresence pour sélectionner les joueurs présent à cette journée ==> plus tard
-- hook useRankings
+- page dayRanking et seasonRanking
