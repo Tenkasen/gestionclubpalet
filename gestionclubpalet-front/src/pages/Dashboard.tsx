@@ -3,6 +3,7 @@ import { useSeasons } from "../hooks/useSeasons";
 import { Medal, Target, Trophy } from "lucide-react";
 import DashboardCard from "../components/dashboard/DashboardCard";
 import { RotatingLines } from "react-loader-spinner";
+import PageError from "../components/feedback/PageError";
 
 export default function Dashboard() {
   const { seasons, loading, error } = useSeasons();
@@ -22,7 +23,7 @@ export default function Dashboard() {
         />
       </div>
     );
-  if (error) return <div>{error}</div>;
+  if (error) return <PageError errorMessage={error} />;
 
   return (
     <div className="container">

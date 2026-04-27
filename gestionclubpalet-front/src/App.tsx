@@ -3,7 +3,7 @@ import "./index.css";
 import Dashboard from "./pages/Dashboard";
 import TestApi from "./pages/TestApi";
 import TrainingScoreEntry from "./pages/TrainingScoreEntry";
-import RankingTables from "./components/rankings/RankingTables";
+import DayRanking from "./pages/DayRanking";
 
 export default function App() {
   return (
@@ -15,7 +15,10 @@ export default function App() {
           path="/seasons/:seasonId/days/:dayId/training"
           element={<TrainingScoreEntry />}
         />
-        <Route path="/ranking" element={<RankingTables />} />
+        <Route
+          path="/rankings/:seasonId/days/:dayId"
+          element={<DayRanking />}
+        />
       </Routes>
     </div>
   );

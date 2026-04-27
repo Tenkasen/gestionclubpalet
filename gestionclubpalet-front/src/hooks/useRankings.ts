@@ -25,7 +25,7 @@ export default function useRankings(
       setRanking(response);
       setError(null);
     } catch (error) {
-      setError("Erreur lors du chargement des saisons");
+      setError("Erreur lors du chargement du classement");
       console.error(error);
     } finally {
       setLoading(false);

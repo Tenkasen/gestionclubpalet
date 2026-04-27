@@ -3,9 +3,13 @@ import type { IRanking } from "../../types/ranking";
 interface IProps {
   data: IRanking[];
   type: "training" | "championship";
-  dayName?: string;
+  dayNumber?: number;
 }
-export default function RankingTables({ data, type }: IProps) {
+export default function RankingTables({
+  data,
+  type,
+  dayNumber,
+}: IProps) {
   return (
     <div className="overflow-x-auto rounded-xl border border-gray-700 shadow-md mx-auto w-fit">
       <table className="border-collapse text-sm">
@@ -16,7 +20,7 @@ export default function RankingTables({ data, type }: IProps) {
               className="bg-gray-900 text-gray-100 text-center text-base font-semibold
                      tracking-widest uppercase px-4 py-3.5 border-b-2 border-gray-700"
             >
-              Classement J2
+              Classement J{dayNumber}
             </td>
           </tr>
           <tr className="bg-gray-700 text-gray-200 text-xs uppercase tracking-wider">

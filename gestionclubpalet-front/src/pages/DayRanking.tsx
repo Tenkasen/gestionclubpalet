@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import useRankings from "../hooks/useRankings";
 import { RotatingLines } from "react-loader-spinner";
 import RankingTables from "../components/rankings/RankingTables";
+import PageError from "../components/feedback/PageError";
 
 export default function DayRanking() {
   const { seasonId, dayId } = useParams();
@@ -28,14 +29,19 @@ export default function DayRanking() {
         />
       </div>
     );
-  if (error) return <div>{error}</div>;
+
+  if (error) return <PageError errorMessage={error} />;
   return (
     <div className="container mx-auto py-10 max-w-md">
-      <h1 className="text-3xl font-bold pb-2">
-        Classement J{dayIdNumber} -{" "}
+      <h1 className="text-3xl font-bold pb-8 text-center">
+        Classement J{dayIdNumber}
       </h1>
 
-      <RankingTables data={ranking} type="training" />
+      <RankingTables
+        data={ranking}
+        type="training"
+        dayNumber={dayIdNumber}
+      />
     </div>
   );
 }
