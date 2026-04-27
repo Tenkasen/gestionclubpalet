@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import useRankings from "../hooks/useRankings";
-import { RotatingLines } from "react-loader-spinner";
 import RankingTables from "../components/rankings/RankingTables";
 import PageError from "../components/feedback/PageError";
+import PageLoading from "../components/feedback/PageLoading";
 
 export default function DayRanking() {
   const { seasonId, dayId } = useParams();
@@ -14,23 +14,9 @@ export default function DayRanking() {
     seasonIdNumber,
     dayIdNumber,
   );
-  if (loading)
-    return (
-      <div className="container flex flex-col justify-center items-center min-h-screen">
-        <div className="text-2xl pb-6 ">"Chargement en cours"</div>
-        <RotatingLines
-          visible={true}
-          height="96"
-          width="96"
-          color="grey"
-          strokeWidth="5"
-          animationDuration="1.25"
-          ariaLabel="rotating-lines-loading"
-        />
-      </div>
-    );
+  if (loading) return <PageLoading />;
 
-  if (error) return <PageError errorMessage={error} />;
+  if (error) return <PageError error={error} />;
   return (
     <div className="container mx-auto py-10 max-w-md">
       <h1 className="text-3xl font-bold pb-8 text-center">

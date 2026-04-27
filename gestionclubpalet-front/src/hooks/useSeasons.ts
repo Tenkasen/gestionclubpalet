@@ -9,7 +9,6 @@ export function useSeasons(type?: string) {
 
   const fetchSeasons = async () => {
     try {
-      throw error;
       setLoading(true);
       const response = await seasonsAPI.getAll(type);
       setSeasons(response);

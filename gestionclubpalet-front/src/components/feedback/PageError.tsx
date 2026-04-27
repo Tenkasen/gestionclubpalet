@@ -1,8 +1,8 @@
 interface IProps {
-  errorMessage: string;
+  error: string;
 }
 
-export default function PageError({ errorMessage }: IProps) {
+export default function PageError({ error }: IProps) {
   return (
     <div className="container flex flex-col pt-20 items-center min-h-screen">
       <div className="flex flex-col items-center gap-4 p-8 bg-white dark:bg-zinc-900 border border-red-200 dark:border-red-900 rounded-2xl max-w-md w-full">
@@ -27,9 +27,7 @@ export default function PageError({ errorMessage }: IProps) {
           <p className="font-medium text-lg text-zinc-900 dark:text-zinc-100 mb-1">
             Une erreur est survenue
           </p>
-          <p className="text-red-500 dark:text-red-400">
-            {errorMessage}
-          </p>
+          <p className="text-red-500 dark:text-red-400">{error}</p>
         </div>
       </div>
     </div>
