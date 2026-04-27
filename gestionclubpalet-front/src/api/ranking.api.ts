@@ -7,7 +7,7 @@ export const rankingApi = {
   async getDayRanking(
     seasonId: number,
     dayId: number,
-  ): Promise<IRanking[] | null> {
+  ): Promise<IRanking[]> {
     try {
       const { data } = await api.get<IRanking[]>(
         `/rankings/${seasonId}/days/${dayId}`,
@@ -15,8 +15,7 @@ export const rankingApi = {
       return data;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response?.status === 404) {
-        console.warn(`La saison ou la journée n'existe pas`);
-        return null;
+        throw new Error(`La saison ou la journée n'existe pas`);
       }
       console.error(
         "Erreur lors de la récupération des inscriptions à cette saison (rankingApi.getDayRanking)",
@@ -27,9 +26,7 @@ export const rankingApi = {
   },
 
   // season actual (or final) ranking
-  async getSeasonRanking(
-    seasonId: number,
-  ): Promise<IRanking[] | null> {
+  async getSeasonRanking(seasonId: number): Promise<IRanking[]> {
     try {
       const { data } = await api.get<IRanking[]>(
         `/rankings/seasons/${seasonId}`,
@@ -37,10 +34,9 @@ export const rankingApi = {
       return data;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response?.status === 404) {
-        console.warn(
+        throw new Error(
           `La saison avec l'ID '${seasonId}' n'existe pas`,
         );
-        return null;
       }
       console.error(
         "Erreur lors de la récupération des inscriptions à cette saison (rankingApi.getSeasonRanking)",

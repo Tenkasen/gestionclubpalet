@@ -15,8 +15,8 @@ export default function DayRanking() {
     dayIdNumber,
   );
   if (loading) return <PageLoading />;
-
   if (error) return <PageError error={error} />;
+
   return (
     <div className="container mx-auto py-10 max-w-md">
       <h1 className="text-3xl font-bold pb-8 text-center">

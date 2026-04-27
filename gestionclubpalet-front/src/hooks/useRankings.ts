@@ -6,19 +6,21 @@ export default function useRankings(
   seasonId: number,
   dayId?: number,
 ) {
-  const [ranking, setRanking] = useState<IRanking[] | null>([]);
+  const [ranking, setRanking] = useState<IRanking[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const fetchRanking = async () => {
     try {
       setLoading(true);
-      if (dayId) {
+      if (dayId !== undefined) {
         const response = await rankingApi.getDayRanking(
           seasonId,
           dayId,
         );
         setRanking(response);
+        setError(null);
+        return;
       }
 
       const response = await rankingApi.getSeasonRanking(seasonId);
