@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import TestApi from "./pages/TestApi";
 import TrainingScoreEntry from "./pages/TrainingScoreEntry";
 import DayRanking from "./pages/DayRanking";
+import Error404 from "./pages/Error404";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
           path="/rankings/:seasonId/days/:dayId"
           element={<DayRanking />}
         />
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </div>
   );
