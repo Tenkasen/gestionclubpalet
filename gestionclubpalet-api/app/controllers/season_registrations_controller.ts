@@ -2,6 +2,8 @@ import type { HttpContext } from '@adonisjs/core/http'
 import SeasonRegistration from '#models/season_registration'
 import Season from '#models/season'
 import Player from '#models/player'
+import vine from '@vinejs/vine'
+import { addPlayerInSeasonValidator } from '#validators/season_registration'
 
 export default class SeasonRegistrationsController {
   async index({ params }: HttpContext) {
@@ -30,35 +32,43 @@ export default class SeasonRegistrationsController {
 
   // Register a player in a specific season
   async store({ params, request, response }: HttpContext) {
-    const { playerId } = request.only(['playerId'])
+    const playerIds = await vine.validate({
+      schema: addPlayerInSeasonValidator,
+      data: request.body(),
+    })
 
-    const existingPlayer = await Player.find(playerId)
+    const existingPlayers = await Player.query().whereIn('id', playerIds)
 
-    if (!existingPlayer) {
-      return response.notFound({
-        message: 'Aucun joueur ne correspond à cet ID',
+    const notFoundIds = playerIds.filter(
+      (id) => !existingPlayers.some((player) => player.id === id)
+    )
+    if (existingPlayers.length !== playerIds.length) {
+      return response.conflict({
+        message: "Un des joueurs n'existe pas",
+        notExistingPlayers: notFoundIds,
       })
     }
 
     // check existing player in this season
-    const existingRegistration = await SeasonRegistration.query()
+    const existingRegistrations = await SeasonRegistration.query()
       .where('season_id', params.seasonId)
-      .where('player_id', playerId)
-      .first()
+      .whereIn('player_id', playerIds)
 
-    if (existingRegistration) {
+    if (existingRegistrations.length > 0) {
       return response.conflict({
-        message: 'Ce joueur est déjà inscrit pour cette saison',
+        message: 'Un des joueurs est déjà inscrit pour cette saison',
+        playersRegister: existingRegistrations,
       })
     }
 
-    const registration = await SeasonRegistration.create({
-      seasonId: params.seasonId,
-      playerId: playerId,
-    })
+    const registrations = await SeasonRegistration.createMany(
+      playerIds.map((id) => ({ seasonId: params.seasonId, playerId: id }))
+    )
 
-    await registration.load('player')
-    return response.created(registration)
+    for (const regi of registrations) {
+      await regi.load('player')
+    }
+    return response.created(registrations)
   }
 
   async show({ params }: HttpContext) {
