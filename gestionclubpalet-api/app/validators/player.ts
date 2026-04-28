@@ -1,6 +1,6 @@
 import vine from '@vinejs/vine'
 
-export const createPlayerValidator = vine.compile(
+export const createPlayerValidator = vine.array(
   vine.object({
     nom: vine.string().trim().minLength(3).maxLength(100),
     prenom: vine.string().trim().minLength(3).maxLength(100),
