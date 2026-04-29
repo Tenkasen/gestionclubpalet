@@ -48,7 +48,6 @@ export default function SeasonRanking() {
         <h1 className="text-3xl font-bold pb-8 text-center">
           {season.type} - {season.nom}
         </h1>
-
         <RankingTables data={ranking} type={season.type} />
       </div>
     </>
