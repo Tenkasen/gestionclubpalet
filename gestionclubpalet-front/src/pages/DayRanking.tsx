@@ -52,7 +52,7 @@ export default function DayRanking() {
       <div className="flex justify-center py-10">
         <div className="relative">
           {/* Bouton discret en haut à droite du bloc */}
-          <div className="absolute  -right-100 z-10">
+          <div className="absolute -right-100 z-10">
             <RankingExport
               elementId="ranking-export"
               filename={`classement-${season.type}-j${dayIdNumber}`}

@@ -7,6 +7,7 @@ import { seasonsAPI } from "../api/season.api";
 import { useEffect, useState } from "react";
 import Header from "../components/layout/Header";
 import type { ISeason } from "../types/season";
+import RankingExport from "../components/rankings/RankingExport";
 
 export default function SeasonRanking() {
   const { seasonId, dayId } = useParams();
@@ -44,11 +45,23 @@ export default function SeasonRanking() {
   return (
     <>
       <Header />
-      <div className="container mx-auto py-10 max-w-md">
-        <h1 className="text-3xl font-bold pb-8 text-center">
-          {season.type} - {season.nom}
-        </h1>
-        <RankingTables data={ranking} type={season.type} />
+      <div className="flex justify-center py-10">
+        <div className="relative">
+          {/* Bouton discret en haut à droite du bloc */}
+          <div className="absolute -right-100 z-10">
+            <RankingExport
+              elementId="ranking-export"
+              filename={`classement-final-${season.type}-${season.nom}`}
+            />
+          </div>
+
+          <div id="ranking-export" className=" p-1 w-fit">
+            <h1 className="text-3xl font-bold pb-8 text-center">
+              {season.type} - {season.nom}
+            </h1>
+            <RankingTables data={ranking} type={season.type} />
+          </div>
+        </div>
       </div>
     </>
   );
