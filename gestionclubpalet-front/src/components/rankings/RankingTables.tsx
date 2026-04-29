@@ -2,7 +2,7 @@ import type { IRanking } from "../../types/ranking";
 
 interface IProps {
   data: IRanking[];
-  type: "training" | "championship";
+  type: "ENTRAINEMENT" | "CHAMPIONNAT" | "COUPE";
   dayNumber?: number;
 }
 export default function RankingTables({
@@ -16,7 +16,7 @@ export default function RankingTables({
         <thead>
           <tr>
             <td
-              colSpan={type === "championship" ? 6 : 5}
+              colSpan={type === "CHAMPIONNAT" ? 6 : 5}
               className="bg-gray-900 text-gray-100 text-center text-base font-semibold
                      tracking-widest uppercase px-4 py-3.5 border-b-2 border-gray-700"
             >
@@ -36,7 +36,7 @@ export default function RankingTables({
             <th className="px-3 py-3 text-center border-r border-gray-600 w-28 whitespace-nowrap">
               Goal Average
             </th>
-            {type === "championship" && (
+            {type === "CHAMPIONNAT" && (
               <th className="px-3 py-3 text-center border-r border-gray-600 w-32 whitespace-nowrap">
                 Parties gagnées
               </th>
@@ -87,11 +87,11 @@ export default function RankingTables({
                 {entry.points}
               </td>
 
-              {type === "championship" && (
+              {/* {type === "CHAMPIONNAT" && (
                 <td className="px-3 py-3 text-center border-r border-gray-300">
                   {entry.nbVictoires} // todo : pour championnat
                 </td>
-              )}
+              )} */}
             </tr>
           ))}
         </tbody>
