@@ -20,7 +20,9 @@ export default function RankingTables({
               className="bg-gray-900 text-gray-100 text-center text-base font-semibold
                      tracking-widest uppercase px-4 py-3.5 border-b-2 border-gray-700"
             >
-              Classement J{dayNumber}
+              {dayNumber
+                ? `Classement J${dayNumber}`
+                : "Classement final"}
             </td>
           </tr>
           <tr className="bg-gray-700 text-gray-200 text-xs uppercase tracking-wider">
