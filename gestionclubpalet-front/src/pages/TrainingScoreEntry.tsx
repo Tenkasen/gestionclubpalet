@@ -144,6 +144,8 @@ export default function TrainingScoreEntry() {
             currentScore={scores[currentPlayer.id]}
             isFirst={isFirst}
             isLast={isLast}
+            seasonId={seasonId}
+            dayId={dayId}
           />
         )}
       </div>

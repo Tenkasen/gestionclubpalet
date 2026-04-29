@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import type { IPlayer } from "../../types/player";
 import { Save } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   player: IPlayer;
@@ -12,6 +13,8 @@ interface IProps {
   currentScore?: { pointsPour: number; pointsContre: number };
   isFirst: boolean;
   isLast: boolean;
+  seasonId: string;
+  dayId: string;
 }
 
 export default function TrainingScoreInput({
@@ -21,6 +24,8 @@ export default function TrainingScoreInput({
   currentScore,
   isFirst,
   isLast,
+  seasonId,
+  dayId,
 }: IProps) {
   const [pointsPour, SetPointsPour] = useState(
     currentScore?.pointsPour || 0,
@@ -29,10 +34,14 @@ export default function TrainingScoreInput({
     currentScore?.pointsContre || 0,
   );
   const goalAverage = pointsPour - pointsContre;
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
     onSave({ pointsPour, pointsContre });
+    if (isLast) {
+      navigate(`/rankings/${seasonId}/days/${dayId}`);
+    }
   };
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -123,7 +132,7 @@ export default function TrainingScoreInput({
         {isLast && (
           <div className="flex items-center justify-center">
             <button
-              type="button"
+              type="submit"
               className="flex gap-4 bg-teal-600 text-white px-3 py-2 rounded-lg hover:bg-teal-700 cursor-pointer text-sm font-medium"
             >
               <Save />

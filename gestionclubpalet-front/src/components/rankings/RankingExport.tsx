@@ -15,6 +15,7 @@ export default function RankingExport({
 
   const handleExport = () => {
     try {
+      setLoading(true);
       const node = document.getElementById(elementId);
       if (!node) {
         return;
@@ -31,6 +32,8 @@ export default function RankingExport({
       });
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,7 +67,7 @@ export default function RankingExport({
         ) : (
           <Download className="w-4 h-4" />
         )}
-        Exporter PNG
+        Télécharger le classement
       </button>
     </div>
   );
