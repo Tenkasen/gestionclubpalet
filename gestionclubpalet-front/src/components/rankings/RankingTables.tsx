@@ -11,7 +11,7 @@ export default function RankingTables({
   dayNumber,
 }: IProps) {
   return (
-    <div className="w-fit mx-auto">
+    <div className="w-fit ">
       <div className="overflow-x-auto rounded-xl border border-gray-700 shadow-md">
         <table className=" text-sm">
           <thead>
