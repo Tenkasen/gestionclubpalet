@@ -23,16 +23,14 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <DashboardCard
             link="/seasons?type=ENTRAINEMENT"
-            icon={Target}
-            iconColor="text-blue-600"
+            icon={<Target className="text-blue-600" size={48} />}
             title="Entraînement"
             description="Gérer les scores d'entraînement et suivre la progression"
           />
 
           <DashboardCard
             link="/seasons?type=CHAMPIONNAT"
-            icon={Medal}
-            iconColor="text-yellow-600"
+            icon={<Medal className="text-yellow-600" size={48} />}
             title="Championnat"
             description="Saisir les scores de championnat et consulter les
               classements"
@@ -40,10 +38,28 @@ export default function Dashboard() {
 
           <DashboardCard
             link="/seasons?type=COUPE"
-            icon={Trophy}
-            iconColor="text-slate-600"
+            icon={<Trophy className="text-slate-600" size={48} />}
             title="Coupe"
             description="Gérer les matchs de coupe en doublette"
+          />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <DashboardCard
+            link="/rankings"
+            icon={
+              <i className="fa-duotone fa-solid fa-ranking-star fa-flip-horizontal text-4xl text-red-800" />
+            }
+            title="Classement"
+            description="Voir les classements finaux ou pas journées des différentes saisons"
+          />
+
+          <DashboardCard
+            link="/players"
+            icon={
+              <i className="fa-duotone fa-solid fa-users text-4xl text-emerald-600"></i>
+            }
+            title="Liste des joueurs"
+            description="Consulter la liste des tous les joueurs inscrit depuis la création du club ou alors classés par saison"
           />
         </div>
 
