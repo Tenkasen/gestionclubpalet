@@ -30,6 +30,13 @@ export default function Players() {
     fetchPlayers();
   }, []);
 
+  const handleDeletePlayer = async (playerId: number) => {
+    await playerAPI.delete(playerId);
+    setPlayers((prev) =>
+      prev.filter((player) => player.id !== playerId),
+    );
+  };
+
   if (loading) return <PageLoading />;
   if (error) return <PageError error={error} />;
 
@@ -122,6 +129,7 @@ export default function Players() {
                     <button
                       type="button"
                       className="text-emerald-500 hover:text-emerald-800 hover:cursor-pointer transition-colors"
+                      onClick={() => handleDeletePlayer(player.id)}
                     >
                       <i className="fa-solid fa-ellipsis" />
                     </button>
