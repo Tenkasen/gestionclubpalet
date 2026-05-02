@@ -7,3 +7,10 @@ export interface IPlayer {
   createdAt: string;
   updatedAt: string;
 }
+export interface ICreatePlayer {
+  nom: string;
+  prenom: string;
+  email?: string;
+  tel?: string;
+  isGuest: boolean;
+}

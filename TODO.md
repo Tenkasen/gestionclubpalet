@@ -10,18 +10,21 @@
 
 - table **day_registration** sur le meme modèle que season_registration pour gérer les joueurs présent lors d'une journée et ne pas parcourir tout le club pour la saisie des scores
 
-- createmany pour ajouter plusieurs joueurs d'un coup et aussi pour ajouter plusieurs joueurs dans une saison
+-ajouter un champ **Division** à la table season
 
   <br>
 
 ## Côté FRONT
 
-- sauvegarde des scores meme si refresh de la page
--
+-Gérer le Header en mobile
+-Organisation des routes de navigations
+
+- Récupérer le type de la saison pour la saisie des scores
 
 <br>
 
 ### Prochaine étape
 
 - table DayPresence pour sélectionner les joueurs présent à cette journée ==> plus tard
-- page dayRanking et seasonRanking
+- Modèle match championnat : création et saisie des 6 parties
+- page des joueurs : Ajouter un joueur via le bouton + trie des joueurs par saison + modal pour afficher les infos supplémentaire des joueurs/ supprimer ou modifier le joueur

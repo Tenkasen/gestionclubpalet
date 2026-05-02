@@ -24,7 +24,7 @@ export default class PlayersController {
     if (existingPlayers.length > 0) {
       return response.conflict({
         message: 'Un joueur avec ce nom et prénom existe déjà',
-        player: existingPlayers,
+        players: existingPlayers,
       })
     }
 

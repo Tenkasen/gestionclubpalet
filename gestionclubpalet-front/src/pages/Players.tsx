@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { IPlayer } from "../types/player.ts";
+import type { ICreatePlayer, IPlayer } from "../types/player.ts";
 import { playerAPI } from "../api/player.api.ts";
 import PageLoading from "../components/feedback/PageLoading.tsx";
 import PageError from "../components/feedback/PageError.tsx";
@@ -37,12 +37,23 @@ export default function Players() {
       prev.filter((player) => player.id !== playerId),
     );
   };
-  const handleAddPlayer = async (e: React.SubmitEvent) => {
+  const handleAddPlayer = async (e: React.BaseSyntheticEvent) => {
     e.preventDefault();
-    const newPlayer = await playerAPI.create(data);
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const data = Object.fromEntries(
+      formData,
+    ) as unknown as ICreatePlayer;
+
+    const newPlayers = await playerAPI.create([data]);
+    if (!newPlayers) return;
     setPlayers((prev) =>
-      prev.filter((player) => player.id !== playerId),
+      [...prev, ...newPlayers].sort((a, b) => {
+        const nomCompare = a.nom.localeCompare(b.nom);
+        if (nomCompare !== 0) return nomCompare;
+        return a.prenom.localeCompare(b.prenom);
+      }),
     );
+    setOpen(false);
   };
 
   if (loading) return <PageLoading />;
@@ -111,7 +122,7 @@ export default function Players() {
                       X
                     </button>
                   </div>
-                  <form>
+                  <form onSubmit={handleAddPlayer}>
                     <div className="grid grid-cols-2 gap-8 mb-8">
                       <div>
                         <label className="block text-stone-700 mb-1">
@@ -119,8 +130,10 @@ export default function Players() {
                         </label>
                         <input
                           type="text"
+                          name="nom"
                           placeholder="Votre Nom"
                           className="border border-stone-400 rounded px-3 py-2 w-full"
+                          required
                         />
                       </div>
                       <div>
@@ -129,8 +142,10 @@ export default function Players() {
                         </label>
                         <input
                           type="text"
+                          name="prenom"
                           placeholder="Votre Prénom"
                           className="border border-stone-400 rounded px-3 py-2 w-full"
+                          required
                         />
                       </div>
                     </div>
