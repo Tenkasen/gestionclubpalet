@@ -31,7 +31,16 @@ export default function App() {
           />
           <Route path="*" element={<Error404 />} />
         </Routes>
-        <Toaster position="top-right" />
+        <Toaster
+          position="top-right"
+          offset="70px"
+          toastOptions={{
+            classNames: {
+              success: "!bg-green-500 !text-white !text-lg",
+              error: "!bg-red-600 !text-white !text-sm !max-w-75",
+            },
+          }}
+        />
       </div>
     </>
   );
