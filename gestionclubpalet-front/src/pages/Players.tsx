@@ -5,6 +5,7 @@ import PageLoading from "../components/feedback/PageLoading.tsx";
 import PageError from "../components/feedback/PageError.tsx";
 import Header from "../components/layout/Header.tsx";
 import AddPlayerModal from "../components/modals/addPlayerModal.tsx";
+import { toast } from "sonner";
 
 export default function Players() {
   const [players, setPlayers] = useState<IPlayer[]>([]);
@@ -37,6 +38,7 @@ export default function Players() {
     setPlayers((prev) =>
       prev.filter((player) => player.id !== playerId),
     );
+    toast.success("Joueur supprimé avec succès !");
   };
 
   const handleAddPlayer = async (
@@ -57,7 +59,10 @@ export default function Players() {
         }),
       );
       setOpen(false);
-    } catch (error) {}
+      toast.success("Joueur ajouté avec succès !");
+    } catch (error) {
+      toast.error(`${error}`);
+    }
   };
 
   if (loading) return <PageLoading />;

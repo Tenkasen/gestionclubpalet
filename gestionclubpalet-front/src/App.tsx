@@ -7,6 +7,7 @@ import DayRanking from "./pages/DayRanking";
 import Error404 from "./pages/Error404";
 import SeasonRanking from "./pages/SeasonRanking";
 import Players from "./pages/Players.tsx";
+import { Toaster } from "sonner";
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
           />
           <Route path="*" element={<Error404 />} />
         </Routes>
+        <Toaster position="top-right" />
       </div>
     </>
   );
