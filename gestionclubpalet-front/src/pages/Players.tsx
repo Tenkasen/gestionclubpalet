@@ -42,20 +42,22 @@ export default function Players() {
   const handleAddPlayer = async (
     e: React.SubmitEvent<HTMLFormElement>,
   ) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData) as unknown as IPlayer;
+    try {
+      e.preventDefault();
+      const formData = new FormData(e.currentTarget);
+      const data = Object.fromEntries(formData) as unknown as IPlayer;
 
-    const newPlayer = await playerAPI.create(data);
-    if (!newPlayer) return;
-    setPlayers((prev) =>
-      [...prev, newPlayer].sort((a, b) => {
-        const nomCompare = a.nom.localeCompare(b.nom);
-        if (nomCompare !== 0) return nomCompare;
-        return a.prenom.localeCompare(b.prenom);
-      }),
-    );
-    setOpen(false);
+      const newPlayer = await playerAPI.create(data);
+      if (!newPlayer) return;
+      setPlayers((prev) =>
+        [...prev, newPlayer].sort((a, b) => {
+          const nomCompare = a.nom.localeCompare(b.nom);
+          if (nomCompare !== 0) return nomCompare;
+          return a.prenom.localeCompare(b.prenom);
+        }),
+      );
+      setOpen(false);
+    } catch (error) {}
   };
 
   if (loading) return <PageLoading />;
