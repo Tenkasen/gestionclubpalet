@@ -1,7 +1,6 @@
 import Player from '#models/player'
 import { createPlayerValidator, updatePlayerValidator } from '#validators/player'
 import type { HttpContext } from '@adonisjs/core/http'
-import vine from '@vinejs/vine'
 
 export default class PlayersController {
   async index({}: HttpContext) {
@@ -9,17 +8,10 @@ export default class PlayersController {
   }
 
   async store({ request, response }: HttpContext) {
-    const data = await vine.validate({
-      schema: createPlayerValidator,
-      data: request.body(),
-    })
+    const data = await request.validateUsing(createPlayerValidator)
 
     // check existing player in the club
-    const existingPlayers = await Player.query().where((query) => {
-      for (const player of data) {
-        query.orWhere((q) => q.where('nom', player.nom).where('prenom', player.prenom))
-      }
-    })
+    const existingPlayers = await Player.query().where('nom', data.nom).where('prenom', data.prenom)
 
     if (existingPlayers.length > 0) {
       return response.conflict({
@@ -28,9 +20,12 @@ export default class PlayersController {
       })
     }
 
-    const players = await Player.createMany(data)
+    const players = await Player.create({
+      ...data,
+      dateInscription: data.dateInscription ?? new Date(),
+    })
     return {
-      message: 'Joueur(s) ajouté(s) avec succès',
+      message: 'Joueur ajouté avec succès',
       players,
     }
   }

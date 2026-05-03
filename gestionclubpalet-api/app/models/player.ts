@@ -14,6 +14,18 @@ export default class Player extends BaseModel {
   declare prenom: string
 
   @column()
+  declare email: string | null
+
+  @column()
+  declare telephone: string | null
+
+  @column()
+  declare anniversaire: Date | null
+
+  @column()
+  declare dateInscription: Date
+
+  @column()
   isGuest: boolean = false
 
   @column()

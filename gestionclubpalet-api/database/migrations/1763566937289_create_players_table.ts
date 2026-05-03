@@ -8,6 +8,10 @@ export default class extends BaseSchema {
       table.increments('id')
       table.string('nom').notNullable()
       table.string('prenom').notNullable()
+      table.string('email')
+      table.string('telephone')
+      table.date('anniversaire')
+      table.date('date_inscription').notNullable()
       table.boolean('is_guest').defaultTo(false)
       table.integer('club_id').nullable()
 
