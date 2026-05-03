@@ -1,5 +1,5 @@
 import { isAxiosError } from "axios";
-import type { ICreatePlayer, IPlayer } from "../types/player";
+import type { IPlayer } from "../types/player";
 import { api } from "./client";
 
 export const playerAPI = {
@@ -23,12 +23,12 @@ export const playerAPI = {
       throw error;
     }
   },
-  async create(data: ICreatePlayer[]): Promise<IPlayer[] | null> {
+  async create(data: IPlayer): Promise<IPlayer | null> {
     try {
-      const { data: createdPlayers } = await api.post<{
-        players: IPlayer[];
+      const { data: createdPlayer } = await api.post<{
+        player: IPlayer;
       }>(`/players`, data);
-      return createdPlayers.players;
+      return createdPlayer.player;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response?.status === 409) {
         console.warn(`Un ou plusieurs joueurs existent déjà`);

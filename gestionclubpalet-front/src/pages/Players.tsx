@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { ICreatePlayer, IPlayer } from "../types/player.ts";
+import type { IPlayer } from "../types/player.ts";
 import { playerAPI } from "../api/player.api.ts";
 import PageLoading from "../components/feedback/PageLoading.tsx";
 import PageError from "../components/feedback/PageError.tsx";
@@ -37,17 +37,17 @@ export default function Players() {
       prev.filter((player) => player.id !== playerId),
     );
   };
-  const handleAddPlayer = async (e: React.BaseSyntheticEvent) => {
+  const handleAddPlayer = async (
+    e: React.SubmitEvent<HTMLFormElement>,
+  ) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget as HTMLFormElement);
-    const data = Object.fromEntries(
-      formData,
-    ) as unknown as ICreatePlayer;
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData) as unknown as IPlayer;
 
-    const newPlayers = await playerAPI.create([data]);
-    if (!newPlayers) return;
+    const newPlayer = await playerAPI.create(data);
+    if (!newPlayer) return;
     setPlayers((prev) =>
-      [...prev, ...newPlayers].sort((a, b) => {
+      [...prev, newPlayer].sort((a, b) => {
         const nomCompare = a.nom.localeCompare(b.nom);
         if (nomCompare !== 0) return nomCompare;
         return a.prenom.localeCompare(b.prenom);
@@ -73,7 +73,7 @@ export default function Players() {
 
         <div className="flex mb-8 justify-between">
           <div className="flex gap-6">
-            <div className="text-emerald-800 relative max-w-70 tracking-wider">
+            {/* <div className="text-emerald-800 relative max-w-70 tracking-wider">
               <form className="flex gap-2 ">
                 <button
                   type="submit"
@@ -93,8 +93,8 @@ export default function Players() {
               id="monselect"
             >
               <option value="valeur1">Licencié par saison</option>
-              <option value="valeur3">Valeur 3</option>
-            </select>
+              <option value="valeur3">Saison 2025-2026</option>
+            </select> */}
           </div>
           <div className="flex-end">
             <button
@@ -117,7 +117,7 @@ export default function Players() {
                     <button
                       type="button"
                       onClick={() => setOpen(false)}
-                      className="cursor-pointer border border-1 border-stone-600 bg-red-600 px-2 text-stone-600 hover:text-stone-500 hover:bg-red-400 transition-colors"
+                      className="cursor-pointer text-sm rounded border border-1 border-stone-700 px-2 py-0.5 text-stone-700 hover:bg-red-500 transition-colors"
                     >
                       X
                     </button>
@@ -238,14 +238,13 @@ export default function Players() {
                     {player.prenom}
                   </td>
                   <td className="px-2 py-3.5 text-emerald-900">
-                    {new Date(player.createdAt).toLocaleDateString(
-                      "fr-FR",
-                      {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      },
-                    )}
+                    {new Date(
+                      player.dateInscription,
+                    ).toLocaleDateString("fr-FR", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
                   </td>
                   <td className="px-2 py-3.5 text-center">
                     <button
