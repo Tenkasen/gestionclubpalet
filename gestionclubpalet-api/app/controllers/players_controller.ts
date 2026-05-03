@@ -11,22 +11,22 @@ export default class PlayersController {
     const data = await request.validateUsing(createPlayerValidator)
 
     // check existing player in the club
-    const existingPlayers = await Player.query().where('nom', data.nom).where('prenom', data.prenom)
+    const existingPlayer = await Player.query().where('nom', data.nom).where('prenom', data.prenom)
 
-    if (existingPlayers.length > 0) {
+    if (existingPlayer.length > 0) {
       return response.conflict({
         message: 'Un joueur avec ce nom et prénom existe déjà',
-        players: existingPlayers,
+        player: existingPlayer,
       })
     }
 
-    const players = await Player.create({
+    const player = await Player.create({
       ...data,
       dateInscription: data.dateInscription ?? new Date(),
     })
     return {
       message: 'Joueur ajouté avec succès',
-      players,
+      player,
     }
   }
 

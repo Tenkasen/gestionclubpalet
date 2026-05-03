@@ -31,8 +31,7 @@ export const playerAPI = {
       return createdPlayer.player;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response?.status === 409) {
-        console.warn(`Un ou plusieurs joueurs existent déjà`);
-        return error.response.data.player;
+        throw new Error("Ce joueur existe déjà");
       }
       console.error(
         "Erreur lors de la récupération du joueur (playerAPI.create):",
@@ -49,8 +48,7 @@ export const playerAPI = {
       return updatedPlayer.player;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response?.status === 404) {
-        console.warn(`Le joueur avec l'ID ${id} n'existe pas`);
-        return error.response.data.player;
+        throw new Error(`Le joueur avec l'ID ${id} n'existe pas`);
       }
       console.error(
         "Erreur lors de la récupération du joueur (playerAPI.update):",

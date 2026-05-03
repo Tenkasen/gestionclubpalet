@@ -12,6 +12,8 @@
 
 -ajouter un champ **Division** à la table season
 
+- revoir la table player : email, tel, date inscription, anniversaire
+
   <br>
 
 ## Côté FRONT
@@ -27,4 +29,5 @@
 
 - table DayPresence pour sélectionner les joueurs présent à cette journée ==> plus tard
 - Modèle match championnat : création et saisie des 6 parties
-- page des joueurs : Ajouter un joueur via le bouton + trie des joueurs par saison + modal pour afficher les infos supplémentaire des joueurs/ supprimer ou modifier le joueur
+- page des joueurs : trie des joueurs par saison + modal pour afficher les infos supplémentaire des joueurs/ supprimer ou modifier le joueur
+- toast confirmation action (ajout / suppression)
