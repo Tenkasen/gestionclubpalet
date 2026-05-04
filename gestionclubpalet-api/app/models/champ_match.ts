@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, beforeSave, belongsTo, column } from '@adonisjs/lucid/orm'
 import Day from './day.js'
 import Player from './player.js'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
@@ -74,4 +74,34 @@ export default class ChampMatch extends BaseModel {
 
   @belongsTo(() => Player)
   declare player: BelongsTo<typeof Player>
+
+  // Calculate nbVictoire & goalAverage
+  @beforeSave()
+  static async calculateMatchStats(champScore: ChampScore) {
+    champScore.totalPour =
+      champScore.partie1Pour +
+      champScore.partie2Pour +
+      champScore.partie3Pour +
+      champScore.partie4Pour +
+      champScore.partie5Pour +
+      champScore.partie6Pour
+
+    champScore.totalContre =
+      champScore.partie1Contre +
+      champScore.partie2Contre +
+      champScore.partie3Contre +
+      champScore.partie4Contre +
+      champScore.partie5Contre +
+      champScore.partie6Contre
+
+    champScore.goalAverage = champScore.totalPour - champScore.totalContre
+
+    champScore.nbVictoire = 0
+    if (champScore.partie1Pour > champScore.partie1Contre) champScore.nbVictoire++
+    if (champScore.partie2Pour > champScore.partie2Contre) champScore.nbVictoire++
+    if (champScore.partie3Pour > champScore.partie3Contre) champScore.nbVictoire++
+    if (champScore.partie4Pour > champScore.partie4Contre) champScore.nbVictoire++
+    if (champScore.partie5Pour > champScore.partie5Contre) champScore.nbVictoire++
+    if (champScore.partie6Pour > champScore.partie6Contre) champScore.nbVictoire++
+  }
 }
