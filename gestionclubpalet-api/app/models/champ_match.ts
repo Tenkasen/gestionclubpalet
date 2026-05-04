@@ -77,7 +77,7 @@ export default class ChampMatch extends BaseModel {
 
   // Calculate nbVictoire & goalAverage
   @beforeSave()
-  static async calculateMatchStats(champScore: ChampScore) {
+  static async calculateMatchStats(champScore: ChampMatch) {
     champScore.totalPour =
       champScore.partie1Pour +
       champScore.partie2Pour +
