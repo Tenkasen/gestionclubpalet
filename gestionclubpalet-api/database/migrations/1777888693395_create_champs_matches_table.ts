@@ -7,14 +7,14 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table
-        .increments('day_id')
+        .integer('day_id')
         .unsigned()
         .notNullable()
         .references('id')
         .inTable('days')
         .onDelete('CASCADE')
       table
-        .increments('id')
+        .integer('player_id')
         .unsigned()
         .notNullable()
         .references('id')
