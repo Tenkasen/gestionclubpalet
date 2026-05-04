@@ -17,7 +17,7 @@ export default function AddPlayerModal({
             <button
               type="button"
               onClick={handleCLick}
-              className="cursor-pointer rounded border border-1 border-stone-700 hover:bg-red-500 transition-colors px-0.5"
+              className="cursor-pointer rounded hover:bg-red-500 transition-colors px-0.5"
             >
               <i className="fa-solid fa-xmark text-stone-700 text-sm"></i>
             </button>

@@ -27,7 +27,13 @@
 
 ### Prochaine étape
 
-- table DayPresence pour sélectionner les joueurs présent à cette journée ==> plus tard
+_Week-end :_
+
+- table DayPresence pour sélectionner les joueurs présent à cette journée ==> **plus tard**
+- modal pour afficher : les infos supplémentaire des joueurs/ supprimer ou modifier le joueur
+- page des joueurs : trie des joueurs par saison
+- style des toasts
+
+<u>_**Semaine :**_</u>
+
 - Modèle match championnat : création et saisie des 6 parties
-- page des joueurs : trie des joueurs par saison + modal pour afficher les infos supplémentaire des joueurs/ supprimer ou modifier le joueur
-- toast confirmation action (ajout / suppression)

@@ -4,8 +4,8 @@ import { playerAPI } from "../api/player.api.ts";
 import PageLoading from "../components/feedback/PageLoading.tsx";
 import PageError from "../components/feedback/PageError.tsx";
 import Header from "../components/layout/Header.tsx";
-import AddPlayerModal from "../components/modals/addPlayerModal.tsx";
 import { toast } from "sonner";
+import AddPlayerModal from "../components/modals/AddPlayerModal.tsx";
 
 export default function Players() {
   const [players, setPlayers] = useState<IPlayer[]>([]);
