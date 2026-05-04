@@ -10,6 +10,7 @@
 const RankingsController = () => import('#controllers/rankings_controller')
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+const ChampMatchesController = () => import('#controllers/champ_matches_controller')
 const PlayersController = () => import('#controllers/players_controller')
 const SeasonsController = () => import('#controllers/seasons_controller')
 const SeasonRegistrationsController = () => import('#controllers/season_registrations_controller')
@@ -53,6 +54,10 @@ router
     // Training Scores Routes
     router.get('/days/:dayId/training-scores', [TrainingScoresController, 'index'])
     router.post('/days/:dayId/training-scores', [TrainingScoresController, 'store'])
+
+    // Champ matches Routes
+    router.get('/days/:dayId/champ-matches', [ChampMatchesController, 'index'])
+    router.post('/days/:dayId/champ-matches', [ChampMatchesController, 'store'])
   })
   .prefix('/seasons/:seasonId')
   .use(middleware.CheckExistingSeason())
