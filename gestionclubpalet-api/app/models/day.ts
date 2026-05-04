@@ -4,6 +4,7 @@ import { ScoreStatus } from '../enums/score_status.js'
 import Season from './season.js'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import TrainingScore from './training_score.js'
+import ChampMatch from './champ_match.js'
 
 export default class Day extends BaseModel {
   @column({ isPrimary: true })
@@ -36,4 +37,7 @@ export default class Day extends BaseModel {
 
   @hasMany(() => TrainingScore)
   declare trainingScores: HasMany<typeof TrainingScore>
+
+  @hasMany(() => ChampMatch)
+  declare champMatches: HasMany<typeof ChampMatch>
 }
