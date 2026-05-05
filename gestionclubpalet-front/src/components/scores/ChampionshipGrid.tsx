@@ -72,7 +72,7 @@ export default function ChampionshipGrid({
     e.preventDefault();
     onSave({ parties });
     if (isLast) {
-      navigate(`/rankings/${seasonId}/days/${dayId}`);
+      navigate(`/classements/${seasonId}/journées/${dayId}`);
     }
   };
 

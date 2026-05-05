@@ -22,14 +22,14 @@ export default function Dashboard() {
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <DashboardCard
-            link="/seasons?type=ENTRAINEMENT"
+            link="/saisons?type=ENTRAINEMENT"
             icon={<Target className="text-blue-600" size={48} />}
             title="Entraînement"
             description="Gérer les scores d'entraînement et suivre la progression"
           />
 
           <DashboardCard
-            link="/seasons?type=CHAMPIONNAT"
+            link="/saisons?type=CHAMPIONNAT"
             icon={<Medal className="text-yellow-600" size={48} />}
             title="Championnat"
             description="Saisir les scores de championnat et consulter les
@@ -37,7 +37,7 @@ export default function Dashboard() {
           />
 
           <DashboardCard
-            link="/seasons?type=COUPE"
+            link="/saisons?type=COUPE"
             icon={<Trophy className="text-slate-600" size={48} />}
             title="Coupe"
             description="Gérer les matchs de coupe en doublette"
@@ -45,7 +45,7 @@ export default function Dashboard() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           <DashboardCard
-            link="/rankings"
+            link="/classements"
             icon={
               <i className="fa-duotone fa-solid fa-ranking-star fa-flip-horizontal text-4xl text-red-800" />
             }
@@ -54,7 +54,7 @@ export default function Dashboard() {
           />
 
           <DashboardCard
-            link="/players"
+            link="/joueurs"
             icon={
               <i className="fa-duotone fa-solid fa-users text-4xl text-emerald-600"></i>
             }

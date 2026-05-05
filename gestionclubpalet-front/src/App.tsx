@@ -15,7 +15,7 @@ export default function App() {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 ">
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/players" element={<Players />} />
+          <Route path="/joueurs" element={<Players />} />
           <Route path="/test" element={<TestApi />} />
           <Route
             path="/saisons/:seasonId/journées/:dayId/saisie-entrainement"
