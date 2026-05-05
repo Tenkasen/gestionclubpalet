@@ -18,15 +18,19 @@ export default function App() {
           <Route path="/players" element={<Players />} />
           <Route path="/test" element={<TestApi />} />
           <Route
-            path="/seasons/:seasonId/days/:dayId/training"
+            path="/saisons/:seasonId/journées/:dayId/saisie-entrainement"
             element={<TrainingScoreEntry />}
           />
           <Route
-            path="/rankings/:seasonId/days/:dayId"
+            path="/saisons/:seasonId/journées/:dayId/saisie-match"
+            element={<TrainingScoreEntry />}
+          />
+          <Route
+            path="/classements/:seasonId/journées/:dayId"
             element={<DayRanking />}
           />
           <Route
-            path="/rankings/:seasonId"
+            path="/classements/:seasonId"
             element={<SeasonRanking />}
           />
           <Route path="*" element={<Error404 />} />

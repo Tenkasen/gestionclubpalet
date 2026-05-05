@@ -40,7 +40,7 @@ export default function TrainingScoreInput({
     e.preventDefault();
     onSave({ pointsPour, pointsContre });
     if (isLast) {
-      navigate(`/rankings/${seasonId}/days/${dayId}`);
+      navigate(`/classements/${seasonId}/journées/${dayId}`);
     }
   };
 
