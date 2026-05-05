@@ -4,18 +4,18 @@ import { dayApi } from "../api/day.api";
 import { seasonRegistrationApi } from "../api/seasonRegistration.api";
 import { RotatingLines } from "react-loader-spinner";
 import useScoreEntry, { type IScore } from "../hooks/useScoreEntry";
-import { trainingScoreApi } from "../api/trainingScore.api";
 import type { IDay } from "../types/day";
 import type { IPlayer } from "../types/player";
-import TrainingScoreInput from "../components/scores/TrainingScoreInput";
-import type { ITrainingScore } from "../types/trainingScore";
+import ChampionshipGrid from "../components/scores/ChampionshipGrid.tsx";
+import { champMatchesApi } from "../api/champMatches.api.ts";
+import type { IChampMatches } from "../types/champMatches.ts";
 
-export default function TrainingScoreEntry() {
+export default function ChampionshipScoreEntry() {
   const { seasonId, dayId } = useParams();
   const [day, setDay] = useState<IDay | null>(null);
   const [players, setPlayers] = useState<IPlayer[]>([]);
   const [initialScores, setInitialScores] = useState<
-    ITrainingScore[] | null
+    IChampMatches[] | null
   >(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,8 +27,8 @@ export default function TrainingScoreEntry() {
     currentIndex,
     nextPlayer,
     prevPlayer,
-    saveScore,
-    scores,
+    saveMatchScore,
+    matchScores,
     isLast,
     isFirst,
   } = useScoreEntry(players);
@@ -50,7 +50,7 @@ export default function TrainingScoreEntry() {
           return;
         }
 
-        const existingScores = await trainingScoreApi.getAll(
+        const existingScores = await champMatchesApi.getAll(
           seasonIdNumber,
           dayIdNumber,
         );
@@ -69,25 +69,25 @@ export default function TrainingScoreEntry() {
   }, [seasonIdNumber, dayIdNumber]);
 
   // Load previously entered scores when the page is refreshed
-  useEffect(() => {
-    if (players.length === 0) return;
-    if (initialScores === null) return;
+  //   useEffect(() => {
+  //     if (players.length === 0) return;
+  //     if (initialScores === null) return;
 
-    initialScores.forEach((score) => {
-      saveScore(score.playerId, {
-        pointsPour: score.pointsPour,
-        pointsContre: score.pointsContre,
-      });
-    });
-  }, [players, initialScores]);
+  //     initialScores.forEach((score) => {
+  //       saveMatchScore(score.playerId, {
+  //         pointsPour: score.pointsPour,
+  //         pointsContre: score.pointsContre,
+  //       });
+  //     });
+  //   }, [players, initialScores]);
 
-  const handleSave = async (score: IScore) => {
+  const handleSave = async (parties: IScore[]) => {
     if (!currentPlayer) return;
 
-    const registerScore = await trainingScoreApi.create(
+    const registerScore = await champMatchesApi.create(
       seasonIdNumber,
       dayIdNumber,
-      { ...score, playerId: currentPlayer.id },
+      { playerId: currentPlayer.id, parties: parties },
     );
 
     if (!registerScore) {
@@ -95,7 +95,7 @@ export default function TrainingScoreEntry() {
       return;
     }
 
-    saveScore(currentPlayer.id, score);
+    saveMatchScore(currentPlayer.id, parties);
     nextPlayer();
   };
 
@@ -119,7 +119,7 @@ export default function TrainingScoreEntry() {
     <div className="container mx-auto py-10 max-w-md">
       <div className="mb-6">
         <h1 className="text-3xl font-bold pb-2">
-          Saisie Entraînement J{dayIdNumber} -{" "}
+          Saisie Championnat J{dayIdNumber} -{" "}
           {day?.date
             ? new Date(day.date).toLocaleDateString("fr-FR")
             : ""}{" "}
@@ -137,12 +137,9 @@ export default function TrainingScoreEntry() {
         </div>
 
         {currentPlayer && (
-          <TrainingScoreInput
+          <ChampionshipGrid
             player={currentPlayer}
-            onPrev={prevPlayer}
             onSave={handleSave}
-            currentScore={scores[currentPlayer.id]}
-            isFirst={isFirst}
             isLast={isLast}
             seasonId={seasonIdNumber}
             dayId={dayIdNumber}

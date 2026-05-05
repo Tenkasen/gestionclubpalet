@@ -13,8 +13,8 @@ interface IProps {
   currentScore?: { pointsPour: number; pointsContre: number };
   isFirst: boolean;
   isLast: boolean;
-  seasonId: string;
-  dayId: string;
+  seasonId: number;
+  dayId: number;
 }
 
 export default function TrainingScoreInput({
