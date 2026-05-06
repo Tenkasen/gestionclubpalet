@@ -8,6 +8,7 @@ import Error404 from "./pages/Error404";
 import SeasonRanking from "./pages/SeasonRanking";
 import Players from "./pages/Players.tsx";
 import { Toaster } from "sonner";
+import ChampionshipScoreEntry from "./pages/ChampionshipScoreEntry.tsx";
 
 export default function App() {
   return (
@@ -23,7 +24,7 @@ export default function App() {
           />
           <Route
             path="/saisons/:seasonId/journées/:dayIndex/saisie-match"
-            element={<TrainingScoreEntry />}
+            element={<ChampionshipScoreEntry />}
           />
           <Route
             path="/classements/:seasonId/journées/:dayIndex"

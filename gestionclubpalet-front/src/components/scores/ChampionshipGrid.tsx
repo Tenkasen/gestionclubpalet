@@ -1,20 +1,18 @@
 import { useState } from "react";
 import type { IPlayer } from "../../types/player.ts";
 import { useNavigate } from "react-router-dom";
+import type { IScore } from "../../hooks/useScoreEntry.ts";
 
 interface IProps {
   player: IPlayer;
-  onSave: (scores: { parties: IParties[] }) => void;
+  onSave: (scores: { parties: IScore[] }) => void;
   onPrev?: () => void;
   isLast: boolean;
   seasonId: number;
   dayIndex: number;
 }
 
-interface IParties {
-  pointsPour: number;
-  pointsContre: number;
-}
+const possibleScores = [0, 1, 2, 3];
 
 export default function ChampionshipGrid({
   player,
@@ -24,8 +22,8 @@ export default function ChampionshipGrid({
   seasonId,
   dayIndex,
 }: IProps) {
-  const [parties, setParties] = useState<IParties[]>(
-    Array(6).fill({ pointsPour: 0, pointsContre: 0 }),
+  const [parties, setParties] = useState<(IScore | null)[]>(
+    Array(6).fill(null),
   );
   const navigate = useNavigate();
 
@@ -37,13 +35,13 @@ export default function ChampionshipGrid({
   ) => {
     const newParties = [...parties];
 
-    if (pointsPour !== undefined && pointsPour !== 5) {
+    if (pointsPour !== undefined) {
       newParties[partieIndex] = {
         pointsPour: pointsPour,
         pointsContre: 5,
       };
     } else {
-      if (pointsContre !== undefined && pointsContre !== 5) {
+      if (pointsContre !== undefined) {
         newParties[partieIndex] = {
           pointsPour: 5,
           pointsContre: pointsContre,
@@ -53,148 +51,199 @@ export default function ChampionshipGrid({
     setParties(newParties);
   };
 
+  //   Check if all scores have been entered
+  const filled = parties.filter((p): p is IScore => p !== null); // say p is type IScore if condition is true
+  const allFilled = filled.length === 6;
+
   //   Manage every stats
-  const totalPointsPour = parties.reduce(
+  const totalPointsPour = filled.reduce(
     (sum, points) => sum + points.pointsPour,
     0,
   );
-  const totalPointsContre = parties.reduce(
+  const totalPointsContre = filled.reduce(
     (sum, points) => sum + points.pointsContre,
     0,
   );
   const goalAverage = totalPointsPour - totalPointsContre;
-  const nbVictoire = parties.filter(
+  const nbVictoire = filled.filter(
     (partie) => partie.pointsPour > partie.pointsContre,
   ).length;
 
   //   Manage submission
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
-    onSave({ parties });
+    if (!allFilled) return;
+    onSave({ parties: parties as IScore[] });
     if (isLast) {
       navigate(`/classements/${seasonId}/journées/${dayIndex}`);
     }
   };
 
-  //   Check if all scores have been entered
-  const allScoresfilled = parties.every(
-    (point) => point.pointsPour > 0 || point.pointsContre > 0,
-  );
-
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-6 rounded-lg shadow-lg max-w-3xl mx-auto"
+      className="bg-white p-8 rounded-xl shadow-md w-full max-w-md mx-auto mt-6"
     >
-      <h3 className="text-3xl font-bold mb-6 text-gray-800 text-center">
+      <h3 className="text-xl font-bold mb-6 text-center">
         {player.nom} {player.prenom}
       </h3>
-      <div className="grid grid-cols-1 gap-4 mb-6">
-        {parties.map((partie, idx) => (
-          <div
-            key={idx}
-            className="border-2 border-gray-200 rounded-lg p-4 hover:border-blue-300 transition"
-          >
-            <h4 className="font-bold text-lg mb-3 text-gray-700">
-              Partie {idx + 1}
-            </h4>
 
-            {/* Sélection du score POUR */}
-            <div className="mb-3">
-              <p className="text-sm text-gray-600 mb-2">
-                Score marqué:
-              </p>
-              <div className="flex gap-2">
-                {[5, 3, 2, 1, 0].map((score) => (
+      {/* Header colonnes */}
+      <div className="grid grid-cols-[80px_1fr_1fr] gap-2 mb-2 px-1">
+        <span />
+        <span className="text-center text-xs font-medium text-gray-400 uppercase tracking-wide">
+          points pour
+        </span>
+        <span className="text-center text-xs font-medium text-gray-400 uppercase tracking-wide">
+          points contre
+        </span>
+      </div>
+
+      {/* Cartes parties */}
+      {parties.map((partie, index) => {
+        const isVictoire = partie?.pointsPour === 5;
+
+        return (
+          <div
+            key={index}
+            className={`grid grid-cols-[80px_1fr_1fr] gap-2 items-center bg-white border rounded-xl px-3 py-2.5 mb-2 transition-colors ${
+              partie ? "border-gray-300" : "border-gray-100"
+            }`}
+          >
+            {/* Label partie */}
+            <div className="text-xs font-medium text-gray-400">
+              partie {index + 1}
+            </div>
+
+            {/* Boutons points pour */}
+            <div className="flex gap-1.5 justify-center">
+              {possibleScores.map((score) => {
+                const isSelected =
+                  partie !== null &&
+                  !isVictoire &&
+                  partie.pointsPour === score;
+                return (
                   <button
                     key={score}
-                    type="button"
-                    onClick={() => handleScoreClick(idx, score)}
-                    className={`
-                  flex-1 py-3 rounded-lg font-bold transition-all
-                  ${
-                    partie.pointsPour === score && score !== 4
-                      ? "bg-blue-600 text-white shadow-lg scale-105"
-                      : "bg-gray-100 hover:bg-gray-200 text-gray-700"
-                  }
-                `}
+                    onClick={() => handleScoreClick(index, score)}
+                    className={`w-9 h-9 rounded-lg text-sm font-medium transition-all active:scale-95 ${
+                      isSelected
+                        ? "bg-blue-700 text-white border border-blue-700"
+                        : "bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200"
+                    }`}
                   >
                     {score}
                   </button>
-                ))}
+                );
+              })}
+            </div>
+
+            {/* Boutons points contre */}
+            <div className="flex gap-1.5 justify-center">
+              {possibleScores.map((score) => {
+                const isSelected =
+                  partie !== null &&
+                  isVictoire &&
+                  partie.pointsContre === score;
+                return (
+                  <button
+                    key={score}
+                    onClick={() => handleScoreClick(index, score)}
+                    className={`w-9 h-9 rounded-lg text-sm font-medium transition-all active:scale-95 ${
+                      isSelected
+                        ? "bg-red-700 text-white border border-red-700"
+                        : "bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200"
+                    }`}
+                  >
+                    {score}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Score résumé */}
+            {partie && (
+              <div className="col-span-3 flex items-center justify-center gap-2 mt-1">
+                <span className="text-sm font-medium text-gray-500">
+                  {partie.pointsPour} — {partie.pointsContre}
+                </span>
+                <span
+                  className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                    isVictoire
+                      ? "bg-blue-50 text-blue-700"
+                      : "bg-red-50 text-red-700"
+                  }`}
+                >
+                  {isVictoire ? "victoire" : "défaite"}
+                </span>
               </div>
-            </div>
+            )}
+          </div>
+        );
+      })}
 
-            {/* Affichage du résultat */}
-            <div className="mt-3 pt-3 border-t border-gray-200">
-              <p
-                className={`text-center font-bold ${
-                  partie.pointsPour > partie.pointsContre
-                    ? "text-green-600"
-                    : partie.pointsContre > partie.pointsPour
-                      ? "text-red-600"
-                      : "text-gray-500"
-                }`}
-              >
-                {partie.pointsPour} - {partie.pointsContre}
-                {partie.pointsPour > partie.pointsContre && " ✓"}
-                {partie.pointsContre > partie.pointsPour && " ✗"}
-              </p>
+      {/* Récap */}
+      <div className="bg-gray-50 rounded-xl px-5 py-4 mt-4">
+        <div className="grid grid-cols-4 gap-3 text-center">
+          <div>
+            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">
+              Total pour
+            </div>
+            <div className="text-2xl font-medium text-blue-700">
+              {totalPointsPour}
             </div>
           </div>
-        ))}
-      </div>
-
-      {/* Statistiques */}
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg mb-6 border border-blue-200">
-        <div className="grid grid-cols-3 gap-4 text-center">
           <div>
-            <p className="text-sm text-gray-600 mb-1">Total</p>
-            <p className="text-3xl font-bold text-gray-800">
-              {totalPointsPour} - {totalPointsContre}
-            </p>
+            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">
+              Total contre
+            </div>
+            <div className="text-2xl font-medium text-red-700">
+              {totalPointsContre}
+            </div>
           </div>
           <div>
-            <p className="text-sm text-gray-600 mb-1">Goal Average</p>
-            <p
-              className={`text-3xl font-bold ${
-                goalAverage >= 0 ? "text-green-600" : "text-red-600"
+            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">
+              Goal avg
+            </div>
+            <div
+              className={`text-2xl font-medium ${
+                goalAverage > 0
+                  ? "text-blue-700"
+                  : goalAverage < 0
+                    ? "text-red-700"
+                    : "text-gray-600"
               }`}
             >
-              {goalAverage > 0 ? "+" : ""}
-              {goalAverage}
-            </p>
+              {filled.length
+                ? goalAverage >= 0
+                  ? `+${goalAverage}`
+                  : goalAverage
+                : "—"}
+            </div>
           </div>
           <div>
-            <p className="text-sm text-gray-600 mb-1">Victoires</p>
-            <p className="text-3xl font-bold text-blue-600">
-              {nbVictoire}/6
-            </p>
+            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">
+              Victoires
+            </div>
+            <div className="text-2xl font-medium text-gray-800">
+              {nbVictoire}/{filled.length}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Bouton de validation */}
+      {/* Bouton validation */}
       <button
         type="submit"
-        disabled={!allScoresfilled}
-        className={`
-      w-full py-4 px-6 rounded-lg font-bold text-lg transition-all
-      ${
-        allScoresfilled
-          ? "bg-blue-600 text-white hover:bg-blue-700 shadow-lg"
-          : "bg-gray-300 text-gray-500 cursor-not-allowed"
-      }
-    `}
+        disabled={!allFilled}
+        className={`w-full mt-4 py-3 rounded-xl text-base font-medium transition-all ${
+          allFilled
+            ? "bg-blue-700 text-white hover:bg-blue-800 active:scale-99"
+            : "bg-gray-100 text-gray-400 cursor-not-allowed"
+        }`}
       >
-        {allScoresfilled
-          ? "Valider et passer au suivant"
-          : "Complétez toutes les parties"}
+        Valider les scores
       </button>
-
-      <p className="text-sm text-gray-500 text-center mt-4">
-        Cliquez sur les scores pour saisir les résultats
-      </p>
     </form>
   );
 }
