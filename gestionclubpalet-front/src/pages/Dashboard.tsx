@@ -4,7 +4,8 @@ import { Medal, Target, Trophy } from "lucide-react";
 import DashboardCard from "../components/dashboard/DashboardCard";
 import PageError from "../components/feedback/PageError";
 import PageLoading from "../components/feedback/PageLoading";
-import Header from "../components/layout/Header";
+import HeaderTest from "../components/layout/HeaderTest.tsx";
+// import Header from "../components/layout/Header";
 
 export default function Dashboard() {
   const { seasons, loading, error } = useSeasons();
@@ -14,7 +15,8 @@ export default function Dashboard() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
+      <HeaderTest />
 
       <div className="container">
         <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">

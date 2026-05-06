@@ -9,6 +9,9 @@ import type { IDay } from "../types/day";
 import type { IPlayer } from "../types/player";
 import TrainingScoreInput from "../components/scores/TrainingScoreInput";
 import type { ITrainingScore } from "../types/trainingScore";
+import HeaderTest from "../components/layout/HeaderTest.tsx";
+import PageLoading from "../components/feedback/PageLoading.tsx";
+import PageError from "../components/feedback/PageError.tsx";
 
 export default function TrainingScoreEntry() {
   const { seasonId, dayId } = useParams();
@@ -99,56 +102,45 @@ export default function TrainingScoreEntry() {
     nextPlayer();
   };
 
-  if (loading)
-    return (
-      <div className="container flex flex-col justify-center items-center min-h-screen">
-        <div className="text-2xl pb-6 ">"Chargement en cours"</div>
-        <RotatingLines
-          visible={true}
-          height="96"
-          width="96"
-          color="grey"
-          strokeWidth="5"
-          animationDuration="1.25"
-          ariaLabel="rotating-lines-loading"
-        />
-      </div>
-    );
-  if (error) return <div>{error}</div>;
+  if (loading) return <PageLoading />;
+  if (error) return <PageError error={error} />;
   return (
-    <div className="container mx-auto py-10 max-w-md">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold pb-2">
-          Saisie Entraînement J{dayIdNumber} -{" "}
-          {day?.date
-            ? new Date(day.date).toLocaleDateString("fr-FR")
-            : ""}{" "}
-        </h1>
-        <p className="text-gray-600">
-          Joueur {currentIndex + 1} / {players.length}
-        </p>
-        <div className="w-full bg-gray-200 h-2 rounded mt-2">
-          <div
-            className="bg-blue-600 h-2 rounded transition-all"
-            style={{
-              width: `${((currentIndex + 1) / players.length) * 100}%`,
-            }}
-          ></div>
-        </div>
+    <>
+      <HeaderTest />
+      <div className="container mx-auto py-10 max-w-md">
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold pb-2">
+            Saisie Entraînement J{dayIdNumber} -{" "}
+            {day?.date
+              ? new Date(day.date).toLocaleDateString("fr-FR")
+              : ""}{" "}
+          </h1>
+          <p className="text-gray-600">
+            Joueur {currentIndex + 1} / {players.length}
+          </p>
+          <div className="w-full bg-gray-200 h-2 rounded mt-2">
+            <div
+              className="bg-blue-600 h-2 rounded transition-all"
+              style={{
+                width: `${((currentIndex + 1) / players.length) * 100}%`,
+              }}
+            ></div>
+          </div>
 
-        {currentPlayer && (
-          <TrainingScoreInput
-            player={currentPlayer}
-            onPrev={prevPlayer}
-            onSave={handleSave}
-            currentScore={scores[currentPlayer.id]}
-            isFirst={isFirst}
-            isLast={isLast}
-            seasonId={seasonIdNumber}
-            dayId={dayIdNumber}
-          />
-        )}
+          {currentPlayer && (
+            <TrainingScoreInput
+              player={currentPlayer}
+              onPrev={prevPlayer}
+              onSave={handleSave}
+              currentScore={scores[currentPlayer.id]}
+              isFirst={isFirst}
+              isLast={isLast}
+              seasonId={seasonIdNumber}
+              dayId={dayIdNumber}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

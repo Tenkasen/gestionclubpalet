@@ -6,6 +6,7 @@ import PageError from "../components/feedback/PageError.tsx";
 import Header from "../components/layout/Header.tsx";
 import { toast } from "sonner";
 import AddPlayerModal from "../components/modals/AddPlayerModal.tsx";
+import HeaderTest from "../components/layout/HeaderTest.tsx";
 
 export default function Players() {
   const [players, setPlayers] = useState<IPlayer[]>([]);
@@ -70,7 +71,8 @@ export default function Players() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
+      <HeaderTest />
       <div className="container mx-auto px-6 py-12 ">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-indigo-900 tracking-tight">

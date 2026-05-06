@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function Header() {
+export default function HeaderTest() {
   return (
     <header className="border-b py-4 border-indigo-800 sticky top-0 z-90 bg-white">
       <div className="flex justify-center gap-12 text-lg items-center ">

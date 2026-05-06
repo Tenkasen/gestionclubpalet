@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import Header from "../components/layout/Header";
 import type { ISeason } from "../types/season";
 import RankingExport from "../components/rankings/RankingExport";
+import HeaderTest from "../components/layout/HeaderTest.tsx";
 
 export default function DayRanking() {
   const { seasonId, dayId } = useParams();
@@ -48,7 +49,8 @@ export default function DayRanking() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
+      <HeaderTest />
       {/* Bouton discret en haut à droite du bloc */}
       <div className="p-3">
         <RankingExport

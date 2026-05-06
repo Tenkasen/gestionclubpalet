@@ -8,9 +8,10 @@ import { useEffect, useState } from "react";
 import Header from "../components/layout/Header";
 import type { ISeason } from "../types/season";
 import RankingExport from "../components/rankings/RankingExport";
+import HeaderTest from "../components/layout/HeaderTest.tsx";
 
 export default function SeasonRanking() {
-  const { seasonId, dayId } = useParams();
+  const { seasonId } = useParams();
 
   const seasonIdNumber = Number(seasonId);
   const [season, setSeason] = useState<ISeason>();
@@ -44,7 +45,8 @@ export default function SeasonRanking() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
+      <HeaderTest />
       <div className="flex justify-center py-10">
         <div className="relative">
           {/* Bouton discret en haut à droite du bloc */}
