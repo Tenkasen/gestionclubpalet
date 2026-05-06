@@ -80,7 +80,7 @@ export default function ChampionshipScoreEntry() {
         parties.push({
           pointsPour: score[
             `partie${index}Pour` as keyof IChampMatches
-          ] as number,
+          ] as number, // ex : score["partie3Contre"] and get the value in the object
           pointsContre: score[
             `partie${index}Contre` as keyof IChampMatches
           ] as number,

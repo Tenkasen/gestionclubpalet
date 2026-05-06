@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { IPlayer } from "../../types/player.ts";
 import { useNavigate } from "react-router-dom";
 import type { IScore } from "../../hooks/useScoreEntry.ts";
@@ -21,14 +21,13 @@ export default function ChampionshipGrid({
   player,
   onSave,
   onPrev,
+  currentScore,
   isFirst,
   isLast,
   seasonId,
   dayIndex,
 }: IProps) {
-  const [parties, setParties] = useState<(IScore | null)[]>(
-    Array(6).fill(null),
-  );
+  const [parties, setParties] = useState<IScore[]>([]);
   const navigate = useNavigate();
 
   //   Manage score entry
@@ -83,6 +82,12 @@ export default function ChampionshipGrid({
     }
   };
 
+  useEffect(() => {
+    if (currentScore) {
+      setParties(currentScore);
+    }
+  }, [currentScore]);
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -128,6 +133,7 @@ export default function ChampionshipGrid({
                   partie.pointsPour === score;
                 return (
                   <button
+                    type="button"
                     key={score}
                     onClick={() =>
                       handleScoreClick(index, score, undefined)
@@ -153,6 +159,7 @@ export default function ChampionshipGrid({
                   partie.pointsContre === score;
                 return (
                   <button
+                    type="button"
                     key={score}
                     onClick={() =>
                       handleScoreClick(index, undefined, score)
