@@ -8,6 +8,7 @@ interface IProps {
   player: IPlayer;
   onSave: (scores: { parties: IScore[] }) => void;
   onPrev?: () => void;
+  currentScore?: IScore[];
   isFirst: boolean;
   isLast: boolean;
   seasonId: number;

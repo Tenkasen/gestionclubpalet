@@ -29,9 +29,10 @@ export default function ChampionshipScoreEntry() {
     nextPlayer,
     prevPlayer,
     saveScore,
+    scores,
     isFirst,
     isLast,
-  } = useScoreEntry(players);
+  } = useScoreEntry<IScore[]>(players);
 
   useEffect(() => {
     async function loadData() {
@@ -74,20 +75,28 @@ export default function ChampionshipScoreEntry() {
     if (initialScores === null) return;
 
     initialScores.forEach((score) => {
-      saveScore(score.playerId, {
-        pointsPour: score.pointsPour,
-        pointsContre: score.pointsContre,
-      });
+      const parties: IScore[] = [];
+      for (let index = 1; index < 7; index++) {
+        parties.push({
+          pointsPour: score[
+            `partie${index}Pour` as keyof IChampMatches
+          ] as number,
+          pointsContre: score[
+            `partie${index}Contre` as keyof IChampMatches
+          ] as number,
+        });
+      }
+      saveScore(score.playerId, parties);
     });
   }, [players, initialScores]);
 
-  const handleSave = async (score: IScore) => {
+  const handleSave = async (scores: { parties: IScore[] }) => {
     if (!currentPlayer) return;
 
     const registerScore = await champMatchesApi.create(
       seasonIdNumber,
       dayIdNumber,
-      { ...score, playerId: currentPlayer.id },
+      { ...scores, playerId: currentPlayer.id },
     );
 
     if (!registerScore) {
@@ -95,7 +104,7 @@ export default function ChampionshipScoreEntry() {
       return;
     }
 
-    saveScore(currentPlayer.id, score);
+    saveScore(currentPlayer.id, scores.parties);
     nextPlayer();
   };
 
@@ -143,10 +152,11 @@ export default function ChampionshipScoreEntry() {
               player={currentPlayer}
               onPrev={prevPlayer}
               onSave={handleSave}
+              currentScore={scores[currentPlayer.id]}
               isFirst={isFirst}
               isLast={isLast}
               seasonId={seasonIdNumber}
-              dayId={dayIdNumber}
+              dayIndex={dayIdNumber}
             />
           )}
         </div>

@@ -5,11 +5,11 @@ import { api } from "./client.ts";
 export const champMatchesApi = {
   async getAll(
     seasonId: number,
-    dayId: number,
+    dayIndex: number,
   ): Promise<IChampMatches[]> {
     try {
       const { data } = await api.get<IChampMatches[]>(
-        `/seasons/${seasonId}/days/${dayId}/champ-matches`,
+        `/seasons/${seasonId}/days/${dayIndex}/champ-matches`,
       );
       return data;
     } catch (error) {

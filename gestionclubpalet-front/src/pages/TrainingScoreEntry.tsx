@@ -33,7 +33,7 @@ export default function TrainingScoreEntry() {
     scores,
     isLast,
     isFirst,
-  } = useScoreEntry(players);
+  } = useScoreEntry<IScore>(players);
 
   useEffect(() => {
     async function loadData() {
@@ -135,7 +135,7 @@ export default function TrainingScoreEntry() {
               isFirst={isFirst}
               isLast={isLast}
               seasonId={seasonIdNumber}
-              dayId={dayIdNumber}
+              dayIndex={dayIdNumber}
             />
           )}
         </div>

@@ -6,9 +6,13 @@ export interface IScore {
   pointsContre: number;
 }
 
-export default function useScoreEntry(players: IPlayer[]) {
+export default function useScoreEntry<TypeOfScore>(
+  players: IPlayer[],
+) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [scores, setScores] = useState<Record<number, IScore>>({});
+  const [scores, setScores] = useState<Record<number, TypeOfScore>>(
+    {},
+  );
 
   function nextPlayer() {
     if (currentIndex < players.length - 1) {
@@ -22,7 +26,7 @@ export default function useScoreEntry(players: IPlayer[]) {
     }
   }
 
-  function saveScore(playerId: number, score: IScore) {
+  function saveScore(playerId: number, score: TypeOfScore) {
     setScores((prev) => ({ ...prev, [playerId]: score }));
   }
   return {

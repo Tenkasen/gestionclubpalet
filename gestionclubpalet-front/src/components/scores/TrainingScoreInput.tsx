@@ -14,7 +14,7 @@ interface IProps {
   isFirst: boolean;
   isLast: boolean;
   seasonId: number;
-  dayId: number;
+  dayIndex: number;
 }
 
 export default function TrainingScoreInput({
@@ -25,7 +25,7 @@ export default function TrainingScoreInput({
   isFirst,
   isLast,
   seasonId,
-  dayId,
+  dayIndex,
 }: IProps) {
   const [pointsPour, SetPointsPour] = useState(
     currentScore?.pointsPour || 0,
@@ -40,7 +40,7 @@ export default function TrainingScoreInput({
     e.preventDefault();
     onSave({ pointsPour, pointsContre });
     if (isLast) {
-      navigate(`/classements/${seasonId}/journées/${dayId}`);
+      navigate(`/classements/${seasonId}/journées/${dayIndex}`);
     }
   };
 
