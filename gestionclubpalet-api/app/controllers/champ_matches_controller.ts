@@ -7,7 +7,7 @@ export default class ChampMatchesController {
   async index({ params, response }: HttpContext) {
     const existingDay = await Day.query()
       .where('season_id', params.seasonId)
-      .where('id', params.dayId)
+      .where('index_jour', params.dayNumber)
       .first()
 
     if (!existingDay) {
@@ -16,14 +16,14 @@ export default class ChampMatchesController {
       })
     }
 
-    const matchScores = await ChampMatch.query().where('day_id', params.dayId).preload('player')
+    const matchScores = await ChampMatch.query().where('day_id', existingDay.id).preload('player')
     return matchScores
   }
 
   async store({ params, response, request }: HttpContext) {
     const existingDay = await Day.query()
       .where('season_id', params.seasonId)
-      .where('id', params.dayId)
+      .where('index_jour', params.dayNumber)
       .first()
 
     if (!existingDay) {
@@ -49,7 +49,7 @@ export default class ChampMatchesController {
     }
 
     const score = await ChampMatch.updateOrCreate(
-      { dayId: params.dayId, playerId: data.playerId },
+      { dayId: existingDay.id, playerId: data.playerId },
       matchData
     )
     await score.load('player')

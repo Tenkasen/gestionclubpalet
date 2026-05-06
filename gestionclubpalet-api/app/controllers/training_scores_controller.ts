@@ -7,7 +7,7 @@ export default class TrainingScoresController {
   async index({ params, response }: HttpContext) {
     const existingDay = await Day.query()
       .where('season_id', params.seasonId)
-      .where('id', params.dayId)
+      .where('index_jour', params.dayNumber)
       .first()
 
     if (!existingDay) {
@@ -15,14 +15,14 @@ export default class TrainingScoresController {
         message: `Cette journée n'existe pas dans cette saison`,
       })
     }
-    const scores = await TrainingScore.query().where('day_id', params.dayId).preload('player')
+    const scores = await TrainingScore.query().where('day_id', existingDay.id).preload('player')
     return scores
   }
 
   async store({ request, params, response }: HttpContext) {
     const existingDay = await Day.query()
       .where('season_id', params.seasonId)
-      .where('id', params.dayId)
+      .where('index_jour', params.dayNumber)
       .first()
 
     if (!existingDay) {
@@ -33,7 +33,7 @@ export default class TrainingScoresController {
     const data = await request.validateUsing(createTrainingScoreValidator)
 
     const score = await TrainingScore.updateOrCreate(
-      { dayId: params.dayId, playerId: data.playerId },
+      { dayId: existingDay.id, playerId: data.playerId },
       { pointsPour: data.pointsPour, pointsContre: data.pointsContre }
     )
     return score

@@ -49,15 +49,15 @@ router
     // Days  Routes
     router.get('/days', [DaysController, 'index'])
     router.post('/days', [DaysController, 'store'])
-    router.get('/days/:dayId', [DaysController, 'show'])
+    router.get('/days/:dayNumber', [DaysController, 'show'])
 
     // Training Scores Routes
-    router.get('/days/:dayId/training-scores', [TrainingScoresController, 'index'])
-    router.post('/days/:dayId/training-scores', [TrainingScoresController, 'store'])
+    router.get('/days/:dayNumber/training-scores', [TrainingScoresController, 'index'])
+    router.post('/days/:dayNumber/training-scores', [TrainingScoresController, 'store'])
 
     // Champ matches Routes
-    router.get('/days/:dayId/champ-matches', [ChampMatchesController, 'index'])
-    router.post('/days/:dayId/champ-matches', [ChampMatchesController, 'store'])
+    router.get('/days/:dayNumber/champ-matches', [ChampMatchesController, 'index'])
+    router.post('/days/:dayNumber/champ-matches', [ChampMatchesController, 'store'])
   })
   .prefix('/seasons/:seasonId')
   .use(middleware.CheckExistingSeason())

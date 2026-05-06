@@ -49,7 +49,7 @@ export default class DaysController {
   async show({ params }: HttpContext) {
     const day = await Day.query()
       .where('season_id', params.seasonId)
-      .where('index_jour', params.dayId)
+      .where('index_jour', params.dayNumber)
       .preload('trainingScores', (query) => {
         query.preload('player')
       })
