@@ -27,7 +27,9 @@ export default function ChampionshipGrid({
   seasonId,
   dayIndex,
 }: IProps) {
-  const [parties, setParties] = useState<IScore[]>([]);
+  const [parties, setParties] = useState<IScore[] | null>(
+    currentScore ?? Array(6).fill(null),
+  );
   const navigate = useNavigate();
 
   //   Manage score entry

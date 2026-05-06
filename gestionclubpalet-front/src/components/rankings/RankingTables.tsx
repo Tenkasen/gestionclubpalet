@@ -39,12 +39,14 @@ export default function RankingTables({
               <th className="px-3 py-3 text-center border-r border-gray-600 w-28 whitespace-nowrap">
                 Goal Average
               </th>
+              <th className="px-3 py-3 text-center border-r border-gray-600 w-20">
+                Points
+              </th>
               {type === "CHAMPIONNAT" && (
-                <th className="px-3 py-3 text-center border-r border-gray-600 w-32 whitespace-nowrap">
+                <th className="px-3 py-3 text-center  w-32 whitespace-nowrap">
                   Parties gagnées
                 </th>
               )}
-              <th className="px-3 py-3 text-center w-20">Points</th>
             </tr>
           </thead>
           <tbody>
@@ -86,11 +88,11 @@ export default function RankingTables({
                 <td className="px-3 py-3 text-center font-bold text-gray-900">
                   {entry.points}
                 </td>
-                {/* {type === "CHAMPIONNAT" && (
+                {type === "CHAMPIONNAT" && (
                   <td className="px-3 py-3 text-center border-r border-gray-300">
                     {entry.nbVictoires} // todo : pour championnat
                   </td>
-                )} */}
+                )}
               </tr>
             ))}
           </tbody>
