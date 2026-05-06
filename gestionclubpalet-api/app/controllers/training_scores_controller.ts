@@ -7,7 +7,7 @@ export default class TrainingScoresController {
   async index({ params, response }: HttpContext) {
     const existingDay = await Day.query()
       .where('season_id', params.seasonId)
-      .where('index_jour', params.dayNumber)
+      .where('index_jour', params.dayIndex)
       .first()
 
     if (!existingDay) {
@@ -22,7 +22,7 @@ export default class TrainingScoresController {
   async store({ request, params, response }: HttpContext) {
     const existingDay = await Day.query()
       .where('season_id', params.seasonId)
-      .where('index_jour', params.dayNumber)
+      .where('index_jour', params.dayIndex)
       .first()
 
     if (!existingDay) {

@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 interface IProps {
   player: IPlayer;
   onSave: (scores: { parties: IParties[] }) => void;
-  onPrev: () => void;
+  onPrev?: () => void;
   isLast: boolean;
   seasonId: number;
-  dayId: number;
+  dayIndex: number;
 }
 
 interface IParties {
@@ -22,7 +22,7 @@ export default function ChampionshipGrid({
   onPrev,
   isLast,
   seasonId,
-  dayId,
+  dayIndex,
 }: IProps) {
   const [parties, setParties] = useState<IParties[]>(
     Array(6).fill({ pointsPour: 0, pointsContre: 0 }),
@@ -72,7 +72,7 @@ export default function ChampionshipGrid({
     e.preventDefault();
     onSave({ parties });
     if (isLast) {
-      navigate(`/classements/${seasonId}/journées/${dayId}`);
+      navigate(`/classements/${seasonId}/journées/${dayIndex}`);
     }
   };
 

@@ -11,10 +11,10 @@ import RankingExport from "../components/rankings/RankingExport";
 import HeaderTest from "../components/layout/HeaderTest.tsx";
 
 export default function DayRanking() {
-  const { seasonId, dayId } = useParams();
+  const { seasonId, dayIndex } = useParams();
 
   const seasonIdNumber = Number(seasonId);
-  const dayIdNumber = Number(dayId);
+  const dayIdNumber = Number(dayIndex);
   const [season, setSeason] = useState<ISeason>();
   const [errorSeason, setErrorSeason] = useState<string | null>(null);
 
@@ -40,7 +40,7 @@ export default function DayRanking() {
     getSeason();
   }, [seasonId]);
 
-  if (!seasonId || !dayId)
+  if (!seasonId || !dayIndex)
     return <PageError error="Paramètres manquant dans l'URL" />;
   if (loading) return <PageLoading />;
   if (!season) return <PageLoading />;
@@ -66,7 +66,7 @@ export default function DayRanking() {
           <RankingTables
             data={ranking}
             type={season.type}
-            dayNumber={dayIdNumber}
+            dayIndex={dayIdNumber}
           />
         </div>
       </div>

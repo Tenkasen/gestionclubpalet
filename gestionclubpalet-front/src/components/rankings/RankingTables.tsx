@@ -3,12 +3,12 @@ import type { IRanking } from "../../types/ranking";
 interface IProps {
   data: IRanking[];
   type: "ENTRAINEMENT" | "CHAMPIONNAT" | "COUPE";
-  dayNumber?: number;
+  dayIndex?: number;
 }
 export default function RankingTables({
   data,
   type,
-  dayNumber,
+  dayIndex,
 }: IProps) {
   return (
     <div className="w-fit ">
@@ -21,8 +21,8 @@ export default function RankingTables({
                 className="bg-gray-900 text-gray-100 text-center text-base font-semibold
                        tracking-widest uppercase px-4 py-3.5 border-b-2 border-gray-700"
               >
-                {dayNumber
-                  ? `Classement J${dayNumber}`
+                {dayIndex
+                  ? `Classement J${dayIndex}`
                   : "Classement final"}
               </td>
             </tr>

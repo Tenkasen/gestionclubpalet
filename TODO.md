@@ -12,7 +12,7 @@
 
 -ajouter un champ **Division** à la table season
 
-- revoir la table player : email, tel, date inscription, anniversaire
+- check le type de saison avant de rentrer les scores ?
 
   <br>
 

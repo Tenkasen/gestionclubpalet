@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { dayApi } from "../api/day.api";
 import { seasonRegistrationApi } from "../api/seasonRegistration.api";
-import { RotatingLines } from "react-loader-spinner";
 import useScoreEntry, { type IScore } from "../hooks/useScoreEntry";
 import { trainingScoreApi } from "../api/trainingScore.api";
 import type { IDay } from "../types/day";
@@ -14,7 +13,7 @@ import PageLoading from "../components/feedback/PageLoading.tsx";
 import PageError from "../components/feedback/PageError.tsx";
 
 export default function TrainingScoreEntry() {
-  const { seasonId, dayId } = useParams();
+  const { seasonId, dayIndex } = useParams();
   const [day, setDay] = useState<IDay | null>(null);
   const [players, setPlayers] = useState<IPlayer[]>([]);
   const [initialScores, setInitialScores] = useState<
@@ -22,7 +21,7 @@ export default function TrainingScoreEntry() {
   >(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const dayIdNumber = Number(dayId);
+  const dayIdNumber = Number(dayIndex);
   const seasonIdNumber = Number(seasonId);
 
   const {

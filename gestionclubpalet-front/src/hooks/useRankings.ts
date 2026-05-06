@@ -4,7 +4,7 @@ import { rankingApi } from "../api/ranking.api";
 
 export default function useRankings(
   seasonId: number,
-  dayId?: number,
+  dayIndex?: number,
 ) {
   const [ranking, setRanking] = useState<IRanking[]>([]);
   const [loading, setLoading] = useState(true);
@@ -13,10 +13,10 @@ export default function useRankings(
   const fetchRanking = async () => {
     try {
       setLoading(true);
-      if (dayId !== undefined) {
+      if (dayIndex !== undefined) {
         const response = await rankingApi.getDayRanking(
           seasonId,
-          dayId,
+          dayIndex,
         );
         setRanking(response);
         setError(null);
@@ -36,7 +36,7 @@ export default function useRankings(
 
   useEffect(() => {
     fetchRanking();
-  }, [seasonId, dayId]);
+  }, [seasonId, dayIndex]);
 
   return { ranking, loading, error, refetch: fetchRanking };
 }

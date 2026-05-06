@@ -49,15 +49,15 @@ router
     // Days  Routes
     router.get('/days', [DaysController, 'index'])
     router.post('/days', [DaysController, 'store'])
-    router.get('/days/:dayNumber', [DaysController, 'show'])
+    router.get('/days/:dayIndex', [DaysController, 'show'])
 
     // Training Scores Routes
-    router.get('/days/:dayNumber/training-scores', [TrainingScoresController, 'index'])
-    router.post('/days/:dayNumber/training-scores', [TrainingScoresController, 'store'])
+    router.get('/days/:dayIndex/training-scores', [TrainingScoresController, 'index'])
+    router.post('/days/:dayIndex/training-scores', [TrainingScoresController, 'store'])
 
     // Champ matches Routes
-    router.get('/days/:dayNumber/champ-matches', [ChampMatchesController, 'index'])
-    router.post('/days/:dayNumber/champ-matches', [ChampMatchesController, 'store'])
+    router.get('/days/:dayIndex/champ-matches', [ChampMatchesController, 'index'])
+    router.post('/days/:dayIndex/champ-matches', [ChampMatchesController, 'store'])
   })
   .prefix('/seasons/:seasonId')
   .use(middleware.CheckExistingSeason())
@@ -65,7 +65,7 @@ router
 // ranking routes
 router
   .group(() => {
-    router.get('/rankings/:seasonId/days/:dayId', [RankingsController, 'dayRanking'])
+    router.get('/rankings/:seasonId/days/:dayIndex', [RankingsController, 'dayRanking'])
     router.get('/rankings/seasons/:seasonId', [RankingsController, 'seasonRanking'])
   })
   .use(middleware.CheckExistingSeason())

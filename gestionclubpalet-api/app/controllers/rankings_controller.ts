@@ -10,7 +10,7 @@ export default class RankingsController {
   async dayRanking({ params, response }: HttpContext) {
     const existingDay = await Day.query()
       .where('season_id', params.seasonId)
-      .where('id', params.dayId)
+      .where('index_jour', params.dayIndex)
       .first()
 
     if (!existingDay) {
@@ -19,7 +19,7 @@ export default class RankingsController {
       })
     }
     // call function with upToDay
-    const ranking = await this.rankingService.getTrainingRanking(params.seasonId, params.dayId)
+    const ranking = await this.rankingService.getTrainingRanking(params.seasonId, existingDay.id)
 
     return ranking
   }

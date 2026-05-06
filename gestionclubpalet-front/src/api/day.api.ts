@@ -25,11 +25,11 @@ export const dayApi = {
   },
   async getOne(
     seasonId: number,
-    dayId: number,
+    dayIndex: number,
   ): Promise<IDay | null> {
     try {
       const { data } = await api.get<IDay>(
-        `/seasons/${seasonId}/days/${dayId}`,
+        `/seasons/${seasonId}/days/${dayIndex}`,
       );
       return data;
     } catch (error: unknown) {

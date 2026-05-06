@@ -7,7 +7,7 @@ export default class ChampMatchesController {
   async index({ params, response }: HttpContext) {
     const existingDay = await Day.query()
       .where('season_id', params.seasonId)
-      .where('index_jour', params.dayNumber)
+      .where('index_jour', params.dayIndex)
       .first()
 
     if (!existingDay) {
@@ -23,7 +23,7 @@ export default class ChampMatchesController {
   async store({ params, response, request }: HttpContext) {
     const existingDay = await Day.query()
       .where('season_id', params.seasonId)
-      .where('index_jour', params.dayNumber)
+      .where('index_jour', params.dayIndex)
       .first()
 
     if (!existingDay) {

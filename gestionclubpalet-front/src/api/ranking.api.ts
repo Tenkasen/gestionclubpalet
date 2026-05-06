@@ -6,11 +6,11 @@ export const rankingApi = {
   // ranking after a specific day
   async getDayRanking(
     seasonId: number,
-    dayId: number,
+    dayIndex: number,
   ): Promise<IRanking[]> {
     try {
       const { data } = await api.get<IRanking[]>(
-        `/rankings/${seasonId}/days/${dayId}`,
+        `/rankings/${seasonId}/days/${dayIndex}`,
       );
       return data;
     } catch (error: unknown) {
