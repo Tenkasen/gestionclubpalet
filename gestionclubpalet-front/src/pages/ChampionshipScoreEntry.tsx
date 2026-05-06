@@ -23,8 +23,15 @@ export default function ChampionshipScoreEntry() {
   const dayIdNumber = Number(dayIndex);
   const seasonIdNumber = Number(seasonId);
 
-  const { currentPlayer, currentIndex, nextPlayer, isFirst, isLast } =
-    useScoreEntry(players);
+  const {
+    currentPlayer,
+    currentIndex,
+    nextPlayer,
+    prevPlayer,
+    saveScore,
+    isFirst,
+    isLast,
+  } = useScoreEntry(players);
 
   useEffect(() => {
     async function loadData() {
@@ -62,25 +69,25 @@ export default function ChampionshipScoreEntry() {
   }, [seasonIdNumber, dayIdNumber]);
 
   // Load previously entered scores when the page is refreshed
-  //   useEffect(() => {
-  //     if (players.length === 0) return;
-  //     if (initialScores === null) return;
+  useEffect(() => {
+    if (players.length === 0) return;
+    if (initialScores === null) return;
 
-  //     initialScores.forEach((score) => {
-  //       saveMatchScore(score.playerId, {
-  //         pointsPour: score.pointsPour,
-  //         pointsContre: score.pointsContre,
-  //       });
-  //     });
-  //   }, [players, initialScores]);
+    initialScores.forEach((score) => {
+      saveScore(score.playerId, {
+        pointsPour: score.pointsPour,
+        pointsContre: score.pointsContre,
+      });
+    });
+  }, [players, initialScores]);
 
-  const handleSave = async (parties: IScore[]) => {
+  const handleSave = async (score: IScore) => {
     if (!currentPlayer) return;
 
     const registerScore = await champMatchesApi.create(
       seasonIdNumber,
       dayIdNumber,
-      { playerId: currentPlayer.id, parties: parties },
+      { ...score, playerId: currentPlayer.id },
     );
 
     if (!registerScore) {
@@ -88,7 +95,7 @@ export default function ChampionshipScoreEntry() {
       return;
     }
 
-    saveMatchScore(currentPlayer.id, parties);
+    saveScore(currentPlayer.id, score);
     nextPlayer();
   };
 
@@ -134,6 +141,7 @@ export default function ChampionshipScoreEntry() {
           {currentPlayer && (
             <ChampionshipGrid
               player={currentPlayer}
+              onPrev={prevPlayer}
               onSave={handleSave}
               isFirst={isFirst}
               isLast={isLast}

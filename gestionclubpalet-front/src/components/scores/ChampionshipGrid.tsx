@@ -260,10 +260,10 @@ export default function ChampionshipGrid({
         </button>
       </div>
       {isLast && (
-        <div className="flex items-center justify-center">
+        <div className="mt-4">
           <button
             type="submit"
-            className="flex gap-4 bg-teal-600 text-white px-3 py-2 rounded-lg hover:bg-teal-700 cursor-pointer text-sm font-medium"
+            className="w-full flex justify-center items-center gap-4 bg-teal-600 text-white text-xl px-3 py-2 rounded-lg hover:bg-teal-700 cursor-pointer text-sm font-medium"
             disabled={!allFilled}
           >
             <Save />
