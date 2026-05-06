@@ -115,7 +115,7 @@ export default function TrainingScoreInput({
         <div className="flex gap-3 pt-2">
           <button
             type="button"
-            className="flex-1 bg-gray-100 text-gray-700 px-3 py-2 rounded-lg hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+            className="flex-1 bg-gray-100 text-gray-700 px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
             onClick={onPrev}
             disabled={isFirst}
           >
@@ -123,7 +123,7 @@ export default function TrainingScoreInput({
           </button>
           <button
             type="submit"
-            className="flex-1 bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+            className="flex-1 bg-blue-600 text-white px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
             disabled={isLast}
           >
             Joueur suivant →
@@ -133,7 +133,7 @@ export default function TrainingScoreInput({
           <div className="flex items-center justify-center">
             <button
               type="submit"
-              className="flex gap-4 bg-teal-600 text-white px-3 py-2 rounded-lg hover:bg-teal-700 cursor-pointer text-sm font-medium"
+              className="flex gap-4 bg-teal-600 text-white px-3 py-2 rounded-lg cursor-pointer hover:bg-teal-700 cursor-pointer text-sm font-medium"
             >
               <Save />
               Sauvegarder la journée

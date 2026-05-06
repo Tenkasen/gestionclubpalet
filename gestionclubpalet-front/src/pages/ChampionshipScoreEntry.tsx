@@ -9,9 +9,10 @@ import type { IPlayer } from "../types/player";
 import ChampionshipGrid from "../components/scores/ChampionshipGrid.tsx";
 import { champMatchesApi } from "../api/champMatches.api.ts";
 import type { IChampMatches } from "../types/champMatches.ts";
+import HeaderTest from "../components/layout/HeaderTest.tsx";
 
 export default function ChampionshipScoreEntry() {
-  const { seasonId, dayId } = useParams();
+  const { seasonId, dayIndex } = useParams();
   const [day, setDay] = useState<IDay | null>(null);
   const [players, setPlayers] = useState<IPlayer[]>([]);
   const [initialScores, setInitialScores] = useState<
@@ -19,19 +20,11 @@ export default function ChampionshipScoreEntry() {
   >(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const dayIdNumber = Number(dayId);
+  const dayIdNumber = Number(dayIndex);
   const seasonIdNumber = Number(seasonId);
 
-  const {
-    currentPlayer,
-    currentIndex,
-    nextPlayer,
-    prevPlayer,
-    saveMatchScore,
-    matchScores,
-    isLast,
-    isFirst,
-  } = useScoreEntry(players);
+  const { currentPlayer, currentIndex, nextPlayer, isFirst, isLast } =
+    useScoreEntry(players);
 
   useEffect(() => {
     async function loadData() {
@@ -116,36 +109,40 @@ export default function ChampionshipScoreEntry() {
     );
   if (error) return <div>{error}</div>;
   return (
-    <div className="container mx-auto py-10 max-w-md">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold pb-2">
-          Saisie Championnat J{dayIdNumber} -{" "}
-          {day?.date
-            ? new Date(day.date).toLocaleDateString("fr-FR")
-            : ""}{" "}
-        </h1>
-        <p className="text-gray-600">
-          Joueur {currentIndex + 1} / {players.length}
-        </p>
-        <div className="w-full bg-gray-200 h-2 rounded mt-2">
-          <div
-            className="bg-blue-600 h-2 rounded transition-all"
-            style={{
-              width: `${((currentIndex + 1) / players.length) * 100}%`,
-            }}
-          ></div>
-        </div>
+    <>
+      <HeaderTest />
+      <div className="container mx-auto py-10 max-w-md">
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold pb-2">
+            Saisie Championnat J{dayIdNumber} -{" "}
+            {day?.date
+              ? new Date(day.date).toLocaleDateString("fr-FR")
+              : ""}{" "}
+          </h1>
+          <p className="text-gray-600">
+            Joueur {currentIndex + 1} / {players.length}
+          </p>
+          <div className="w-full bg-gray-200 h-2 rounded mt-2">
+            <div
+              className="bg-blue-600 h-2 rounded transition-all"
+              style={{
+                width: `${((currentIndex + 1) / players.length) * 100}%`,
+              }}
+            ></div>
+          </div>
 
-        {currentPlayer && (
-          <ChampionshipGrid
-            player={currentPlayer}
-            onSave={handleSave}
-            isLast={isLast}
-            seasonId={seasonIdNumber}
-            dayId={dayIdNumber}
-          />
-        )}
+          {currentPlayer && (
+            <ChampionshipGrid
+              player={currentPlayer}
+              onSave={handleSave}
+              isFirst={isFirst}
+              isLast={isLast}
+              seasonId={seasonIdNumber}
+              dayId={dayIdNumber}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

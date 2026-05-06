@@ -2,11 +2,13 @@ import { useState } from "react";
 import type { IPlayer } from "../../types/player.ts";
 import { useNavigate } from "react-router-dom";
 import type { IScore } from "../../hooks/useScoreEntry.ts";
+import { Save } from "lucide-react";
 
 interface IProps {
   player: IPlayer;
   onSave: (scores: { parties: IScore[] }) => void;
   onPrev?: () => void;
+  isFirst: boolean;
   isLast: boolean;
   seasonId: number;
   dayIndex: number;
@@ -18,6 +20,7 @@ export default function ChampionshipGrid({
   player,
   onSave,
   onPrev,
+  isFirst,
   isLast,
   seasonId,
   dayIndex,
@@ -82,14 +85,14 @@ export default function ChampionshipGrid({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-8 rounded-xl shadow-md w-full max-w-md mx-auto mt-6"
+      className="bg-white p-6 rounded-xl shadow-md w-full max-w-2xl mx-auto mt-6"
     >
       <h3 className="text-xl font-bold mb-6 text-center">
         {player.nom} {player.prenom}
       </h3>
 
       {/* Header colonnes */}
-      <div className="grid grid-cols-[80px_1fr_1fr] gap-2 mb-2 px-1">
+      <div className="grid grid-cols-[80px_1fr_1fr_110px] gap-2 mb-2 px-1">
         <span />
         <span className="text-center text-xs font-medium text-gray-400 uppercase tracking-wide">
           points pour
@@ -106,12 +109,12 @@ export default function ChampionshipGrid({
         return (
           <div
             key={index}
-            className={`grid grid-cols-[80px_1fr_1fr] gap-2 items-center bg-white border rounded-xl px-3 py-2.5 mb-2 transition-colors ${
-              partie ? "border-gray-300" : "border-gray-100"
+            className={`grid grid-cols-[80px_1fr_1fr_110px] gap-2 items-center bg-white border rounded-xl px-3 py-2.5 mb-2 transition-colors ${
+              partie ? "border-gray-400" : "border-gray-100"
             }`}
           >
             {/* Label partie */}
-            <div className="text-xs font-medium text-gray-400">
+            <div className="font-medium text-gray-500">
               partie {index + 1}
             </div>
 
@@ -125,7 +128,9 @@ export default function ChampionshipGrid({
                 return (
                   <button
                     key={score}
-                    onClick={() => handleScoreClick(index, score)}
+                    onClick={() =>
+                      handleScoreClick(index, score, undefined)
+                    }
                     className={`w-9 h-9 rounded-lg text-sm font-medium transition-all active:scale-95 ${
                       isSelected
                         ? "bg-blue-700 text-white border border-blue-700"
@@ -148,7 +153,9 @@ export default function ChampionshipGrid({
                 return (
                   <button
                     key={score}
-                    onClick={() => handleScoreClick(index, score)}
+                    onClick={() =>
+                      handleScoreClick(index, undefined, score)
+                    }
                     className={`w-9 h-9 rounded-lg text-sm font-medium transition-all active:scale-95 ${
                       isSelected
                         ? "bg-red-700 text-white border border-red-700"
@@ -162,22 +169,24 @@ export default function ChampionshipGrid({
             </div>
 
             {/* Score résumé */}
-            {partie && (
-              <div className="col-span-3 flex items-center justify-center gap-2 mt-1">
-                <span className="text-sm font-medium text-gray-500">
-                  {partie.pointsPour} — {partie.pointsContre}
-                </span>
-                <span
-                  className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                    isVictoire
-                      ? "bg-blue-50 text-blue-700"
-                      : "bg-red-50 text-red-700"
-                  }`}
-                >
-                  {isVictoire ? "victoire" : "défaite"}
-                </span>
-              </div>
-            )}
+            <div className="flex items-center gap-2 w-fit ">
+              {partie && (
+                <>
+                  <span
+                    className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                      isVictoire
+                        ? "bg-blue-50 text-blue-700"
+                        : "bg-red-50 text-red-700"
+                    }`}
+                  >
+                    {isVictoire ? "victoire" : "défaite"}
+                  </span>
+                  <span className="text-sm font-medium text-gray-500">
+                    {partie.pointsPour} — {partie.pointsContre}
+                  </span>
+                </>
+              )}
+            </div>
           </div>
         );
       })}
@@ -186,7 +195,7 @@ export default function ChampionshipGrid({
       <div className="bg-gray-50 rounded-xl px-5 py-4 mt-4">
         <div className="grid grid-cols-4 gap-3 text-center">
           <div>
-            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">
+            <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">
               Total pour
             </div>
             <div className="text-2xl font-medium text-blue-700">
@@ -233,17 +242,35 @@ export default function ChampionshipGrid({
       </div>
 
       {/* Bouton validation */}
-      <button
-        type="submit"
-        disabled={!allFilled}
-        className={`w-full mt-4 py-3 rounded-xl text-base font-medium transition-all ${
-          allFilled
-            ? "bg-blue-700 text-white hover:bg-blue-800 active:scale-99"
-            : "bg-gray-100 text-gray-400 cursor-not-allowed"
-        }`}
-      >
-        Valider les scores
-      </button>
+      <div className="flex gap-3 pt-2">
+        <button
+          type="button"
+          className="flex-1 bg-gray-100 text-gray-700 px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+          onClick={onPrev}
+          disabled={isFirst}
+        >
+          ← Joueur précédent
+        </button>
+        <button
+          type="submit"
+          className="flex-1 bg-blue-600 text-white px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+          disabled={isLast || !allFilled}
+        >
+          Joueur suivant →
+        </button>
+      </div>
+      {isLast && (
+        <div className="flex items-center justify-center">
+          <button
+            type="submit"
+            className="flex gap-4 bg-teal-600 text-white px-3 py-2 rounded-lg hover:bg-teal-700 cursor-pointer text-sm font-medium"
+            disabled={!allFilled}
+          >
+            <Save />
+            Sauvegarder la journée
+          </button>
+        </div>
+      )}
     </form>
   );
 }
