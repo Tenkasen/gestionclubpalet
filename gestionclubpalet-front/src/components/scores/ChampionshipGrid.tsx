@@ -27,7 +27,7 @@ export default function ChampionshipGrid({
   seasonId,
   dayIndex,
 }: IProps) {
-  const [parties, setParties] = useState<IScore[] | null>(
+  const [parties, setParties] = useState<(IScore | null)[]>(
     currentScore ?? Array(6).fill(null),
   );
   const navigate = useNavigate();
@@ -103,10 +103,10 @@ export default function ChampionshipGrid({
       <div className="grid grid-cols-[80px_1fr_1fr_110px] gap-2 mb-2 px-1">
         <span />
         <span className="text-center text-xs font-medium text-gray-400 uppercase tracking-wide">
-          points pour
+          Points pour
         </span>
         <span className="text-center text-xs font-medium text-gray-400 uppercase tracking-wide">
-          points contre
+          Points contre
         </span>
       </div>
 
@@ -140,7 +140,7 @@ export default function ChampionshipGrid({
                     onClick={() =>
                       handleScoreClick(index, score, undefined)
                     }
-                    className={`w-9 h-9 rounded-lg text-sm font-medium transition-all active:scale-95 ${
+                    className={`w-9 h-9 rounded-lg text-sm font-medium transition-all active:scale-95 cursor-pointer ${
                       isSelected
                         ? "bg-blue-700 text-white border border-blue-700"
                         : "bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200"
@@ -166,7 +166,7 @@ export default function ChampionshipGrid({
                     onClick={() =>
                       handleScoreClick(index, undefined, score)
                     }
-                    className={`w-9 h-9 rounded-lg text-sm font-medium transition-all active:scale-95 ${
+                    className={`w-9 h-9 rounded-lg text-sm font-medium transition-all active:scale-95 cursor-pointer ${
                       isSelected
                         ? "bg-red-700 text-white border border-red-700"
                         : "bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200"
@@ -185,8 +185,8 @@ export default function ChampionshipGrid({
                   <span
                     className={`text-xs font-medium px-2 py-0.5 rounded-full ${
                       isVictoire
-                        ? "bg-blue-50 text-blue-700"
-                        : "bg-red-50 text-red-700"
+                        ? "bg-blue-100 text-blue-700"
+                        : "bg-red-100 text-red-700"
                     }`}
                   >
                     {isVictoire ? "victoire" : "défaite"}
@@ -202,7 +202,7 @@ export default function ChampionshipGrid({
       })}
 
       {/* Récap */}
-      <div className="bg-gray-50 rounded-xl px-5 py-4 mt-4">
+      <div className="bg-gray-100 rounded-xl px-5 py-4 mt-4">
         <div className="grid grid-cols-4 gap-3 text-center">
           <div>
             <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">
@@ -233,11 +233,7 @@ export default function ChampionshipGrid({
                     : "text-gray-600"
               }`}
             >
-              {filled.length
-                ? goalAverage >= 0
-                  ? `+${goalAverage}`
-                  : goalAverage
-                : "—"}
+              {filled.length ? goalAverage : "—"}
             </div>
           </div>
           <div>
@@ -245,7 +241,7 @@ export default function ChampionshipGrid({
               Victoires
             </div>
             <div className="text-2xl font-medium text-gray-800">
-              {nbVictoire}/{filled.length}
+              {nbVictoire}/{parties.length}
             </div>
           </div>
         </div>
