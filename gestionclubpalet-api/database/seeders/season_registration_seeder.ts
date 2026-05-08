@@ -16,10 +16,10 @@ export default class SeasonRegistrationSeeder extends BaseSeeder {
 
     // SAISON 2025-2026
     // ENTRAINEMENT 2025-2026 (seasonId: 4) - 52 joueurs
-    const entrainement2025PlayerIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 16, 17]
+    const entrainement2025PlayerIds = [7, 9, 10, 15]
 
     // CHAMPIONNAT 2025-2026 (seasonId: 5) - 46 joueurs
-    const championnat2025PlayerIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    const championnat2025PlayerIds = [5, 9, 10, 13]
 
     // COUPE 2025-2026 (seasonId: 6) - Mêmes joueurs que championnat
     const coupe2025PlayerIds = championnat2025PlayerIds

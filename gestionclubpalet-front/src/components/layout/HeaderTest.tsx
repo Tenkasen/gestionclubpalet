@@ -12,14 +12,14 @@ export default function HeaderTest() {
           Accueil
         </Link>
         <Link
-          to="/saisons/7/journées/1/saisie-entrainement"
+          to="/saisons/4/journées/1/saisie-entrainement"
           className="hover:underline
         hover:text-indigo-800 text-gray-700"
         >
           Saisie Entraînement
         </Link>
         <Link
-          to="/saisons/8/journées/1/saisie-match"
+          to="/saisons/5/journées/1/saisie-match"
           className="hover:underline
         hover:text-indigo-800 text-gray-700"
         >

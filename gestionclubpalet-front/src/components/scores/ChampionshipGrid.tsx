@@ -79,16 +79,16 @@ export default function ChampionshipGrid({
     e.preventDefault();
     if (!allFilled) return;
     onSave({ parties: parties as IScore[] });
-    if (isLast) {
+    if (isLast && dayIndex === 10) {
+      navigate(`/classements/${seasonId}`);
+    } else if (isLast) {
       navigate(`/classements/${seasonId}/journées/${dayIndex}`);
     }
   };
 
   useEffect(() => {
-    if (currentScore) {
-      setParties(currentScore);
-    }
-  }, [currentScore]);
+    setParties(currentScore ?? Array(6).fill(null));
+  }, [player]);
 
   return (
     <form

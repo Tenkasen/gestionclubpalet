@@ -8,7 +8,13 @@ export const createPlayerValidator = vine.compile(
       .trim()
       .minLength(3)
       .maxLength(100)
-      .transform((val) => val.replace(/\b\w/g, (c) => c.toUpperCase())),
+      .transform((val) =>
+        val
+          .trim()
+          .split(' ')
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+          .join(' ')
+      ),
     email: vine.string().email().optional(),
     telephone: vine
       .string()

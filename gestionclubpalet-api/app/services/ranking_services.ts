@@ -13,18 +13,6 @@ interface RankingEntry {
   points: number
   position?: number
 }
-interface RankingEntry2 {
-  playerId: number
-  nom: string
-  prenom: string
-  presences: number
-  totalPour: number
-  totalContre: number
-  goalAverage: number
-  nbVictoire: number
-  points: number
-  position?: number
-}
 
 export default class RankingService {
   async getTrainingRanking(seasonId: number, upToDayId?: number) {
@@ -125,7 +113,7 @@ export default class RankingService {
     const scores = await scoresQuery
 
     // Step B : Group scores by player
-    const playersMap = new Map<number, RankingEntry2>()
+    const playersMap = new Map<number, RankingEntry>()
 
     for (const score of scores) {
       const playerId = score.playerId
@@ -152,7 +140,7 @@ export default class RankingService {
       entry.presences += 1
       entry.totalPour += score.totalPour
       entry.totalContre += score.totalContre
-      entry.nbVictoire += score.nbVictoire
+      entry.nbVictoire! += score.nbVictoire
     }
 
     // Step C : Final ranking
@@ -161,7 +149,6 @@ export default class RankingService {
       (entry) => {
         entry.goalAverage = entry.totalPour - entry.totalContre
         entry.points = entry.totalPour
-        entry.nbVictoire
         return entry
       }
     )
@@ -178,7 +165,7 @@ export default class RankingService {
       }
       // 3. If tied, sort by victories in descending order
       if (b.nbVictoire !== a.nbVictoire) {
-        return b.nbVictoire - a.nbVictoire
+        return b.nbVictoire! - a.nbVictoire!
       }
       // 4. If tied, sort by presences in ascending order
       if (b.presences !== a.presences) {
