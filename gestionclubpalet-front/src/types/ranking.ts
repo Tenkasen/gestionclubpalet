@@ -6,6 +6,7 @@ export interface IRanking {
   totalPour: number;
   totalContre: number;
   goalAverage: number;
+  nbVictoire?: number;
   points: number;
   position: number;
 }

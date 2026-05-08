@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 
 import RankingService from '#services/ranking_services'
 import Day from '#models/day'
+import Season from '#models/season'
 // import Day from '#models/day'
 
 export default class RankingsController {
@@ -18,15 +19,31 @@ export default class RankingsController {
         message: `Cette journée n'existe pas dans cette saison`,
       })
     }
-    // call function with upToDay
-    const ranking = await this.rankingService.getTrainingRanking(params.seasonId, existingDay.id)
 
-    return ranking
+    const season = await Season.query().where('id', params.seasonId).first()
+
+    if (season?.type === 'ENTRAINEMENT') {
+      // call function with upToDay
+      const ranking = await this.rankingService.getTrainingRanking(params.seasonId, existingDay.id)
+      return ranking
+    } else {
+      const ranking = await this.rankingService.getChampionshipRanking(
+        params.seasonId,
+        existingDay.id
+      )
+      return ranking
+    }
   }
   async seasonRanking({ params }: HttpContext) {
+    const season = await Season.query().where('id', params.seasonId).first()
     // without upToDay, all the ranking
-    const ranking = await this.rankingService.getTrainingRanking(params.seasonId)
+    if (season?.type === 'ENTRAINEMENT') {
+      const ranking = await this.rankingService.getTrainingRanking(params.seasonId)
 
-    return ranking
+      return ranking
+    } else {
+      const ranking = await this.rankingService.getChampionshipRanking(params.seasonId)
+      return ranking
+    }
   }
 }

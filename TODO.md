@@ -36,4 +36,5 @@ _Week-end :_
 
 <u>_**Semaine :**_</u>
 
-- Modèle match championnat : création et saisie des 6 parties
+- Modèle match championnat : récupérer les current score
+- modifier et ajouter le caclul de ranking selon le type

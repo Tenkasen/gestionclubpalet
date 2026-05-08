@@ -89,8 +89,8 @@ export default function RankingTables({
                   {entry.points}
                 </td>
                 {type === "CHAMPIONNAT" && (
-                  <td className="px-3 py-3 text-center border-r border-gray-300">
-                    {entry.nbVictoires} // todo : pour championnat
+                  <td className="px-3 py-3 text-center border-l border-gray-300">
+                    {entry.nbVictoire}
                   </td>
                 )}
               </tr>
