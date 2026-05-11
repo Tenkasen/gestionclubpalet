@@ -9,6 +9,8 @@ import Header from "../components/layout/Header";
 import type { ISeason } from "../types/season";
 import RankingExport from "../components/rankings/RankingExport";
 import HeaderTest from "../components/layout/HeaderTest.tsx";
+import DayPodium from "../components/rankings/DayPodium.tsx";
+import useDayTop3 from "../hooks/useDayTop3.ts";
 
 export default function DayRanking() {
   const { seasonId, dayIndex } = useParams();
@@ -22,6 +24,8 @@ export default function DayRanking() {
     seasonIdNumber,
     dayIdNumber,
   );
+
+  const { top3 } = useDayTop3(seasonIdNumber, dayIdNumber);
 
   useEffect(() => {
     const getSeason = async () => {
@@ -68,6 +72,7 @@ export default function DayRanking() {
             type={season.type}
             dayIndex={dayIdNumber}
           />
+          {dayIndex && <DayPodium top3={top3} />}
         </div>
       </div>
     </>
