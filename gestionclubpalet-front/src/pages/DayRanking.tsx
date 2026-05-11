@@ -55,24 +55,27 @@ export default function DayRanking() {
     <>
       {/* <Header /> */}
       <HeaderTest />
-      {/* Bouton discret en haut à droite du bloc */}
-      <div className="p-3">
-        <RankingExport
-          elementId="ranking-export"
-          filename={`classement-${season.type}-j${dayIdNumber}`}
-        />
-      </div>
-      <div className="flex justify-center py-6">
-        <div id="ranking-export" className=" p-1 w-fit">
-          <h1 className="text-3xl font-bold pb-8 text-center px-6">
-            {season.type} - {season.nom}
-          </h1>
-          <RankingTables
-            data={ranking}
-            type={season.type}
-            dayIndex={dayIdNumber}
-          />
-          {dayIndex && <DayPodium top3={top3} />}
+      <div className="flex justify-center py-10">
+        <div className="relative">
+          {/* Bouton discret en haut à droite du bloc */}
+          <div className="absolute -right-100 z-10">
+            <RankingExport
+              elementId="ranking-export"
+              filename={`classement-${season.type}-j${dayIdNumber}`}
+            />
+          </div>
+
+          <div id="ranking-export" className=" p-1 w-fit">
+            <h1 className="text-3xl font-bold pb-8 text-center px-6">
+              {season.type} - {season.nom}
+            </h1>
+            <RankingTables
+              data={ranking}
+              type={season.type}
+              dayIndex={dayIdNumber}
+            />
+            {dayIndex && <DayPodium top3={top3} />}
+          </div>
         </div>
       </div>
     </>
