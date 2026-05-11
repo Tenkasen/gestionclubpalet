@@ -7,9 +7,12 @@ export default function useDayTop3(
   dayIndex: number,
 ) {
   const [top3, setTop3] = useState<IChampMatches[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     const fetchTop3 = async () => {
       try {
+        setLoading(true);
         const response = await champMatchesApi.getAll(
           seasonId,
           dayIndex,
@@ -34,12 +37,16 @@ export default function useDayTop3(
 
         const bestPlayers = dayRank.slice(0, 3);
         setTop3(bestPlayers);
+        setError(null);
       } catch (error) {
+        setError("Erreur lors du chargement du podium de la journée");
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchTop3();
   }, [seasonId, dayIndex]);
 
-  return { top3 };
+  return { top3, loading, error };
 }

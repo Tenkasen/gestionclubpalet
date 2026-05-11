@@ -18,7 +18,6 @@
 
 ## Côté FRONT
 
--Gérer le Header en mobile
 -Organisation des routes de navigations
 
 - Récupérer le type de la saison pour la saisie des scores
@@ -36,5 +35,5 @@ _Week-end :_
 
 <u>_**Semaine :**_</u>
 
-- Modèle match championnat : récupérer les current score
-- modifier et ajouter le caclul de ranking selon le type
+- page et lien pour meilleur navigation + bouton ajout de saison et journées
+- gestion des joueurs dynamiques

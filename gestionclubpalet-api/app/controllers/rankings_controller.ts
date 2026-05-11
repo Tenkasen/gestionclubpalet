@@ -20,30 +20,22 @@ export default class RankingsController {
       })
     }
 
-    const season = await Season.query().where('id', params.seasonId).first()
+    const season = await Season.findOrFail(params.seasonId)
 
-    if (season?.type === 'ENTRAINEMENT') {
+    if (season.type === 'ENTRAINEMENT') {
       // call function with upToDay
-      const ranking = await this.rankingService.getTrainingRanking(params.seasonId, existingDay.id)
-      return ranking
+      return await this.rankingService.getTrainingRanking(params.seasonId, existingDay.id)
     } else {
-      const ranking = await this.rankingService.getChampionshipRanking(
-        params.seasonId,
-        existingDay.id
-      )
-      return ranking
+      return await this.rankingService.getChampionshipRanking(params.seasonId, existingDay.id)
     }
   }
   async seasonRanking({ params }: HttpContext) {
-    const season = await Season.query().where('id', params.seasonId).first()
+    const season = await Season.findOrFail(params.seasonId)
     // without upToDay, all the ranking
-    if (season?.type === 'ENTRAINEMENT') {
-      const ranking = await this.rankingService.getTrainingRanking(params.seasonId)
-
-      return ranking
+    if (season.type === 'ENTRAINEMENT') {
+      return await this.rankingService.getTrainingRanking(params.seasonId)
     } else {
-      const ranking = await this.rankingService.getChampionshipRanking(params.seasonId)
-      return ranking
+      return await this.rankingService.getChampionshipRanking(params.seasonId)
     }
   }
 }
