@@ -1,11 +1,64 @@
+import { useState } from "react";
+import type { IPlayer } from "../../types/player.ts";
+import { playerAPI } from "../../api/player.api.ts";
+import { seasonRegistrationApi } from "../../api/seasonRegistration.api.ts";
+import { toast } from "sonner";
+
 interface IProps {
-  handleCLick: () => void;
-  handleFunction: (e: React.SubmitEvent<HTMLFormElement>) => void;
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (player: IPlayer) => void;
+  seasonId?: number;
 }
+
 export default function AddPlayerModal({
-  handleCLick,
-  handleFunction,
+  isOpen,
+  onClose,
+  onSave,
+  seasonId,
 }: IProps) {
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [email, setEmail] = useState("");
+  const [anniversaire, setAnniversaire] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [dateInscription, setDateInscription] = useState(
+    new Date().toISOString().split("T")[0],
+  );
+  const [isGuest, setIsGuest] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (
+    e: React.SubmitEvent<HTMLFormElement>,
+  ) => {
+    try {
+      e.preventDefault();
+      setError(null);
+
+      const newPlayer = await playerAPI.create({
+        nom,
+        prenom,
+        email: email || undefined,
+        anniversaire: anniversaire ? anniversaire : undefined,
+        telephone: telephone || undefined,
+        dateInscription,
+        isGuest,
+      });
+      if (!newPlayer) return;
+      if (seasonId) {
+        await seasonRegistrationApi.create(seasonId, {
+          playerId: newPlayer.id,
+        });
+      }
+      onSave(newPlayer);
+      onClose();
+    } catch (error) {
+      setError(`${error}`);
+      toast.error(` ${error}`);
+    }
+  };
+
+  if (!isOpen) return null;
   return (
     <div>
       <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/30">
@@ -16,13 +69,14 @@ export default function AddPlayerModal({
             </h2>
             <button
               type="button"
-              onClick={handleCLick}
+              onClick={onClose}
               className="cursor-pointer rounded hover:bg-red-500 transition-colors px-0.5"
             >
               <i className="fa-solid fa-xmark text-stone-700 text-sm"></i>
             </button>
           </div>
-          <form onSubmit={handleFunction}>
+
+          <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-8 mb-8">
               <div>
                 <label className="block text-stone-700 mb-1">
@@ -31,7 +85,9 @@ export default function AddPlayerModal({
                 <input
                   type="text"
                   name="nom"
-                  placeholder="Votre Nom"
+                  value={nom}
+                  onChange={(e) => setNom(e.target.value)}
+                  placeholder="Dupont"
                   className="border border-stone-400 rounded px-3 py-2 w-full"
                   required
                 />
@@ -43,7 +99,9 @@ export default function AddPlayerModal({
                 <input
                   type="text"
                   name="prenom"
-                  placeholder="Votre Prénom"
+                  value={prenom}
+                  onChange={(e) => setPrenom(e.target.value)}
+                  placeholder="Martin"
                   className="border border-stone-400 rounded px-3 py-2 w-full"
                   required
                 />
@@ -55,6 +113,8 @@ export default function AddPlayerModal({
               </label>
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="mon-mail@email.com"
                 className="border border-stone-400 rounded px-3 py-2 w-full"
               />
@@ -66,6 +126,8 @@ export default function AddPlayerModal({
                 </label>
                 <input
                   type="date"
+                  value={anniversaire}
+                  onChange={(e) => setAnniversaire(e.target.value)}
                   className="border border-stone-400 rounded px-3 py-2 w-full"
                 />
               </div>
@@ -75,8 +137,35 @@ export default function AddPlayerModal({
                 </label>
                 <input
                   type="tel"
+                  value={telephone}
+                  onChange={(e) => setTelephone(e.target.value)}
                   placeholder="06 07 08 09 10"
                   className="border border-stone-400 rounded px-3 py-2 w-full"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-8 mb-10">
+              <div>
+                <label className="block text-stone-700 mb-1">
+                  Date d'inscription
+                </label>
+                <input
+                  type="date"
+                  value={dateInscription}
+                  onChange={(e) => setDateInscription(e.target.value)}
+                  className="border border-stone-400 rounded px-3 py-2 w-full"
+                />
+              </div>
+              <div className="flex justify-center items-center gap-6">
+                <label className="block text-stone-700 mb-1">
+                  Joueur non licencié ?
+                </label>
+                <input
+                  type="checkbox"
+                  checked={isGuest}
+                  onChange={(e) => setIsGuest(e.target.checked)}
+                  placeholder="06 07 08 09 10"
+                  className="border-stone-400 w-5"
                 />
               </div>
             </div>
@@ -89,8 +178,8 @@ export default function AddPlayerModal({
               </button>
               <button
                 type="button"
+                onClick={onClose}
                 className="px-4 py-2 rounded text-stone-600 border border-stone-400 hover:bg-stone-200 hover:cursor-pointer"
-                onClick={handleCLick}
               >
                 Annuler
               </button>

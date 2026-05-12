@@ -23,7 +23,7 @@ export const playerAPI = {
       throw error;
     }
   },
-  async create(data: IPlayer): Promise<IPlayer | null> {
+  async create(data: Partial<IPlayer>): Promise<IPlayer | null> {
     try {
       const { data: createdPlayer } = await api.post<{
         player: IPlayer;

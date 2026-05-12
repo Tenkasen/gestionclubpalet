@@ -22,12 +22,12 @@ export const createPlayerValidator = vine.compile(
       .optional(),
     anniversaire: vine
       .date({
-        formats: ['DD/MM/YYYY', 'DD MM YYYY', 'DD-MM-YYYY'],
+        formats: ['DD/MM/YYYY', 'DD MM YYYY', 'DD-MM-YYYY', 'YYYY-MM-DD'],
       })
       .optional(),
     dateInscription: vine
       .date({
-        formats: ['DD/MM/YYYY', 'DD MM YYYY', 'DD-MM-YYYY'],
+        formats: ['DD/MM/YYYY', 'DD MM YYYY', 'DD-MM-YYYY', 'YYYY-MM-DD'],
       })
       .optional(),
     isGuest: vine.boolean().optional(),
@@ -46,12 +46,12 @@ export const updatePlayerValidator = vine.compile(
       .optional(),
     anniversaire: vine
       .date({
-        formats: ['DD/MM/YYYY', 'DD MM YYYY', 'DD-MM-YYYY'],
+        formats: ['DD/MM/YYYY', 'DD MM YYYY', 'DD-MM-YYYY', 'YYYY-MM-DD'],
       })
       .optional(),
     dateInscription: vine
       .date({
-        formats: ['DD/MM/YYYY', 'DD MM YYYY', 'DD-MM-YYYY'],
+        formats: ['DD/MM/YYYY', 'DD MM YYYY', 'DD-MM-YYYY', 'YYYY-MM-DD'],
       })
       .optional(),
     isGuest: vine.boolean().optional(),

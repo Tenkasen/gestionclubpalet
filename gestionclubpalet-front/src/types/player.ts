@@ -4,8 +4,8 @@ export interface IPlayer {
   prenom: string;
   email?: string;
   telephone?: string;
-  anniversaire?: Date;
-  dateInscription: Date;
+  anniversaire?: string;
+  dateInscription: string;
   isGuest: boolean;
   clubId: number | null;
   createdAt: string;

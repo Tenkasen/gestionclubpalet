@@ -3,10 +3,10 @@ import type { IPlayer } from "../types/player.ts";
 import { playerAPI } from "../api/player.api.ts";
 import PageLoading from "../components/feedback/PageLoading.tsx";
 import PageError from "../components/feedback/PageError.tsx";
-import Header from "../components/layout/Header.tsx";
+// import Header from "../components/layout/Header.tsx";
 import { toast } from "sonner";
-import AddPlayerModal from "../components/modals/AddPlayerModal.tsx";
 import HeaderTest from "../components/layout/HeaderTest.tsx";
+import AddPlayerModal from "../components/players/AddPlayerModal.tsx";
 
 export default function Players() {
   const [players, setPlayers] = useState<IPlayer[]>([]);
@@ -42,28 +42,16 @@ export default function Players() {
     toast.success("Joueur supprimé avec succès !");
   };
 
-  const handleAddPlayer = async (
-    e: React.SubmitEvent<HTMLFormElement>,
-  ) => {
-    try {
-      e.preventDefault();
-      const formData = new FormData(e.currentTarget);
-      const data = Object.fromEntries(formData) as unknown as IPlayer;
+  const handlePlayerSaved = (player: IPlayer) => {
+    setPlayers((prev) =>
+      [...prev, player].sort((a, b) => {
+        const nomCompare = a.nom.localeCompare(b.nom);
+        if (nomCompare !== 0) return nomCompare;
+        return a.prenom.localeCompare(b.prenom);
+      }),
+    );
 
-      const newPlayer = await playerAPI.create(data);
-      if (!newPlayer) return;
-      setPlayers((prev) =>
-        [...prev, newPlayer].sort((a, b) => {
-          const nomCompare = a.nom.localeCompare(b.nom);
-          if (nomCompare !== 0) return nomCompare;
-          return a.prenom.localeCompare(b.prenom);
-        }),
-      );
-      setOpen(false);
-      toast.success("Joueur ajouté avec succès !");
-    } catch (error) {
-      toast.error(`${error}`);
-    }
+    toast.success("Joueur ajouté avec succès !");
   };
 
   if (loading) return <PageLoading />;
@@ -120,8 +108,9 @@ export default function Players() {
 
             {open && (
               <AddPlayerModal
-                handleCLick={() => setOpen(!open)}
-                handleFunction={handleAddPlayer}
+                isOpen={open}
+                onClose={() => setOpen(false)}
+                onSave={handlePlayerSaved}
               />
             )}
           </div>

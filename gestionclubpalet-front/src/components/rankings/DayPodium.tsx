@@ -15,6 +15,7 @@ const RANKS = [
   },
   {
     order: "order-3",
+    blockH: "h-[0px]",
     border: "border-[#F0997B]",
     laurier: "/podium/laurier_3.png",
   },
