@@ -7,6 +7,7 @@ import PageError from "../components/feedback/PageError.tsx";
 import { toast } from "sonner";
 import HeaderTest from "../components/layout/HeaderTest.tsx";
 import AddPlayerModal from "../components/players/AddPlayerModal.tsx";
+import AddPlayerButton from "../components/players/AddPlayerButton.tsx";
 
 export default function Players() {
   const [players, setPlayers] = useState<IPlayer[]>([]);
@@ -96,23 +97,9 @@ export default function Players() {
             </select> */}
           </div>
           <div className="flex-end">
-            <button
-              type="button"
-              className="relative border border-white bg-blue-600 p-2 rounded-lg text-stone-200 hover:cursor-pointer hover:bg-blue-500"
-              onClick={() => setOpen(true)}
-            >
-              Ajouter un licencié
-            </button>
+            <AddPlayerButton onSave={handlePlayerSaved} />
 
-            {/* add player form */}
-
-            {open && (
-              <AddPlayerModal
-                isOpen={open}
-                onClose={() => setOpen(false)}
-                onSave={handlePlayerSaved}
-              />
-            )}
+            {/* add player button & form */}
           </div>
         </div>
 
