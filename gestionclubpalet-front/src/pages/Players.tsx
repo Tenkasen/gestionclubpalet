@@ -6,14 +6,13 @@ import PageError from "../components/feedback/PageError.tsx";
 // import Header from "../components/layout/Header.tsx";
 import { toast } from "sonner";
 import HeaderTest from "../components/layout/HeaderTest.tsx";
-import AddPlayerModal from "../components/players/AddPlayerModal.tsx";
 import AddPlayerButton from "../components/players/AddPlayerButton.tsx";
+import { sortPlayers } from "../utils/sortPlayer.ts";
 
 export default function Players() {
   const [players, setPlayers] = useState<IPlayer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -44,13 +43,7 @@ export default function Players() {
   };
 
   const handlePlayerSaved = (player: IPlayer) => {
-    setPlayers((prev) =>
-      [...prev, player].sort((a, b) => {
-        const nomCompare = a.nom.localeCompare(b.nom);
-        if (nomCompare !== 0) return nomCompare;
-        return a.prenom.localeCompare(b.prenom);
-      }),
-    );
+    setPlayers((prev) => sortPlayers([...prev, player]));
 
     toast.success("Joueur ajouté avec succès !");
   };

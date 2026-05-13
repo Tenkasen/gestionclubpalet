@@ -13,6 +13,7 @@ import PageLoading from "../components/feedback/PageLoading.tsx";
 import PageError from "../components/feedback/PageError.tsx";
 import AddPlayerButton from "../components/players/AddPlayerButton.tsx";
 import { toast } from "sonner";
+import { sortPlayers } from "../utils/sortPlayer.ts";
 
 export default function TrainingScoreEntry() {
   const { seasonId, dayIndex } = useParams();
@@ -104,13 +105,7 @@ export default function TrainingScoreEntry() {
   };
 
   const handlePlayerSaved = (player: IPlayer) => {
-    setPlayers((prev) =>
-      [...prev, player].sort((a, b) => {
-        const nomCompare = a.nom.localeCompare(b.nom);
-        if (nomCompare !== 0) return nomCompare;
-        return a.prenom.localeCompare(b.prenom);
-      }),
-    );
+    setPlayers((prev) => sortPlayers([...prev, player]));
 
     toast.success("Joueur ajouté avec succès !");
   };
@@ -122,16 +117,18 @@ export default function TrainingScoreEntry() {
       <HeaderTest />
       <div className="container mx-auto py-10 max-w-md">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold pb-2">
-            Saisie Entraînement J{dayIdNumber} -{" "}
-            {day?.date
-              ? new Date(day.date).toLocaleDateString("fr-FR")
-              : ""}{" "}
-          </h1>
-          <AddPlayerButton
-            onSave={handlePlayerSaved}
-            seasonId={seasonIdNumber}
-          />
+          <div className="flex justify-between">
+            <h1 className="text-3xl font-bold pb-2">
+              Saisie Entraînement J{dayIdNumber} -{" "}
+              {day?.date
+                ? new Date(day.date).toLocaleDateString("fr-FR")
+                : ""}{" "}
+            </h1>
+            <AddPlayerButton
+              onSave={handlePlayerSaved}
+              seasonId={seasonIdNumber}
+            />
+          </div>
           <p className="text-gray-600">
             Joueur {currentIndex + 1} / {players.length}
           </p>
