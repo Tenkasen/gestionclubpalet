@@ -10,6 +10,9 @@ import ChampionshipGrid from "../components/scores/ChampionshipGrid.tsx";
 import { champMatchesApi } from "../api/champMatches.api.ts";
 import type { IChampMatches } from "../types/champMatches.ts";
 import HeaderTest from "../components/layout/HeaderTest.tsx";
+import AddPlayerButton from "../components/players/AddPlayerButton.tsx";
+import { toast } from "sonner";
+import { sortPlayers } from "../utils/sortPlayer.ts";
 
 export default function ChampionshipScoreEntry() {
   const { seasonId, dayIndex } = useParams();
@@ -108,6 +111,12 @@ export default function ChampionshipScoreEntry() {
     nextPlayer();
   };
 
+  const handlePlayerSaved = (player: IPlayer) => {
+    setPlayers((prev) => sortPlayers([...prev, player]));
+
+    toast.success("Joueur ajouté avec succès !");
+  };
+
   if (loading)
     return (
       <div className="container flex flex-col justify-center items-center min-h-screen">
@@ -129,12 +138,19 @@ export default function ChampionshipScoreEntry() {
       <HeaderTest />
       <div className="container mx-auto py-10 max-w-md">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold pb-2">
-            Saisie Championnat J{dayIdNumber} -{" "}
-            {day?.date
-              ? new Date(day.date).toLocaleDateString("fr-FR")
-              : ""}{" "}
-          </h1>
+          <div className="flex justify-between">
+            <h1 className="text-3xl font-bold pb-2">
+              Saisie Championnat J{dayIdNumber} -{" "}
+              {day?.date
+                ? new Date(day.date).toLocaleDateString("fr-FR")
+                : ""}{" "}
+            </h1>
+            <AddPlayerButton
+              onSave={handlePlayerSaved}
+              seasonId={seasonIdNumber}
+            />
+          </div>
+
           <p className="text-gray-600">
             Joueur {currentIndex + 1} / {players.length}
           </p>
