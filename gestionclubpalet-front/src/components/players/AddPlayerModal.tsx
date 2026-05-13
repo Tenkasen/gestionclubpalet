@@ -25,7 +25,7 @@ export default function AddPlayerModal({
   const [dateInscription, setDateInscription] = useState(
     new Date().toISOString().split("T")[0],
   );
-  const [isGuest, setIsGuest] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (
@@ -34,6 +34,7 @@ export default function AddPlayerModal({
     try {
       e.preventDefault();
       setError(null);
+      setLoading(true);
 
       const newPlayer = await playerAPI.create({
         nom,
@@ -42,7 +43,6 @@ export default function AddPlayerModal({
         anniversaire: anniversaire ? anniversaire : undefined,
         telephone: telephone || undefined,
         dateInscription,
-        isGuest,
       });
       if (!newPlayer) return;
       if (seasonId) {
@@ -55,6 +55,8 @@ export default function AddPlayerModal({
     } catch (error) {
       setError(`${error}`);
       toast.error(` ${error}`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -156,25 +158,14 @@ export default function AddPlayerModal({
                   className="border border-stone-400 rounded px-3 py-2 w-full"
                 />
               </div>
-              <div className="flex justify-center items-center gap-6">
-                <label className="block text-stone-700 mb-1">
-                  Joueur non licencié ?
-                </label>
-                <input
-                  type="checkbox"
-                  checked={isGuest}
-                  onChange={(e) => setIsGuest(e.target.checked)}
-                  placeholder="06 07 08 09 10"
-                  className="border-stone-400 w-5"
-                />
-              </div>
             </div>
             <div className="flex justify-center gap-10 mb-6">
               <button
                 type="submit"
                 className="border border-white bg-blue-600 p-2 rounded-lg text-stone-100 hover:cursor-pointer hover:bg-blue-500"
+                disabled={loading}
               >
-                Sauvegarder
+                {loading ? "Ajout en cours..." : "Ajouter le joueur"}
               </button>
               <button
                 type="button"
