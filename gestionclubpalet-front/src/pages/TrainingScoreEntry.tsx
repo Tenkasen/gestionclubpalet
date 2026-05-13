@@ -11,6 +11,8 @@ import type { ITrainingScore } from "../types/trainingScore";
 import HeaderTest from "../components/layout/HeaderTest.tsx";
 import PageLoading from "../components/feedback/PageLoading.tsx";
 import PageError from "../components/feedback/PageError.tsx";
+import AddPlayerButton from "../components/players/AddPlayerButton.tsx";
+import { toast } from "sonner";
 
 export default function TrainingScoreEntry() {
   const { seasonId, dayIndex } = useParams();
@@ -101,6 +103,18 @@ export default function TrainingScoreEntry() {
     nextPlayer();
   };
 
+  const handlePlayerSaved = (player: IPlayer) => {
+    setPlayers((prev) =>
+      [...prev, player].sort((a, b) => {
+        const nomCompare = a.nom.localeCompare(b.nom);
+        if (nomCompare !== 0) return nomCompare;
+        return a.prenom.localeCompare(b.prenom);
+      }),
+    );
+
+    toast.success("Joueur ajouté avec succès !");
+  };
+
   if (loading) return <PageLoading />;
   if (error) return <PageError error={error} />;
   return (
@@ -114,6 +128,10 @@ export default function TrainingScoreEntry() {
               ? new Date(day.date).toLocaleDateString("fr-FR")
               : ""}{" "}
           </h1>
+          <AddPlayerButton
+            onSave={handlePlayerSaved}
+            seasonId={seasonIdNumber}
+          />
           <p className="text-gray-600">
             Joueur {currentIndex + 1} / {players.length}
           </p>

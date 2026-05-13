@@ -19,9 +19,13 @@ export default function AddPlayerModal({
 }: IProps) {
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
-  const [email, setEmail] = useState("");
-  const [anniversaire, setAnniversaire] = useState("");
-  const [telephone, setTelephone] = useState("");
+  const [email, setEmail] = useState<string | undefined>(undefined);
+  const [anniversaire, setAnniversaire] = useState<
+    string | undefined
+  >(undefined);
+  const [telephone, setTelephone] = useState<string | undefined>(
+    undefined,
+  );
   const [dateInscription, setDateInscription] = useState(
     new Date().toISOString().split("T")[0],
   );
@@ -39,25 +43,32 @@ export default function AddPlayerModal({
       const newPlayer = await playerAPI.create({
         nom,
         prenom,
-        email: email || undefined,
-        anniversaire: anniversaire ? anniversaire : undefined,
-        telephone: telephone || undefined,
+        email,
+        anniversaire,
+        telephone,
         dateInscription,
       });
       if (!newPlayer) return;
-      if (seasonId) {
-        await seasonRegistrationApi.create(seasonId, {
-          playerId: newPlayer.id,
-        });
-      }
       onSave(newPlayer);
-      onClose();
+      if (seasonId) {
+        await seasonRegistrationApi.create(seasonId, [newPlayer.id]);
+      }
+      resetForm();
     } catch (error) {
       setError(`${error}`);
       toast.error(` ${error}`);
     } finally {
       setLoading(false);
     }
+  };
+
+  const resetForm = () => {
+    setNom("");
+    setPrenom("");
+    setEmail(undefined);
+    setAnniversaire(undefined);
+    setTelephone(undefined);
+    onClose();
   };
 
   if (!isOpen) return null;
@@ -169,7 +180,7 @@ export default function AddPlayerModal({
               </button>
               <button
                 type="button"
-                onClick={onClose}
+                onClick={resetForm}
                 className="px-4 py-2 rounded text-stone-600 border border-stone-400 hover:bg-stone-200 hover:cursor-pointer"
               >
                 Annuler

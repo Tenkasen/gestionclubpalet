@@ -52,14 +52,12 @@ export const seasonRegistrationApi = {
   },
   async create(
     seasonId: number,
-    data: Partial<ISeasonRegistration>,
-  ): Promise<ISeasonRegistration | null> {
+    data: number[],
+  ): Promise<ISeasonRegistration[] | null> {
     try {
-      const { data: createdRegistration } =
-        await api.post<ISeasonRegistration>(
-          `/seasons/${seasonId}/players`,
-          data,
-        );
+      const { data: createdRegistration } = await api.post<
+        ISeasonRegistration[]
+      >(`/seasons/${seasonId}/players`, data);
       return createdRegistration;
     } catch (error) {
       if (isAxiosError(error) && error.response?.status === 404) {
