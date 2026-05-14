@@ -8,11 +8,13 @@ import { toast } from "sonner";
 import HeaderTest from "../components/layout/HeaderTest.tsx";
 import AddPlayerButton from "../components/players/AddPlayerButton.tsx";
 import { sortPlayers } from "../utils/sortPlayer.ts";
+import OptionsModal from "../components/players/OptionsModal.tsx";
 
 export default function Players() {
   const [players, setPlayers] = useState<IPlayer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [open, setOpen] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -140,14 +142,17 @@ export default function Players() {
                       day: "numeric",
                     })}
                   </td>
-                  <td className="px-2 py-3.5 text-center">
+                  <td className="px-2 py-3.5 text-center relative">
                     <button
                       type="button"
                       className="text-emerald-500 hover:text-emerald-800 hover:cursor-pointer transition-colors"
-                      onClick={() => handleDeletePlayer(player.id)}
+                      onClick={() =>
+                        setOpen(open === player.id ? null : player.id)
+                      }
                     >
                       <i className="fa-solid fa-ellipsis" />
                     </button>
+                    {open === player.id && <OptionsModal />}
                   </td>
                 </tr>
               ))}
@@ -159,6 +164,13 @@ export default function Players() {
           {players.length} joueur{players.length > 1 ? "s" : ""}
         </p>
       </div>
+
+      {open && (
+        <div
+          className="fixed inset-0 z-30"
+          onClick={() => setOpen(null)}
+        ></div>
+      )}
     </>
   );
 }
