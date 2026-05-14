@@ -163,6 +163,7 @@ export default function Players() {
                         <OptionsModal
                           top={modalPos.top}
                           left={modalPos.left}
+                          player={player}
                         />
                       )}
                     </td>
