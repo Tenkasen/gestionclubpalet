@@ -75,7 +75,7 @@ export default function PlayerInfosModal({ player, onClose }: Props) {
     : null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 cursor-default">
       <div className="bg-stone-100 rounded-xl shadow-2xl border border-slate-200 w-full max-w-sm mx-6 overflow-hidden">
         {/* Header */}
         <div className="bg-indigo-800 px-5 py-4 relative">
@@ -92,7 +92,7 @@ export default function PlayerInfosModal({ player, onClose }: Props) {
           </div>
           <button
             onClick={onClose}
-            className="absolute top-3 right-3 text-indigo-300 hover:text-white hover:bg-white/15 rounded-md p-1 transition-colors"
+            className="absolute top-3 right-3 text-indigo-300 hover:text-white hover:bg-white/15 rounded-md p-1 transition-colors cursor-pointer"
           >
             <X size={16} />
           </button>
