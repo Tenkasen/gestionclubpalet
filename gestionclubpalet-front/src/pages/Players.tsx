@@ -14,7 +14,11 @@ export default function Players() {
   const [players, setPlayers] = useState<IPlayer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [open, setOpen] = useState<number | null>(null);
+  const [openId, setOpenId] = useState<number | null>(null);
+  const [modalPos, setModalPos] = useState<{
+    top: number;
+    left: number;
+  }>({ top: 0, left: 0 });
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -146,13 +150,24 @@ export default function Players() {
                     <button
                       type="button"
                       className="text-emerald-500 hover:text-emerald-800 hover:cursor-pointer transition-colors"
-                      onClick={() =>
-                        setOpen(open === player.id ? null : player.id)
-                      }
+                      onClick={(e) => {
+                        const rect =
+                          e.currentTarget.getBoundingClientRect();
+                        setModalPos({
+                          top: rect.bottom - 35,
+                          left: rect.right + 35,
+                        });
+                        setOpenId(player.id);
+                      }}
                     >
                       <i className="fa-solid fa-ellipsis" />
                     </button>
-                    {open === player.id && <OptionsModal />}
+                    {openId === player.id && (
+                      <OptionsModal
+                        top={modalPos.top}
+                        left={modalPos.left}
+                      />
+                    )}
                   </td>
                 </tr>
               ))}
@@ -165,10 +180,10 @@ export default function Players() {
         </p>
       </div>
 
-      {open && (
+      {openId && (
         <div
           className="fixed inset-0 z-30"
-          onClick={() => setOpen(null)}
+          onClick={() => setOpenId(null)}
         ></div>
       )}
     </>
