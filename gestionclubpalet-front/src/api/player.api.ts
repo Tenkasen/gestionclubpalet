@@ -63,8 +63,7 @@ export const playerAPI = {
       return data.message;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response?.status === 404) {
-        console.warn(`Le joueur avec l'ID ${id} n'existe pas.`);
-        return null;
+        throw new Error(`Le joueur avec l'ID ${id} n'existe pas.`);
       }
       console.error(
         "Erreur lors de la récupération du joueur (playerAPI.delete):",

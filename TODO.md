@@ -14,6 +14,8 @@
 
 - check le type de saison avant de rentrer les scores ?
 
+-retirer isGuest
+
   <br>
 
 ## Côté FRONT
@@ -21,6 +23,12 @@
 -Organisation des routes de navigations
 
 - Récupérer le type de la saison pour la saisie des scores
+
+### v1
+
+- onglet stats ?
+- tri des joueurs
+- modifs des couleurs
 
 <br>
 

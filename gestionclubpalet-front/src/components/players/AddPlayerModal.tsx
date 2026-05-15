@@ -171,10 +171,10 @@ export default function AddPlayerModal({
                 />
               </div>
             </div>
-            <div className="flex justify-center gap-10 mb-6">
+            <div className="flex justify-center gap-6">
               <button
                 type="submit"
-                className="border border-white bg-blue-600 p-2 rounded-lg text-stone-100 hover:cursor-pointer hover:bg-blue-500"
+                className="border border-white bg-blue-600 px-4 py-2 rounded-lg text-stone-100 hover:cursor-pointer hover:bg-blue-500"
                 disabled={loading}
               >
                 {loading ? "Ajout en cours..." : "Ajouter le joueur"}
@@ -182,7 +182,7 @@ export default function AddPlayerModal({
               <button
                 type="button"
                 onClick={resetForm}
-                className="px-4 py-2 rounded text-stone-600 border border-stone-400 hover:bg-stone-200 hover:cursor-pointer"
+                className="px-4 py-2 rounded-lg text-stone-600 border border-stone-400 hover:bg-stone-200 hover:cursor-pointer"
               >
                 Annuler
               </button>

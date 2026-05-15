@@ -41,11 +41,16 @@ export default function Players() {
   }, []);
 
   const handleDeletePlayer = async (playerId: number) => {
-    await playerAPI.delete(playerId);
-    setPlayers((prev) =>
-      prev.filter((player) => player.id !== playerId),
-    );
-    toast.success("Joueur supprimé avec succès !");
+    try {
+      await playerAPI.delete(playerId);
+      setPlayers((prev) =>
+        prev.filter((player) => player.id !== playerId),
+      );
+      toast.success("Joueur supprimé avec succès !");
+    } catch (error) {
+      toast.error("Erreur lors de la suppression du joueur.");
+      console.error(error);
+    }
   };
 
   const handlePlayerSaved = (player: IPlayer) => {
@@ -164,6 +169,7 @@ export default function Players() {
                           top={modalPos.top}
                           left={modalPos.left}
                           player={player}
+                          onDelete={handleDeletePlayer}
                         />
                       )}
                     </td>

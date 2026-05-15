@@ -1,7 +1,7 @@
 import Player from '#models/player'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
-const dateInscription = new Date('2016-06-19')
+const dateInscription = new Date('2016-08-19')
 
 export default class PlayerSeeder extends BaseSeeder {
   async run() {
