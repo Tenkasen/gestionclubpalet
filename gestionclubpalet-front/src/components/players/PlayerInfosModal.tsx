@@ -8,32 +8,49 @@ import {
 } from "lucide-react";
 import type { IPlayer } from "../../types/player.ts";
 
-type Props = { player: IPlayer; onClose: () => void };
-
-const empty = (val?: string) => (val?.trim() ? val : null);
-
-function calcAge(dateStr?: string) {
-  if (!dateStr) return null;
-  const diff = Date.now() - new Date(dateStr).getTime();
-  return Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+interface IProps {
+  player: IPlayer;
+  onClose: () => void;
 }
 
-function fmtDate(dateStr?: string) {
-  if (!dateStr) return null;
-  return new Date(dateStr).toLocaleDateString("fr-FR", {
+function empty(value?: string) {
+  return value?.trim() ? value : null;
+}
+
+function calculateAge(dateString?: string) {
+  if (!dateString) return null;
+  const age = Date.now() - new Date(dateString).getTime();
+  return Math.floor(age / (1000 * 60 * 60 * 24 * 365.25));
+}
+
+function formatDate(dateString?: string) {
+  if (!dateString) return null;
+  return new Date(dateString).toLocaleDateString("fr-FR", {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
 }
 
-type RowProps = {
+function formatTelNumber(telNumber?: string) {
+  if (!telNumber) return null;
+  const phoneArray: string[] = [];
+  for (let index = 0; index < telNumber.length; index += 2) {
+    const phoneNumber = telNumber.slice(index, index + 2);
+    console.log(phoneNumber);
+
+    phoneArray.push(phoneNumber);
+  }
+  return phoneArray.join(" ");
+}
+
+interface IRowProps {
   icon: React.ReactNode;
   label: string;
   value?: string | null;
-};
+}
 
-function Row({ icon, label, value }: RowProps) {
+function Row({ icon, label, value }: IRowProps) {
   return (
     <div className="flex items-center gap-3 py-2.5 border-b border-stone-200 last:border-0">
       <div className="w-10 h-10 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0 text-indigo-600">
@@ -57,7 +74,10 @@ function Row({ icon, label, value }: RowProps) {
   );
 }
 
-export default function PlayerInfosModal({ player, onClose }: Props) {
+export default function PlayerInfosModal({
+  player,
+  onClose,
+}: IProps) {
   const {
     id,
     nom,
@@ -68,11 +88,14 @@ export default function PlayerInfosModal({ player, onClose }: Props) {
     dateInscription,
   } = player;
 
-  const bDate = fmtDate(anniversaire);
-  const bAge = calcAge(anniversaire);
-  const birthdayValue = bDate
-    ? `${bDate}${bAge !== null ? `   (${bAge} ans)` : ""}`
+  const birthDate = formatDate(anniversaire);
+  const birthAge = calculateAge(anniversaire);
+  const birthdayValue = birthDate
+    ? `${birthDate} (${birthAge} ans)`
     : null;
+
+  const phoneNumber = formatTelNumber(telephone);
+  const phoneValue = phoneNumber ? phoneNumber : null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 cursor-default">
@@ -108,7 +131,7 @@ export default function PlayerInfosModal({ player, onClose }: Props) {
           <Row
             icon={<Phone size={20} />}
             label="Téléphone"
-            value={empty(telephone)}
+            value={phoneValue}
           />
           <Row
             icon={<Cake size={20} />}
@@ -118,7 +141,7 @@ export default function PlayerInfosModal({ player, onClose }: Props) {
           <Row
             icon={<CalendarCheck size={20} />}
             label="Inscrit le"
-            value={fmtDate(dateInscription)}
+            value={formatDate(dateInscription)}
           />
         </div>
       </div>
