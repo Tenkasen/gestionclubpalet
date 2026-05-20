@@ -75,7 +75,7 @@ export default function AddPlayerModal({
   if (!isOpen) return null;
   return (
     <div>
-      <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/30">
+      <div className="fixed inset-0 flex items-center justify-center z-50 bg-overlay/30">
         <div className="bg-stone-100 rounded-xl shadow-2xl border border-slate-200 w-full max-w-xl mx-8 p-6">
           <div className="flex justify-between items-center mb-6 px-2">
             <h2 className="text-2xl font-semibold text-indigo-800">
