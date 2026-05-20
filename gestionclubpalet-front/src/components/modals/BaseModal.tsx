@@ -3,7 +3,7 @@ import React from "react";
 interface IProps {
   children: React.ReactNode;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
-  variant: "base" | "delete";
+  variant?: "base" | "delete";
   maxWidth: string;
 }
 
@@ -23,7 +23,7 @@ export default function BaseModal({
       onClick={onClick}
     >
       <div
-        className={`bg-background rounded-xl shadow-2xl border border-border w-full mx-8 max-w-${maxWidth} overflow-hidden`}
+        className={`bg-background rounded-xl shadow-2xl border border-border w-full mx-8 max-w-${maxWidth} overflow-hidden ${variant === "base" ? "p-6" : ""}`}
       >
         {children}
       </div>
