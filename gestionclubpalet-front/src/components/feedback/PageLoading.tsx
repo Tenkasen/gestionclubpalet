@@ -3,7 +3,7 @@ import { RotatingLines } from "react-loader-spinner";
 export default function PageLoading() {
   return (
     <div className="container flex flex-col justify-center items-center min-h-screen">
-      <p className="text-lg pb-10 font-medium tracking-widest uppercase text-zinc-400 dark:text-zinc-500">
+      <p className="text-lg pb-10 font-medium tracking-widest uppercase text-foreground-muted brightness-110">
         Chargement en cours...
       </p>
       <RotatingLines
