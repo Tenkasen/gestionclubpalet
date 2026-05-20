@@ -9,11 +9,11 @@ interface IProps {
 
 const variants = {
   confirm:
-    "bg-btn-confirm text-btn-text border border-btn-confirm hover:brightness-110",
+    "bg-btn-confirm text-btn-text-light border border-btn-confirm hover:opacity-80",
   cancel:
     "bg-btn-cancel text-btn-text-dark border border-border hover:brightness-90",
   delete:
-    "bg-btn-delete text-btn-text-light border border-danger hover:brightness-120",
+    "bg-btn-delete text-btn-text-light border border-danger hover:opacity-70",
   export:
     "bg-btn-export text-btn-text border border-btn-export hover:brightness-110",
 };

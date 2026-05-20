@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { IPlayer } from "../../types/player.ts";
 import AddPlayerModal from "./AddPlayerModal.tsx";
+import Button from "../ui/Button.tsx";
 
 interface IProps {
   onSave: (player: IPlayer) => void;
@@ -13,13 +14,9 @@ export default function AddPlayerButton({
   const [open, setOpen] = useState(false);
   return (
     <div>
-      <button
-        type="button"
-        className="relative border border-white bg-blue-600 p-2 rounded-lg text-stone-200 hover:cursor-pointer hover:bg-blue-500"
-        onClick={() => setOpen(true)}
-      >
+      <Button onClick={() => setOpen(true)} variant="confirm">
         Ajouter un licencié
-      </button>
+      </Button>
 
       <AddPlayerModal
         isOpen={open}
