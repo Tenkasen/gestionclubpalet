@@ -11,7 +11,8 @@
   --color-foreground-subtle: #9ca3af;
 
   /* Fonds / white*/
-  --color-bg: #f5f5f4;
+  --color-background: #f5f5f4;
+  --color-overlay: #000000;
   --color-surface: #ffffff;
   --color-border: #d6d3d1;
 
@@ -19,7 +20,7 @@
   --color-btn-confirm: #2563eb;
   --color-btn-export: #15803d;
   --color-btn-cancel: #d6d3d1;
-  --color-btn-delete: #ef4444;
+  --color-btn-delete: #b91c1c;
 
   /* Texte sur boutons */
   --color-btn-text-light: #ffffff;
