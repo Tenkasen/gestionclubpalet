@@ -4,19 +4,19 @@ const RANKS = [
   {
     order: "order-2",
     blockH: "h-[52px]",
-    border: "border-[#FAC775]",
+    border: "border-[#ffd700]",
     laurier: "/podium/laurier_1.png",
   },
   {
     order: "order-1",
     blockH: "h-[18px]",
-    border: "border-[#B4B2A9]",
+    border: "border-[#b7e1cd]",
     laurier: "/podium/laurier_2.png",
   },
   {
     order: "order-3",
     blockH: "h-[0px]",
-    border: "border-[#F0997B]",
+    border: "border-[#614e1a]",
     laurier: "/podium/laurier_3.png",
   },
 ];

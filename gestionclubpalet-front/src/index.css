@@ -20,6 +20,7 @@
   --color-overlay: #000000; /* black */
   --color-surface: #ffffff; /* white */
   --color-border: #d6d3d1; /* stone-300 */
+  --color-border-strong: #374151; /* gray-700 */
 
   /* Boutons */
   --color-btn-confirm: #2563eb; /* blue-600 */
@@ -42,6 +43,7 @@
   --color-table-subheader: #374151; /* gray-700 */
   --color-table-header-text: #f3f4f6; /* gray-100 */
   --color-table-subheader-text: #e5e7eb; /* gray-200 */
+  --color-table-subheader-border: #4b5563; /* gray-600 */
   --color-table-border: #374151; /* gray-700 */
   --color-table-row-even: #e5e7eb; /* gray-200 */
   --color-table-row-hover: #d1d5db; /* gray-300 */

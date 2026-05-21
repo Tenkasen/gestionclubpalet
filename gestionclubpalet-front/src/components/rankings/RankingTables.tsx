@@ -10,40 +10,47 @@ export default function RankingTables({
   type,
   dayIndex,
 }: IProps) {
+  const subHeaderStyle =
+    "py-3 text-center border-r border-table-subheader-border";
+
   return (
     <div className="w-fit ">
-      <div className="overflow-x-auto rounded-xl border border-gray-700 shadow-md">
+      <div className="overflow-x-auto rounded-xl border border-border-strong shadow-md">
         <table className=" text-sm">
           <thead>
             <tr>
               <td
                 colSpan={type === "CHAMPIONNAT" ? 6 : 5}
-                className="bg-gray-900 text-gray-100 text-center text-base font-semibold
-                       tracking-widest uppercase px-4 py-3.5 border-b-2 border-gray-700"
+                className="bg-table-header text-table-header-text text-center text-base font-semibold
+                       tracking-widest uppercase px-4 py-3.5 border-b-2 border-border-strong"
               >
                 {dayIndex
                   ? `Classement J${dayIndex}`
                   : "Classement final"}
               </td>
             </tr>
-            <tr className="bg-gray-700 text-gray-200 text-xs uppercase tracking-wider">
-              <th className="px-3 py-3 text-center border-r border-gray-600 w-10">
+            <tr className="bg-table-subheader text-table-subheader-text text-xs uppercase tracking-wider">
+              <th className={`px-3 ${subHeaderStyle} w-10`}>
                 Classement
               </th>
-              <th className="px-30 py-3 text-center border-r border-gray-600">
+              <th className={`px-30 ${subHeaderStyle}`}>
                 Nom Prénom
               </th>
-              <th className="px-3 py-3 text-center border-r border-gray-600 w-24 whitespace-nowrap">
+              <th
+                className={`px-3 ${subHeaderStyle} w-24 whitespace-nowrap`}
+              >
                 Présences
               </th>
-              <th className="px-3 py-3 text-center border-r border-gray-600 w-28 whitespace-nowrap">
+              <th
+                className={`px-3 ${subHeaderStyle} w-28 whitespace-nowrap`}
+              >
                 Goal Average
               </th>
-              <th className="px-3 py-3 text-center border-r border-gray-600 w-20">
+              <th className={`px-3 ${subHeaderStyle} w-20`}>
                 Points
               </th>
               {type === "CHAMPIONNAT" && (
-                <th className="px-3 py-3 text-center  w-32 whitespace-nowrap">
+                <th className="px-3 py-3 text-center w-32 whitespace-nowrap">
                   Parties gagnées
                 </th>
               )}
@@ -54,16 +61,18 @@ export default function RankingTables({
               <tr
                 key={entry.playerId}
                 className={[
-                  "border-b border-gray-300 transition-colors last:border-0 hover:bg-gray-300",
-                  index % 2 === 0 ? "bg-gray-200" : "bg-white",
+                  "border-b border-table-row-hover transition-colors last:border-0 hover:bg-table-row-hover",
+                  index % 2 === 0
+                    ? "bg-table-row-even"
+                    : "bg-surface",
                 ].join(" ")}
               >
                 <td
                   className={[
-                    "px-3 py-3 text-center font-bold border-r border-gray-300",
-                    index === 0 && "bg-[#ffd700] text-yellow-900",
-                    index === 1 && "bg-[#b7e1cd] text-slate-700",
-                    index === 2 && "bg-[#614e1a] text-orange-900",
+                    "px-3 py-3 text-center font-bold border-r border-table-row-hover",
+                    index === 0 && "bg-[#ffd700]",
+                    index === 1 && "bg-[#b7e1cd]",
+                    index === 2 && "bg-[#614e1a]",
                   ]
                     .filter(Boolean)
                     .join(" ")}
@@ -76,20 +85,20 @@ export default function RankingTables({
                         ? "🥉"
                         : entry.position}
                 </td>
-                <td className="px-4 py-3 text-center font-medium border-r border-gray-300">
+                <td className="px-3 py-3 text-center border-r border-table-row-hover font-medium">
                   {entry.nom} {entry.prenom}
                 </td>
-                <td className="px-3 py-3 text-center border-r border-gray-300">
+                <td className="px-3 py-3 text-center border-r border-table-row-hover">
                   {entry.presences}
                 </td>
-                <td className="px-3 py-3 text-center border-r border-gray-300">
+                <td className="px-3 py-3 text-center border-r border-table-row-hover">
                   {entry.goalAverage}
                 </td>
-                <td className="px-3 py-3 text-center font-bold text-gray-900">
+                <td className="px-3 py-3 text-center font-bold text-table-header">
                   {entry.points}
                 </td>
                 {type === "CHAMPIONNAT" && (
-                  <td className="px-3 py-3 text-center border-l border-gray-300">
+                  <td className="px-3 py-3 text-center border-l border-table-row-hover">
                     {entry.nbVictoire}
                   </td>
                 )}
