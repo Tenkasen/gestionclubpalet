@@ -22,6 +22,12 @@
   --color-btn-cancel: #d6d3d1;
   --color-btn-delete: #b91c1c;
 
+  /* Borders de boutons */
+  --color-btn-confirm-border: #1d4ed8;
+  --color-btn-export-border: #14532d;
+  --color-btn-cancel-border: #a8a29e;
+  --color-btn-delete-border: #7f1d1d;
+
   /* Texte sur boutons */
   --color-btn-text-light: #ffffff;
   --color-btn-text-dark: #374151;
