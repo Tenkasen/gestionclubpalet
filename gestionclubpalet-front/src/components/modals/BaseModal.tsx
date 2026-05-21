@@ -23,7 +23,7 @@ export default function BaseModal({
       onClick={onClick}
     >
       <div
-        className={`bg-background rounded-xl shadow-2xl border border-border w-full mx-8 max-w-${maxWidth} overflow-hidden ${variant === "base" ? "p-6" : ""}`}
+        className={`bg-background rounded-xl shadow-2xl border border-border w-full mx-8 ${maxWidth} overflow-hidden ${variant === "base" ? "p-6" : ""}`}
       >
         {children}
       </div>

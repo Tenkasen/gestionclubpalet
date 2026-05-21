@@ -1,7 +1,8 @@
-import { TriangleAlert, X } from "lucide-react";
 import type { IPlayer } from "../../types/player.ts";
 import Button from "../ui/Button.tsx";
 import BaseModal from "./BaseModal.tsx";
+import CloseButton from "../ui/CloseButton.tsx";
+import { TriangleAlert } from "lucide-react";
 
 interface IProps {
   text: string;
@@ -20,7 +21,7 @@ export default function ConfirmDeleteModal({
     <BaseModal
       onClick={(e) => e.stopPropagation()}
       variant="delete"
-      maxWidth="lg"
+      maxWidth="max-w-lg"
     >
       {/* Header */}
       <div className="bg-btn-delete px-5 py-4 relative">
@@ -29,12 +30,7 @@ export default function ConfirmDeleteModal({
             Supprimer {text}
           </h2>
         </div>
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-3 text-btn-text-light hover:bg-white/40 rounded-md p-1 transition-colors cursor-pointer"
-        >
-          <X size={16} />
-        </button>
+        <CloseButton onClose={onClose} variant="delete" />
       </div>
       <div className="flex justify-center flex-col items-center py-6">
         <div className="bg-danger-bg rounded-[50%] p-6">

@@ -5,6 +5,7 @@ import { seasonRegistrationApi } from "../../api/seasonRegistration.api.ts";
 import { toast } from "sonner";
 import { X } from "lucide-react";
 import BaseModal from "../modals/BaseModal.tsx";
+import CloseButton from "../ui/CloseButton.tsx";
 
 interface IProps {
   isOpen: boolean;
@@ -73,26 +74,22 @@ export default function AddPlayerModal({
     onClose();
   };
 
+  const labelStyle = "block text-foreground mb-1";
+
   if (!isOpen) return null;
   return (
-    <BaseModal maxWidth="xl">
+    <BaseModal maxWidth="max-w-xl">
       <div className="flex justify-between items-center mb-6 px-2">
         <h2 className="text-2xl font-semibold text-indigo-800">
           Ajouter un licencié
         </h2>
-        <button
-          type="button"
-          onClick={onClose}
-          className="cursor-pointer rounded hover:bg-red-500 transition-colors p-0.5"
-        >
-          <X size={16} />
-        </button>
+        <CloseButton onClose={onClose} />
       </div>
 
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-8 mb-8">
           <div>
-            <label className="block text-stone-700 mb-1">Nom</label>
+            <label className={labelStyle}>Nom</label>
             <input
               type="text"
               name="nom"
