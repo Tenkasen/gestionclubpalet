@@ -2,17 +2,16 @@ import { X } from "lucide-react";
 
 interface IProps {
   onClose: () => void;
-  variant?: "base" | "delete";
+  variant?: "light" | "dark";
 }
 
 const variants = {
-  base: "text-btn-text-dark hover:bg-btn-delete/70",
-  delete:
-    "absolute top-3 right-3 text-btn-text-light hover:bg-surface/40",
+  light: "text-btn-text-dark hover:bg-btn-delete/70",
+  dark: "absolute top-3 right-3 text-btn-text-light hover:bg-surface/40",
 };
 export default function CloseButton({
   onClose,
-  variant = "base",
+  variant = "light",
 }: IProps) {
   return (
     <button

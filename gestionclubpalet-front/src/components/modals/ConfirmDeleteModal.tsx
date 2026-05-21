@@ -30,7 +30,7 @@ export default function ConfirmDeleteModal({
             Supprimer {text}
           </h2>
         </div>
-        <CloseButton onClose={onClose} variant="delete" />
+        <CloseButton onClose={onClose} variant="dark" />
       </div>
       <div className="flex justify-center flex-col items-center py-6">
         <div className="bg-danger-bg rounded-[50%] p-6">

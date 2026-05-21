@@ -7,6 +7,8 @@ import {
   BadgeCheck,
 } from "lucide-react";
 import type { IPlayer } from "../../types/player.ts";
+import BaseModal from "../modals/BaseModal.tsx";
+import CloseButton from "../ui/CloseButton.tsx";
 
 interface IProps {
   player: IPlayer;
@@ -52,20 +54,20 @@ interface IRowProps {
 
 function Row({ icon, label, value }: IRowProps) {
   return (
-    <div className="flex items-center gap-3 py-2.5 border-b border-stone-200 last:border-0">
-      <div className="w-10 h-10 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0 text-indigo-600">
+    <div className="flex items-center gap-3 py-2.5 border-b border-border/60 last:border-0">
+      <div className="w-10 h-10 rounded-lg bg-title-muted/15 flex items-center justify-center shrink-0 text-title/85">
         {icon}
       </div>
       <div>
-        <p className="text-[11px] text-left ml-2 uppercase tracking-wide text-stone-400 leading-none mb-0.5">
+        <p className="text-[11px] text-left ml-2 uppercase tracking-wide text-foreground-subtle leading-none mb-0.5">
           {label}
         </p>
         {value ? (
-          <p className="font-medium text-[15px] text-stone-700">
+          <p className="font-medium text-[15px] text-foreground">
             {value}
           </p>
         ) : (
-          <p className="text-sm italic text-stone-400">
+          <p className="text-sm italic text-foreground-subtle">
             Non renseigné
           </p>
         )}
@@ -98,53 +100,46 @@ export default function PlayerInfosModal({
   const phoneValue = phoneNumber ? phoneNumber : null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 cursor-default">
-      <div className="bg-stone-100 rounded-xl shadow-2xl border border-slate-200 w-full max-w-sm mx-6 overflow-hidden">
-        {/* Header */}
-        <div className="bg-indigo-800 px-5 py-4 relative">
-          <div className="flex items-center">
-            <div>
-              <h2 className="text-white font-semibold text-xl leading-tight">
-                {prenom} {nom}
-              </h2>
-              <span className="flex items-center gap-1.5 text-indigo-300 text-xs mt-0.5">
-                <BadgeCheck size={13} />
-                Licencié #{id}
-              </span>
-            </div>
+    <BaseModal maxWidth="max-w-sm" variant="infos">
+      {/* Header */}
+      <div className="bg-title px-5 py-4 relative">
+        <div className="flex items-center">
+          <div>
+            <h2 className="text-surface font-semibold text-xl leading-tight">
+              {prenom} {nom}
+            </h2>
+            <span className="flex items-center gap-1.5 text-surface/60 text-xs mt-0.5">
+              <BadgeCheck size={13} />
+              Licencié #{id}
+            </span>
           </div>
-          <button
-            onClick={onClose}
-            className="absolute top-3 right-3 text-indigo-300 hover:text-white hover:bg-white/15 rounded-md p-1 transition-colors cursor-pointer"
-          >
-            <X size={16} />
-          </button>
         </div>
-
-        {/* Body */}
-        <div className="px-5 py-3 bg-white">
-          <Row
-            icon={<Mail size={20} />}
-            label="Adresse mail"
-            value={empty(email)}
-          />
-          <Row
-            icon={<Phone size={20} />}
-            label="Téléphone"
-            value={phoneValue}
-          />
-          <Row
-            icon={<Cake size={20} />}
-            label="Date de naissance"
-            value={birthdayValue}
-          />
-          <Row
-            icon={<CalendarCheck size={20} />}
-            label="Inscrit le"
-            value={formatDate(dateInscription)}
-          />
-        </div>
+        <CloseButton onClose={onClose} variant="dark" />
       </div>
-    </div>
+
+      {/* Body */}
+      <div className="px-5 py-3 bg-surface">
+        <Row
+          icon={<Mail size={20} />}
+          label="Adresse mail"
+          value={empty(email)}
+        />
+        <Row
+          icon={<Phone size={20} />}
+          label="Téléphone"
+          value={phoneValue}
+        />
+        <Row
+          icon={<Cake size={20} />}
+          label="Date de naissance"
+          value={birthdayValue}
+        />
+        <Row
+          icon={<CalendarCheck size={20} />}
+          label="Inscrit le"
+          value={formatDate(dateInscription)}
+        />
+      </div>
+    </BaseModal>
   );
 }

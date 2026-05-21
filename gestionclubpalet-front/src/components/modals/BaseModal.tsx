@@ -3,12 +3,13 @@ import React from "react";
 interface IProps {
   children: React.ReactNode;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
-  variant?: "base" | "delete";
+  variant?: "base" | "infos" | "delete";
   maxWidth: string;
 }
 
 const variants = {
   base: "bg-overlay/30",
+  infos: "bg-overlay/30",
   delete: "bg-overlay/80 cursor-default",
 };
 export default function BaseModal({
