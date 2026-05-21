@@ -3,7 +3,6 @@ import type { IPlayer } from "../../types/player.ts";
 import { playerAPI } from "../../api/player.api.ts";
 import { seasonRegistrationApi } from "../../api/seasonRegistration.api.ts";
 import { toast } from "sonner";
-import { X } from "lucide-react";
 import BaseModal from "../modals/BaseModal.tsx";
 import CloseButton from "../ui/CloseButton.tsx";
 import Button from "../ui/Button.tsx";

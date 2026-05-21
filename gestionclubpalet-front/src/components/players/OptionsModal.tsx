@@ -20,12 +20,12 @@ export default function OptionsModal({
   const [showInfos, setShowInfos] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const buttonStyle =
-    "w-full flex items-center px-4 py-2 text-sm leading-5 text-stone-500 hover:bg-stone-100 hover:text-stone-700 hover:cursor-pointer focus:outline-none focus:bg-stone-100 focus:text-stone-700";
+    "w-full flex items-center px-4 py-2 text-sm leading-5 text-foreground-muted hover:bg-border/50 hover:text-foreground hover:cursor-pointer focus:outline-none focus:bg-border/50 focus:text-foreground";
   return createPortal(
     <>
       <div
         style={{ top, left }}
-        className="fixed mt-2 py-1 z-50 rounded-md bg-white shadow-xs"
+        className="fixed mt-2 py-1 z-50 rounded-md bg-surface shadow-xs"
       >
         <button className={buttonStyle}>
           <SquarePen width={20} className="mr-2" />
