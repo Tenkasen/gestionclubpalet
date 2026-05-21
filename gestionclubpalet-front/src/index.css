@@ -2,40 +2,49 @@
 
 @theme {
   /* Titres / indigo*/
-  --color-title: #3730a3;
-  --color-title-muted: #3730a3b3;
+  --color-title: #3730a3; /* indigo-800 */
+  --color-title-muted: #3730a3b3; /* indigo-800 70% */
 
   /* Texte / gray */
-  --color-foreground: #374151;
-  --color-foreground-muted: #6b7280;
-  --color-foreground-subtle: #9ca3af;
+  --color-foreground: #374151; /* gray-700 */
+  --color-foreground-muted: #6b7280; /* gray-500 */
+  --color-foreground-subtle: #9ca3af; /* gray-400 */
+
+  /* Scores */
+  --color-score-positive: #1d4ed8; /* blue-700 */
+  --color-score-negative: #b91c1c; /* red-700 */
+  --color-score-neutral: #6b7280; /* gray-500 */
 
   /* Fonds / white*/
-  --color-background: #f5f5f4;
-  --color-overlay: #000000;
-  --color-surface: #ffffff;
-  --color-border: #d6d3d1;
+  --color-background: #f5f5f4; /* stone-100 */
+  --color-overlay: #000000; /* black */
+  --color-surface: #ffffff; /* white */
+  --color-border: #d6d3d1; /* stone-300 */
 
   /* Boutons */
-  --color-btn-confirm: #2563eb;
-  --color-btn-export: #15803d;
-  --color-btn-cancel: #d6d3d1;
-  --color-btn-delete: #b91c1c;
+  --color-btn-confirm: #2563eb; /* blue-600 */
+  --color-btn-export: #15803d; /* green-700 */
+  --color-btn-cancel: #d6d3d1; /* stone-300 */
+  --color-btn-delete: #b91c1c; /* red-700 */
 
   /* Borders de boutons */
-  --color-btn-confirm-border: #1d4ed8;
-  --color-btn-export-border: #14532d;
-  --color-btn-cancel-border: #a8a29e;
-  --color-btn-delete-border: #7f1d1d;
+  --color-btn-confirm-border: #1d4ed8; /* blue-700  */
+  --color-btn-export-border: #14532d; /* green-900 */
+  --color-btn-cancel-border: #a8a29e; /* stone-400 */
+  --color-btn-delete-border: #7f1d1d; /* red-900   */
 
   /* Texte sur boutons */
-  --color-btn-text-light: #ffffff;
-  --color-btn-text-dark: #374151;
+  --color-btn-text-light: #ffffff; /* white */
+  --color-btn-text-dark: #374151; /* gray-700 */
 
   /* Table */
-  --color-table-header: #064e3b;
-  --color-table-header-text: #d1fae5;
-  --color-table-row-hover: #f5f5f4;
+  --color-table-header: #111827; /* gray-900 */
+  --color-table-subheader: #374151; /* gray-700 */
+  --color-table-header-text: #f3f4f6; /* gray-100 */
+  --color-table-subheader-text: #e5e7eb; /* gray-200 */
+  --color-table-border: #374151; /* gray-700 */
+  --color-table-row-even: #e5e7eb; /* gray-200 */
+  --color-table-row-hover: #d1d5db; /* gray-300 */
 
   /* Feedback */
   --color-danger: #f87171;

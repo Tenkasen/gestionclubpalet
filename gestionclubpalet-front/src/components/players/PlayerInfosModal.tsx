@@ -1,5 +1,4 @@
 import {
-  X,
   Mail,
   Phone,
   Cake,

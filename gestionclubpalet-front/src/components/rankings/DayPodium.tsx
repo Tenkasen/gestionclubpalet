@@ -42,10 +42,10 @@ export default function DayPodium({
           const r = RANKS[i];
           const gaColor =
             p.goalAverage > 0
-              ? "text-blue-700"
+              ? "text-score-positive"
               : p.goalAverage < 0
-                ? "text-red-700"
-                : "text-gray-500";
+                ? "text-score-negative"
+                : "text-score-neutral";
 
           return (
             <div
@@ -58,22 +58,22 @@ export default function DayPodium({
                 className="w-18 h-18 object-contain mb-1"
               />
               <div
-                className={`bg-white border ${r.border} rounded-xl px-2 pt-3 w-full`}
+                className={`bg-surface border ${r.border} rounded-xl px-2 pt-3 w-full`}
               >
                 <p className="font-medium text-center truncate w-full mb-2">
                   {p.player.prenom} {p.player.nom}
                 </p>
-                <div className="w-full h-px bg-gray-200 mb-2" />
+                <div className="w-full h-px bg-background brightness-90 mb-2" />
                 <div className="grid grid-cols-2 gap-x-1 gap-y-2 w-full mb-2">
                   <Stat
                     label="Pour"
                     value={p.totalPour}
-                    className="text-blue-700"
+                    className="text-score-positive"
                   />
                   <Stat
                     label="Contre"
                     value={p.totalContre}
-                    className="text-red-700"
+                    className="text-score-negative"
                   />
                   <Stat
                     label="Goal avg"
@@ -102,7 +102,7 @@ export default function DayPodium({
 function Stat({
   label,
   value,
-  className = "text-gray-800",
+  className = "text-foreground",
 }: {
   label: string;
   value: React.ReactNode;
@@ -110,7 +110,7 @@ function Stat({
 }) {
   return (
     <div className="flex flex-col items-center gap-0.5">
-      <span className="text-[11px] text-gray-500 uppercase tracking-widest">
+      <span className="text-[11px] text-score-neutral uppercase tracking-widest">
         {label}
       </span>
       <span className={`text-sm font-medium ${className}`}>
