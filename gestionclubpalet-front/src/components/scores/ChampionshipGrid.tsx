@@ -93,7 +93,7 @@ export default function ChampionshipGrid({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-6 rounded-xl shadow-md w-full max-w-2xl mx-auto mt-6"
+      className="bg-surface p-6 rounded-xl shadow-md w-full max-w-2xl mx-auto mt-6"
     >
       <h3 className="text-xl font-bold mb-6 text-center">
         {player.nom} {player.prenom}
@@ -102,10 +102,10 @@ export default function ChampionshipGrid({
       {/* Header colonnes */}
       <div className="grid grid-cols-[80px_1fr_1fr_110px] gap-2 mb-2 px-1">
         <span />
-        <span className="text-center text-xs font-medium text-gray-400 uppercase tracking-wide">
+        <span className="text-center text-xs font-medium text-foreground-subtle uppercase tracking-wide">
           Points pour
         </span>
-        <span className="text-center text-xs font-medium text-gray-400 uppercase tracking-wide">
+        <span className="text-center text-xs font-medium text-foreground-subtle uppercase tracking-wide">
           Points contre
         </span>
       </div>
@@ -117,12 +117,14 @@ export default function ChampionshipGrid({
         return (
           <div
             key={index}
-            className={`grid grid-cols-[80px_1fr_1fr_110px] gap-2 items-center bg-white border rounded-xl px-3 py-2.5 mb-2 transition-colors ${
-              partie ? "border-gray-400" : "border-gray-100"
+            className={`grid grid-cols-[80px_1fr_1fr_110px] gap-2 items-center bg-surface border rounded-xl px-3 py-2.5 mb-2 transition-colors ${
+              partie
+                ? "border-foreground-subtle"
+                : "border-foreground-subtle/10"
             }`}
           >
             {/* Label partie */}
-            <div className="font-medium text-gray-500">
+            <div className="font-medium text-foreground-muted">
               partie {index + 1}
             </div>
 
@@ -142,8 +144,8 @@ export default function ChampionshipGrid({
                     }
                     className={`w-9 h-9 rounded-lg text-sm font-medium transition-all active:scale-95 cursor-pointer ${
                       isSelected
-                        ? "bg-blue-700 text-white border border-blue-700"
-                        : "bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200"
+                        ? "bg-score-positive text-score-text border border-score-positive"
+                        : "bg-foreground-subtle/10 text-foreground border border-foreground-subtle/30 hover:bg-foreground-subtle/30"
                     }`}
                   >
                     {score}
@@ -168,8 +170,8 @@ export default function ChampionshipGrid({
                     }
                     className={`w-9 h-9 rounded-lg text-sm font-medium transition-all active:scale-95 cursor-pointer ${
                       isSelected
-                        ? "bg-red-700 text-white border border-red-700"
-                        : "bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200"
+                        ? "bg-score-negative text-score-text border border-score-negative"
+                        : "bg-foreground-subtle/10 text-foreground border border-foreground-subtle/30 hover:bg-foreground-subtle/30"
                     }`}
                   >
                     {score}
@@ -185,13 +187,13 @@ export default function ChampionshipGrid({
                   <span
                     className={`text-xs font-medium px-2 py-0.5 rounded-full ${
                       isVictoire
-                        ? "bg-blue-100 text-blue-700"
-                        : "bg-red-100 text-red-700"
+                        ? "bg-score-positive/10 text-score-positive"
+                        : "bg-score-negative/10 text-score-negative"
                     }`}
                   >
                     {isVictoire ? "victoire" : "défaite"}
                   </span>
-                  <span className="text-sm font-medium text-gray-500">
+                  <span className="text-sm font-medium text-foreground-muted">
                     {partie.pointsPour} — {partie.pointsContre}
                   </span>
                 </>
@@ -202,45 +204,45 @@ export default function ChampionshipGrid({
       })}
 
       {/* Récap */}
-      <div className="bg-gray-100 rounded-xl px-5 py-4 mt-4">
+      <div className="bg-foreground-subtle/15 rounded-xl px-5 py-4 mt-4">
         <div className="grid grid-cols-4 gap-3 text-center">
           <div>
-            <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">
+            <div className="text-xs text-foreground-muted uppercase tracking-wide mb-1">
               Total pour
             </div>
-            <div className="text-2xl font-medium text-blue-700">
+            <div className="text-2xl font-medium text-score-positive">
               {totalPointsPour}
             </div>
           </div>
           <div>
-            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">
+            <div className="text-xs text-foreground-muted uppercase tracking-wide mb-1">
               Total contre
             </div>
-            <div className="text-2xl font-medium text-red-700">
+            <div className="text-2xl font-medium text-score-negative">
               {totalPointsContre}
             </div>
           </div>
           <div>
-            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">
+            <div className="text-xs text-foreground-muted uppercase tracking-wide mb-1">
               Goal avg
             </div>
             <div
               className={`text-2xl font-medium ${
                 goalAverage > 0
-                  ? "text-blue-700"
+                  ? "text-score-positive"
                   : goalAverage < 0
-                    ? "text-red-700"
-                    : "text-gray-600"
+                    ? "text-score-negative"
+                    : "text-foreground"
               }`}
             >
               {filled.length ? goalAverage : "—"}
             </div>
           </div>
           <div>
-            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">
+            <div className="text-xs text-foreground-muted uppercase tracking-wide mb-1">
               Victoires
             </div>
-            <div className="text-2xl font-medium text-gray-800">
+            <div className="text-2xl font-medium text-foreground">
               {nbVictoire}/{parties.length}
             </div>
           </div>
@@ -251,7 +253,7 @@ export default function ChampionshipGrid({
       <div className="flex gap-3 pt-2">
         <button
           type="button"
-          className="flex-1 bg-gray-100 text-gray-700 px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+          className="flex-1 bg-foreground-subtle/15 text-foreground px-3 py-2 rounded-lg cursor-pointer hover:bg-foreground-subtle/30 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
           onClick={onPrev}
           disabled={isFirst}
         >
@@ -259,7 +261,7 @@ export default function ChampionshipGrid({
         </button>
         <button
           type="submit"
-          className="flex-1 bg-blue-600 text-white px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+          className="flex-1 bg-btn-confirm text-btn-text px-3 py-2 rounded-lg cursor-pointer hover:bg-btn-confirm/80 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
           disabled={isLast || !allFilled}
         >
           Joueur suivant →
@@ -269,7 +271,7 @@ export default function ChampionshipGrid({
         <div className="mt-4">
           <button
             type="submit"
-            className="w-full flex justify-center items-center gap-4 bg-teal-600 text-white text-xl px-3 py-2 rounded-lg hover:bg-teal-700 cursor-pointer text-sm font-medium"
+            className="w-full flex justify-center items-center gap-4 bg-btn-save text-btn-text text-xl px-3 py-2 rounded-lg hover:brightness-85 cursor-pointer text-sm font-medium"
             disabled={!allFilled}
           >
             <Save />
