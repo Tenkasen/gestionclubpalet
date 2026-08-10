@@ -13,7 +13,7 @@ import ChampionshipScoreEntry from "./pages/ChampionshipScoreEntry.tsx";
 export default function App() {
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 ">
+      <div className="min-h-screen app-background">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/joueurs" element={<Players />} />
@@ -41,7 +41,7 @@ export default function App() {
           offset="70px"
           toastOptions={{
             classNames: {
-              success: "!bg-green-500 !text-white !text-lg",
+              success: "!bg-green-700 !text-white !text-lg",
               error: "!bg-red-600 !text-white !text-sm !max-w-75",
             },
           }}

@@ -15,14 +15,14 @@ export default function RankingTables({
 
   return (
     <div className="w-fit ">
-      <div className="overflow-x-auto rounded-xl border border-border-strong shadow-md">
+      <div className="overflow-x-auto rounded-xl border border-table-border shadow-md">
         <table className=" text-sm">
           <thead>
             <tr>
               <td
                 colSpan={type === "CHAMPIONNAT" ? 6 : 5}
                 className="bg-table-header text-table-header-text text-center text-base font-semibold
-                       tracking-widest uppercase px-4 py-3.5 border-b-2 border-border-strong"
+                       tracking-widest uppercase px-4 py-3.5 border-b-2 border-table-border"
               >
                 {dayIndex
                   ? `Classement J${dayIndex}`
