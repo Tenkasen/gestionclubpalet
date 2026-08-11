@@ -271,7 +271,7 @@ export default function ChampionshipGrid({
         <div className="mt-4">
           <button
             type="submit"
-            className="w-full flex justify-center items-center gap-4 bg-btn-save text-btn-text text-xl px-3 py-2 rounded-lg hover:brightness-85 cursor-pointer text-sm font-medium"
+            className="w-full flex justify-center items-center gap-4 bg-btn-save text-btn-text px-3 py-2 rounded-lg hover:brightness-85 cursor-pointer font-medium"
             disabled={!allFilled}
           >
             <Save />

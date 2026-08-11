@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import type { IPlayer } from "../../types/player";
 import { Save } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Button from "../ui/Button.tsx";
 
 interface IProps {
   player: IPlayer;
@@ -59,16 +60,16 @@ export default function TrainingScoreInput({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-8 rounded-xl shadow-md w-full max-w-md mx-auto mt-6"
+      className="bg-surface p-8 rounded-xl shadow-md w-full max-w-md mx-auto mt-6"
     >
-      <h3 className="text-xl font-bold mb-6 text-center">
+      <h3 className="text-xl font-bold text-foreground mb-6 text-center">
         {player.nom} {player.prenom}
       </h3>
 
       <div className="space-y-6">
         <div className="flex gap-6 justify-center">
           <div className="flex flex-col items-center gap-2">
-            <label className="text-sm font-medium text-gray-600">
+            <label className="text-sm font-medium text-foreground/80">
               Points POUR
             </label>
             <input
@@ -79,11 +80,11 @@ export default function TrainingScoreInput({
               onChange={(e) => SetPointsPour(Number(e.target.value))}
               ref={inputRef}
               required
-              className="w-20 text-center px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-20 text-foreground text-center px-3 py-2 border border-foreground rounded-lg focus:outline-none focus:ring-2 focus:ring-border-input/70"
             />
           </div>
           <div className="flex flex-col items-center gap-2">
-            <label className="text-sm font-medium text-gray-600">
+            <label className="text-sm font-medium text-foreground/80">
               Points CONTRE
             </label>
             <input
@@ -95,16 +96,20 @@ export default function TrainingScoreInput({
               onChange={(e) =>
                 SetPointsContre(Number(e.target.value))
               }
-              className="w-20 text-center px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-20 text-foreground text-center px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-border-input/70"
             />
           </div>
         </div>
 
-        <div className="pt-4 border-t text-center">
-          <p className="text-sm text-gray-500 mb-1">Goal Average</p>
+        <div className="pt-4 border-t border-border-header text-center">
+          <p className="text-sm text-foreground-muted mb-1">
+            Goal Average
+          </p>
           <span
             className={`text-2xl font-bold ${
-              goalAverage >= 0 ? "text-green-600" : "text-red-600"
+              goalAverage >= 0
+                ? "text-score-positive"
+                : "text-score-negative"
             }`}
           >
             {goalAverage > 0 ? "+" : ""}
@@ -113,31 +118,27 @@ export default function TrainingScoreInput({
         </div>
 
         <div className="flex gap-3 pt-2">
-          <button
-            type="button"
-            className="flex-1 bg-gray-100 text-gray-700 px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+          <Button
+            variant={"previousPlayer"}
             onClick={onPrev}
             disabled={isFirst}
           >
             ← Joueur précédent
-          </button>
-          <button
+          </Button>
+          <Button
             type="submit"
-            className="flex-1 bg-blue-600 text-white px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+            variant={"nextPlayer"}
             disabled={isLast}
           >
             Joueur suivant →
-          </button>
+          </Button>
         </div>
         {isLast && (
           <div className="flex items-center justify-center">
-            <button
-              type="submit"
-              className="flex gap-4 bg-teal-600 text-white px-3 py-2 rounded-lg cursor-pointer hover:bg-teal-700 cursor-pointer text-sm font-medium"
-            >
+            <Button type="submit" variant={"save"}>
               <Save />
               Sauvegarder la journée
-            </button>
+            </Button>
           </div>
         )}
       </div>
