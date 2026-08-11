@@ -3,6 +3,7 @@ import type { IPlayer } from "../../types/player.ts";
 import { useNavigate } from "react-router-dom";
 import type { IScore } from "../../hooks/useScoreEntry.ts";
 import { Save } from "lucide-react";
+import Button from "../ui/Button.tsx";
 
 interface IProps {
   player: IPlayer;
@@ -144,7 +145,7 @@ export default function ChampionshipGrid({
                     }
                     className={`w-9 h-9 rounded-lg text-sm font-medium transition-all active:scale-95 cursor-pointer ${
                       isSelected
-                        ? "bg-score-positive text-score-text border border-score-positive"
+                        ? "bg-score-negative text-score-text border border-score-negative"
                         : "bg-foreground-subtle/10 text-foreground border border-foreground-subtle/30 hover:bg-foreground-subtle/30"
                     }`}
                   >
@@ -170,7 +171,7 @@ export default function ChampionshipGrid({
                     }
                     className={`w-9 h-9 rounded-lg text-sm font-medium transition-all active:scale-95 cursor-pointer ${
                       isSelected
-                        ? "bg-score-negative text-score-text border border-score-negative"
+                        ? "bg-score-positive text-score-text border border-score-positive"
                         : "bg-foreground-subtle/10 text-foreground border border-foreground-subtle/30 hover:bg-foreground-subtle/30"
                     }`}
                   >
@@ -251,32 +252,31 @@ export default function ChampionshipGrid({
 
       {/* Bouton validation */}
       <div className="flex gap-3 pt-2">
-        <button
-          type="button"
-          className="flex-1 bg-foreground-subtle/15 text-foreground px-3 py-2 rounded-lg cursor-pointer hover:bg-foreground-subtle/30 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+        <Button
+          variant={"previousPlayer"}
           onClick={onPrev}
           disabled={isFirst}
         >
           ← Joueur précédent
-        </button>
-        <button
+        </Button>
+        <Button
           type="submit"
-          className="flex-1 bg-btn-confirm text-btn-text px-3 py-2 rounded-lg cursor-pointer hover:bg-btn-confirm/80 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+          variant={"nextPlayer"}
           disabled={isLast || !allFilled}
         >
           Joueur suivant →
-        </button>
+        </Button>
       </div>
       {isLast && (
-        <div className="mt-4">
-          <button
+        <div className="mt-4 flex items-center justify-center">
+          <Button
             type="submit"
-            className="w-full flex justify-center items-center gap-4 bg-btn-save text-btn-text px-3 py-2 rounded-lg hover:brightness-85 cursor-pointer font-medium"
+            variant={"save"}
             disabled={!allFilled}
           >
             <Save />
             Sauvegarder la journée
-          </button>
+          </Button>
         </div>
       )}
     </form>
