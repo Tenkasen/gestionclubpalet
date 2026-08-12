@@ -49,7 +49,7 @@ export default function Error404() {
       </div>
       {/* 404 */}
       <div className="flex items-center gap-1">
-        <span className="text-9xl font-medium tracking-tighter">
+        <span className="text-9xl text-foreground font-medium tracking-tighter">
           4
         </span>
 
@@ -84,16 +84,16 @@ export default function Error404() {
           />
         </svg>
 
-        <span className="text-9xl font-medium tracking-tighter">
+        <span className="text-9xl font-medium text-foreground tracking-tighter">
           4
         </span>
       </div>
       {/* Message */}
       <div className="flex flex-col gap-2">
-        <p className="text-xl font-medium text-blue-700">
+        <p className="text-xl font-medium text-title">
           Ce palet est sorti de la plaque
         </p>
-        <p className="text-lg text-slate-600  leading-relaxed">
+        <p className="text-lg text-foreground-muted  leading-relaxed">
           La page que vous cherchez n'existe pas ou a été déplacée.
           <br></br>Retournez à l'accueil et relancez votre palet.
         </p>
@@ -101,7 +101,7 @@ export default function Error404() {
       {/* Boutons */}
       <Link
         to="/"
-        className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-zinc-400 text-sm font-medium hover:bg-zinc-300 transition-colors"
+        className="bg-btn-cancel  text-btn-text-dark  border border-btn-cancel-border  hover:brightness-90 px-4 py-2 rounded-lg cursor-pointer transition-all"
       >
         Retour à l'accueil
       </Link>
