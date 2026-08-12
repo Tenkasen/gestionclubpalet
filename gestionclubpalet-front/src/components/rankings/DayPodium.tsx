@@ -33,7 +33,7 @@ export default function DayPodium({
 
   return (
     <>
-      <h1 className="text-2xl font-bold italic py-6 text-center px-6">
+      <h1 className="text-2xl text-title-muted font-bold italic py-6 text-center px-6">
         Meilleurs joueurs de la journée
       </h1>
       <div className="flex items-end justify-center gap-2 px-4">
@@ -60,7 +60,7 @@ export default function DayPodium({
               <div
                 className={`bg-surface border ${r.border} rounded-xl px-2 pt-3 w-full`}
               >
-                <p className="font-medium text-center truncate w-full mb-2">
+                <p className="font-medium text-center text-foreground truncate w-full mb-2">
                   {p.player.prenom} {p.player.nom}
                 </p>
                 <div className="w-full h-px bg-background brightness-90 mb-2" />

@@ -47,7 +47,7 @@ export default function Dashboard() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           <DashboardCard
-            link="/classements"
+            link="/classements/5/journées/1"
             icon={
               <i className="fa-duotone fa-solid fa-ranking-star fa-flip-horizontal text-4xl text-ranking" />
             }
