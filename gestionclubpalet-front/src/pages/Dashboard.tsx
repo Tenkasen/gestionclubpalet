@@ -19,20 +19,20 @@ export default function Dashboard() {
       <HeaderTest />
 
       <div className="container">
-        <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">
+        <h1 className="text-4xl font-bold text-foreground mb-8 text-center">
           Gestion Club Palet
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <DashboardCard
             link="/saisons?type=ENTRAINEMENT"
-            icon={<Target className="text-blue-600" size={48} />}
+            icon={<Target className="text-training" size={48} />}
             title="Entraînement"
             description="Gérer les scores d'entraînement et suivre la progression"
           />
 
           <DashboardCard
             link="/saisons?type=CHAMPIONNAT"
-            icon={<Medal className="text-yellow-600" size={48} />}
+            icon={<Medal className="text-championship" size={48} />}
             title="Championnat"
             description="Saisir les scores de championnat et consulter les
               classements"
@@ -40,7 +40,7 @@ export default function Dashboard() {
 
           <DashboardCard
             link="/saisons?type=COUPE"
-            icon={<Trophy className="text-slate-600" size={48} />}
+            icon={<Trophy className="text-cup" size={48} />}
             title="Coupe"
             description="Gérer les matchs de coupe en doublette"
           />
@@ -49,7 +49,7 @@ export default function Dashboard() {
           <DashboardCard
             link="/classements"
             icon={
-              <i className="fa-duotone fa-solid fa-ranking-star fa-flip-horizontal text-4xl text-red-800" />
+              <i className="fa-duotone fa-solid fa-ranking-star fa-flip-horizontal text-4xl text-ranking" />
             }
             title="Classement"
             description="Voir les classements finaux ou pas journées des différentes saisons"
@@ -58,7 +58,7 @@ export default function Dashboard() {
           <DashboardCard
             link="/joueurs"
             icon={
-              <i className="fa-duotone fa-solid fa-users text-4xl text-emerald-600"></i>
+              <i className="fa-duotone fa-solid fa-users text-4xl text-players"></i>
             }
             title="Liste des joueurs"
             description="Consulter la liste des tous les joueurs inscrit depuis la création du club ou alors classés par saison"
@@ -66,30 +66,32 @@ export default function Dashboard() {
         </div>
 
         {/* Saisons récentes */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+        <div className="bg-surface rounded-xl shadow-lg p-6">
+          <h2 className="text-2xl font-bold text-foreground mb-4">
             Dernières saisons actives
           </h2>
           {seasons.length === 0 ? (
-            <p className="text-gray-500">Aucune saison créée</p>
+            <p className="text-foreground-muted">
+              Aucune saison créée
+            </p>
           ) : (
             <div className="space-y-3">
               {seasons.slice(0, 6).map((season) => (
                 <Link
                   key={season.id}
                   to={`/seasons/${season.id}`}
-                  className="block p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition"
+                  className="block p-4 border border-border rounded-lg hover:bg-foreground-subtle/15 transition"
                 >
                   <div className="flex justify-between items-center">
                     <div>
-                      <h3 className="font-bold text-gray-800">
+                      <h3 className="font-bold text-foreground">
                         {season.nom}
                       </h3>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-foreground-muted">
                         {season.type}
                       </p>
                     </div>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-foreground-muted">
                       {new Date(season.dateDebut).toLocaleDateString(
                         "fr-FR",
                       )}

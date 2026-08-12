@@ -28,7 +28,7 @@
   --color-progressbar: #d4a017;
 
   /* Border */
-  --color-border: #c7d2fe;
+  --color-border: #e5e7eb;
   --color-border-strong: #6366f1;
   --color-border-header: #0f056b;
   --color-border-input: #1d4ed8;
@@ -50,6 +50,13 @@
   /* Texte sur boutons */
   --color-btn-text-light: #ffffff;
   --color-btn-text-dark: #374151;
+
+  /* Dashboard */
+  --color-training: #3b82f6;
+  --color-championship: #ca8a04;
+  --color-cup: #475569;
+  --color-ranking: #ef4444;
+  --color-players: #059669;
 
   /* Table */
   --color-table-header: #111827;
