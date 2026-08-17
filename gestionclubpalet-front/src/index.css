@@ -58,7 +58,7 @@
   --color-ranking: #ef4444;
   --color-players: #059669;
 
-  /* Table */
+  /* Table ranking */
   --color-table-header: #111827;
   --color-table-subheader: #374151;
   --color-table-header-text: #f3f4f6;
@@ -67,6 +67,19 @@
   --color-table-border: #374151;
   --color-table-row-even: #e5e7eb;
   --color-table-row-hover: #d1d5db;
+
+  /* Table players roster */
+  --color-roster-card: #ffffff;
+  --color-roster-border: #a7f3d0;
+  --color-roster-header-bg: #047857;
+  --color-roster-header-text: #e7e5e4;
+  --color-roster-divide: #d1fae5;
+  --color-roster-row-hover: #eef2ff;
+  --color-roster-index-text: #78716c;
+  --color-roster-text: #064e3b;
+  --color-roster-action: #10b981;
+  --color-roster-action-hover: #065f46;
+  --color-roster-footer-text: #34d399;
 
   /* Feedback */
   --color-danger: #f87171;

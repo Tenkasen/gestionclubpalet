@@ -69,7 +69,7 @@ export default function Players() {
       <div className="container mx-auto ">
         <div className="pb-20">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-indigo-900 tracking-tight">
+            <h1 className="text-4xl font-bold text-title tracking-tight">
               Liste des joueurs
             </h1>
           </div>
@@ -105,41 +105,41 @@ export default function Players() {
             </div>
           </div>
           {/* player roster */}
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl border border-emerald-200 shadow-sm overflow-x-auto">
+          <div className="bg-roster-card/60 backdrop-blur-sm rounded-2xl border border-roster-border shadow-sm overflow-x-auto">
             <table className="w-full table-fixed">
               <thead>
-                <tr className="bg-emerald-700 border-b border-emerald-200">
-                  <th className="text-left text-sm font-semibold tracking-widest uppercase text-stone-200 px-3 py-3 w-14">
+                <tr className="bg-roster-header-bg border-b border-roster-border">
+                  <th className="text-left text-sm font-semibold tracking-widest uppercase text-roster-header-text px-3 py-3 w-14">
                     N°
                   </th>
-                  <th className="text-left text-sm font-semibold tracking-widest uppercase text-stone-200 px-2 py-3 w-44">
+                  <th className="text-left text-sm font-semibold tracking-widest uppercase text-roster-header-text px-2 py-3 w-44">
                     Nom
                   </th>
-                  <th className="text-left text-sm font-semibold tracking-widest uppercase text-stone-200 px-2 py-3 w-44">
+                  <th className="text-left text-sm font-semibold tracking-widest uppercase text-roster-header-text px-2 py-3 w-44">
                     Prénom
                   </th>
-                  <th className="text-left text-sm font-semibold tracking-widest uppercase text-stone-200 px-2 py-3 w-44">
+                  <th className="text-left text-sm font-semibold tracking-widest uppercase text-roster-header-text px-2 py-3 w-44">
                     Date d'inscription
                   </th>
                   <th className="w-10 py-3" />
                 </tr>
               </thead>
-              <tbody className="divide-y divide-emerald-100">
+              <tbody className="divide-y divide-roster-divide">
                 {players.map((player, index) => (
                   <tr
                     key={player.id}
-                    className="group hover:bg-indigo-50 transition-colors duration-150"
+                    className="group hover:bg-roster-row-hover transition-colors duration-150"
                   >
-                    <td className="px-3 py-3.5 text-sm font-mono text-stone-500">
+                    <td className="px-3 py-3.5 text-sm font-mono text-roster-index-text">
                       {String(index + 1).padStart(2, "0")}
                     </td>
-                    <td className="px-2 py-3.5 font-semibold text-emerald-900 truncate">
+                    <td className="px-2 py-3.5 font-semibold text-roster-text truncate">
                       {player.nom}
                     </td>
-                    <td className="px-2 py-3.5 text-emerald-900 truncate">
+                    <td className="px-2 py-3.5 text-roster-text truncate">
                       {player.prenom}
                     </td>
-                    <td className="px-2 py-3.5 text-emerald-900">
+                    <td className="px-2 py-3.5 text-roster-text">
                       {new Date(
                         player.dateInscription,
                       ).toLocaleDateString("fr-FR", {
@@ -151,7 +151,7 @@ export default function Players() {
                     <td className="px-2 py-3.5 text-center">
                       <button
                         type="button"
-                        className="text-emerald-500 hover:text-emerald-800 hover:cursor-pointer transition-colors relative z-40"
+                        className="text-roster-action hover:text-roster-action-hover hover:cursor-pointer transition-colors relative z-40"
                         onClick={(e) => {
                           const rect =
                             e.currentTarget.getBoundingClientRect();
@@ -178,7 +178,7 @@ export default function Players() {
               </tbody>
             </table>
           </div>
-          <p className="mt-4 text-xs text-emerald-400 text-right">
+          <p className="mt-4 text-xs text-roster-footer-text text-right">
             {players.length} joueur{players.length > 1 ? "s" : ""}
           </p>
         </div>
