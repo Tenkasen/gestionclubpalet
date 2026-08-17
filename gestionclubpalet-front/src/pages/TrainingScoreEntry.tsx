@@ -115,45 +115,43 @@ export default function TrainingScoreEntry() {
   return (
     <>
       <HeaderTest />
-      <div className="container mx-auto py-10 max-w-md">
-        <div className="mb-6">
-          <div className="flex justify-between">
-            <h1 className="text-3xl font-bold pb-2">
-              Saisie Entraînement J{dayIdNumber} -{" "}
-              {day?.date
-                ? new Date(day.date).toLocaleDateString("fr-FR")
-                : ""}{" "}
-            </h1>
-            <AddPlayerButton
-              onSave={handlePlayerSaved}
-              seasonId={seasonIdNumber}
-            />
-          </div>
-          <p className="text-gray-600">
-            Joueur {currentIndex + 1} / {players.length}
-          </p>
-          <div className="w-full bg-gray-200 h-2 rounded mt-2">
-            <div
-              className="bg-blue-600 h-2 rounded transition-all"
-              style={{
-                width: `${((currentIndex + 1) / players.length) * 100}%`,
-              }}
-            ></div>
-          </div>
-
-          {currentPlayer && (
-            <TrainingScoreInput
-              player={currentPlayer}
-              onPrev={prevPlayer}
-              onSave={handleSave}
-              currentScore={scores[currentPlayer.id]}
-              isFirst={isFirst}
-              isLast={isLast}
-              seasonId={seasonIdNumber}
-              dayIndex={dayIdNumber}
-            />
-          )}
+      <div className="container mx-auto py-10 max-w-md mb-6">
+        <div className="flex justify-between">
+          <h1 className="text-4xl text-title font-bold pb-2">
+            Saisie Entraînement J{dayIdNumber} -{" "}
+            {day?.date
+              ? new Date(day.date).toLocaleDateString("fr-FR")
+              : ""}{" "}
+          </h1>
+          <AddPlayerButton
+            onSave={handlePlayerSaved}
+            seasonId={seasonIdNumber}
+          />
         </div>
+        <p className="text-foreground font-semibold text-lg">
+          Joueur {currentIndex + 1} / {players.length}
+        </p>
+        <div className="w-full bg-foreground-subtle/30 h-2 rounded mt-2">
+          <div
+            className="bg-progressbar h-2 rounded transition-all"
+            style={{
+              width: `${((currentIndex + 1) / players.length) * 100}%`,
+            }}
+          ></div>
+        </div>
+
+        {currentPlayer && (
+          <TrainingScoreInput
+            player={currentPlayer}
+            onPrev={prevPlayer}
+            onSave={handleSave}
+            currentScore={scores[currentPlayer.id]}
+            isFirst={isFirst}
+            isLast={isLast}
+            seasonId={seasonIdNumber}
+            dayIndex={dayIdNumber}
+          />
+        )}
       </div>
     </>
   );

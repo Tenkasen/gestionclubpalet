@@ -58,7 +58,7 @@ export default function SeasonRanking() {
           </div>
 
           <div id="ranking-export" className=" p-1 w-fit">
-            <h1 className="text-3xl font-bold pb-8 text-center">
+            <h1 className="text-4xl text-title font-bold pb-8 text-center px-6">
               {season.type} - {season.nom}
             </h1>
             <RankingTables data={ranking} type={season.type} />
