@@ -40,6 +40,7 @@ _Week-end :_
 - modal pour afficher : les infos supplémentaire des joueurs/ supprimer ou modifier le joueur
 - page des joueurs : trie des joueurs par saison
 - style des toasts
+- couleur header et page d'erreur/chargement à changer (layout + feedback)
 
 <u>_**Semaine :**_</u>
 

@@ -12,6 +12,7 @@ interface IProps {
   onClose: () => void;
   onSave: (player: IPlayer) => void;
   seasonId?: number;
+  player?: IPlayer;
 }
 
 export default function AddPlayerModal({
@@ -19,6 +20,7 @@ export default function AddPlayerModal({
   onClose,
   onSave,
   seasonId,
+  player,
 }: IProps) {
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
@@ -74,6 +76,17 @@ export default function AddPlayerModal({
     onClose();
   };
 
+  const isEditing = player ? true : false;
+  function getButtonText(
+    loading: boolean,
+    isEditing: boolean,
+  ): string {
+    if (loading && isEditing) return "Modification en cours...";
+    if (loading && !isEditing) return "Ajout en cours...";
+    if (isEditing) return "Modifier le joueur";
+    return "Ajouter le joueur";
+  }
+
   const labelStyle = "block text-foreground mb-1";
   const inputStyle =
     "border border-foreground-subtle rounded px-3 py-2 w-full";
@@ -83,7 +96,7 @@ export default function AddPlayerModal({
     <BaseModal maxWidth="max-w-xl">
       <div className="flex justify-between items-center mb-6 px-2">
         <h2 className="text-2xl font-semibold text-title">
-          Ajouter un licencié
+          {isEditing ? "Modifier un licencié" : "Ajouter un licencié"}
         </h2>
         <CloseButton onClose={onClose} />
       </div>
@@ -159,7 +172,7 @@ export default function AddPlayerModal({
         </div>
         <div className="flex justify-center gap-6">
           <Button type="submit" variant="confirm" disabled={loading}>
-            {loading ? "Ajout en cours..." : "Ajouter le joueur"}
+            {getButtonText(loading, isEditing)}
           </Button>
           <Button variant="cancel" onClick={resetForm}>
             Annuler
