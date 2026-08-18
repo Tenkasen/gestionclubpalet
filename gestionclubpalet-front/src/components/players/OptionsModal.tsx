@@ -10,12 +10,14 @@ interface IProps {
   left: number;
   player: IPlayer;
   onDelete: (playerId: number) => void;
+  onEdit: (player: IPlayer) => void;
 }
 export default function OptionsModal({
   top,
   left,
   player,
   onDelete,
+  onEdit,
 }: IProps) {
   const [showInfos, setShowInfos] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -27,7 +29,10 @@ export default function OptionsModal({
         style={{ top, left }}
         className="fixed mt-2 py-1 z-50 rounded-md bg-surface shadow-xs"
       >
-        <button className={buttonStyle}>
+        <button
+          className={buttonStyle}
+          onClick={() => onEdit(player)}
+        >
           <SquarePen width={20} className="mr-2" />
           Éditer
         </button>
@@ -46,6 +51,7 @@ export default function OptionsModal({
           Supprimer
         </button>
       </div>
+
       {showInfos && (
         <PlayerInfosModal
           player={player}

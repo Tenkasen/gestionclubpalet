@@ -9,11 +9,16 @@ import HeaderTest from "../components/layout/HeaderTest.tsx";
 import AddPlayerButton from "../components/players/AddPlayerButton.tsx";
 import { sortPlayers } from "../utils/sortPlayer.ts";
 import OptionsModal from "../components/players/OptionsModal.tsx";
+import AddPlayerModal from "../components/players/AddPlayerModal.tsx";
 
 export default function Players() {
   const [players, setPlayers] = useState<IPlayer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedPlayer, setSelectedPlayer] = useState<
+    IPlayer | undefined
+  >(undefined);
   const [openId, setOpenId] = useState<number | null>(null);
   const [modalPos, setModalPos] = useState<{
     top: number;
@@ -59,6 +64,21 @@ export default function Players() {
     toast.success("Joueur ajouté avec succès !");
   };
 
+  function handleOpenCreateModal() {
+    setSelectedPlayer(undefined);
+    setOpenModal(true);
+  }
+
+  function handleOpenEditModal(player: IPlayer) {
+    setSelectedPlayer(player);
+    setOpenModal(true);
+  }
+
+  function handleCloseModal(player: IPlayer) {
+    setOpenModal(false);
+    setSelectedPlayer(undefined);
+  }
+
   if (loading) return <PageLoading />;
   if (error) return <PageError error={error} />;
 
@@ -100,8 +120,11 @@ export default function Players() {
               </select> */}
             </div>
             <div className="flex-end">
-              <AddPlayerButton onSave={handlePlayerSaved} />
               {/* add player button & form */}
+              <AddPlayerButton
+                onSave={handlePlayerSaved}
+                onClick={handleOpenCreateModal}
+              />
             </div>
           </div>
           {/* player roster */}
@@ -170,6 +193,7 @@ export default function Players() {
                           left={modalPos.left}
                           player={player}
                           onDelete={handleDeletePlayer}
+                          onEdit={handleOpenEditModal}
                         />
                       )}
                     </td>
@@ -190,6 +214,17 @@ export default function Players() {
           onClick={() => setOpenId(null)}
         ></div>
       )}
+
+      <AddPlayerModal
+        isOpen={openModal}
+        player={selectedPlayer}
+        key={
+          selectedPlayer
+            ? `edit-player-${selectedPlayer.id}`
+            : "new-player"
+        }
+        onClose={() => setOpenModal(false)}
+      />
     </>
   );
 }

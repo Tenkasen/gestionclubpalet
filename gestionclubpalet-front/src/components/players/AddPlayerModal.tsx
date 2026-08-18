@@ -22,17 +22,18 @@ export default function AddPlayerModal({
   seasonId,
   player,
 }: IProps) {
-  const [nom, setNom] = useState("");
-  const [prenom, setPrenom] = useState("");
-  const [email, setEmail] = useState<string | undefined>(undefined);
-  const [anniversaire, setAnniversaire] = useState<
-    string | undefined
-  >(undefined);
-  const [telephone, setTelephone] = useState<string | undefined>(
-    undefined,
+  const [nom, setNom] = useState(player?.nom || "");
+  const [prenom, setPrenom] = useState(player?.prenom || "");
+  const [email, setEmail] = useState<string>(player?.email || "");
+  const [anniversaire, setAnniversaire] = useState<string>(
+    player?.anniversaire ? player.anniversaire.split("T")[0] : "",
+  );
+  const [telephone, setTelephone] = useState<string>(
+    player?.telephone || "",
   );
   const [dateInscription, setDateInscription] = useState(
-    new Date().toISOString().split("T")[0],
+    player?.dateInscription.split("T")[0] ||
+      new Date().toISOString().split("T")[0],
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

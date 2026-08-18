@@ -5,16 +5,18 @@ import Button from "../ui/Button.tsx";
 
 interface IProps {
   onSave: (player: IPlayer) => void;
+  onClick?: () => void;
   seasonId?: number;
 }
 export default function AddPlayerButton({
   onSave,
   seasonId,
+  onClick,
 }: IProps) {
   const [open, setOpen] = useState(false);
   return (
     <div>
-      <Button onClick={() => setOpen(true)} variant="confirm">
+      <Button onClick={onClick} variant="confirm">
         Ajouter un licencié
       </Button>
 
