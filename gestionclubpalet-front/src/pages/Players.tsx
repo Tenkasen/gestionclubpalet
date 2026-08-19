@@ -9,21 +9,20 @@ import HeaderTest from "../components/layout/HeaderTest.tsx";
 import AddPlayerButton from "../components/players/AddPlayerButton.tsx";
 import { sortPlayers } from "../utils/sortPlayer.ts";
 import OptionsModal from "../components/players/OptionsModal.tsx";
-import AddPlayerModal from "../components/players/AddPlayerModal.tsx";
+import { usePlayerModal } from "../hooks/usePlayerModal.tsx";
 
 export default function Players() {
   const [players, setPlayers] = useState<IPlayer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [openModal, setOpenModal] = useState(false);
-  const [selectedPlayer, setSelectedPlayer] = useState<
-    IPlayer | undefined
-  >(undefined);
   const [openId, setOpenId] = useState<number | null>(null);
   const [modalPos, setModalPos] = useState<{
     top: number;
     left: number;
   }>({ top: 0, left: 0 });
+
+  const { openCreateModal, openEditModal, renderPlayerModal } =
+    usePlayerModal();
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -59,25 +58,24 @@ export default function Players() {
   };
 
   const handlePlayerSaved = (player: IPlayer) => {
-    setPlayers((prev) => sortPlayers([...prev, player]));
+    setPlayers((prev) => {
+      const existingPlayer = prev.some(
+        (oldPlayer) => oldPlayer.id === player.id,
+      );
+      if (existingPlayer) {
+        // Update : Replace existing player
+        return sortPlayers(
+          prev.map((oldPlayer) =>
+            oldPlayer.id === player.id ? player : oldPlayer,
+          ),
+        );
+      } else {
+        return sortPlayers([...prev, player]);
+      }
+    });
 
-    toast.success("Joueur ajouté avec succès !");
+    toast.success("Joueur enregistré avec succès !");
   };
-
-  function handleOpenCreateModal() {
-    setSelectedPlayer(undefined);
-    setOpenModal(true);
-  }
-
-  function handleOpenEditModal(player: IPlayer) {
-    setSelectedPlayer(player);
-    setOpenModal(true);
-  }
-
-  function handleCloseModal(player: IPlayer) {
-    setOpenModal(false);
-    setSelectedPlayer(undefined);
-  }
 
   if (loading) return <PageLoading />;
   if (error) return <PageError error={error} />;
@@ -123,7 +121,7 @@ export default function Players() {
               {/* add player button & form */}
               <AddPlayerButton
                 onSave={handlePlayerSaved}
-                onClick={handleOpenCreateModal}
+                onClick={openCreateModal}
               />
             </div>
           </div>
@@ -193,7 +191,7 @@ export default function Players() {
                           left={modalPos.left}
                           player={player}
                           onDelete={handleDeletePlayer}
-                          onEdit={handleOpenEditModal}
+                          onEdit={openEditModal}
                         />
                       )}
                     </td>
@@ -215,16 +213,7 @@ export default function Players() {
         ></div>
       )}
 
-      <AddPlayerModal
-        isOpen={openModal}
-        player={selectedPlayer}
-        key={
-          selectedPlayer
-            ? `edit-player-${selectedPlayer.id}`
-            : "new-player"
-        }
-        onClose={() => setOpenModal(false)}
-      />
+      {renderPlayerModal({ onSave: handlePlayerSaved })}
     </>
   );
 }
