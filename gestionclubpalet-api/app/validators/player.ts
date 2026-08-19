@@ -15,9 +15,10 @@ export const createPlayerValidator = vine.compile(
           .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
           .join(' ')
       ),
-    email: vine.string().email().optional(),
+    email: vine.string().trim().email().optional(),
     telephone: vine
       .string()
+      .trim()
       .mobile({ locale: ['fr-FR'] })
       .optional(),
     anniversaire: vine
@@ -39,9 +40,10 @@ export const updatePlayerValidator = vine.compile(
   vine.object({
     nom: vine.string().trim().minLength(3).maxLength(100).optional(),
     prenom: vine.string().trim().minLength(3).maxLength(100).optional(),
-    email: vine.string().email().optional(),
+    email: vine.string().trim().email().optional(),
     telephone: vine
       .string()
+      .trim()
       .mobile({ locale: ['fr-FR'] })
       .optional(),
     anniversaire: vine

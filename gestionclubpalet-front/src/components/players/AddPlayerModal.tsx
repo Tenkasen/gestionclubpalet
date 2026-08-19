@@ -45,20 +45,42 @@ export default function AddPlayerModal({
       e.preventDefault();
       setError(null);
       setLoading(true);
+      let savedPlayer: IPlayer | null;
+      // Nettoyer le numéro de téléphone avant l'envoi
+      const cleanedTelephone =
+        telephone?.replace(/ /g, "") || undefined;
 
-      const newPlayer = await playerAPI.create({
-        nom,
-        prenom,
-        email,
-        anniversaire,
-        telephone,
-        dateInscription,
-      });
-      if (!newPlayer) return;
-      onSave(newPlayer);
-      if (seasonId) {
-        await seasonRegistrationApi.create(seasonId, [newPlayer.id]);
+      if (player) {
+        savedPlayer = await playerAPI.update(player.id, {
+          nom,
+          prenom,
+          email,
+          anniversaire,
+          telephone: cleanedTelephone,
+          dateInscription,
+        });
+      } else {
+        savedPlayer = await playerAPI.create({
+          nom,
+          prenom,
+          email,
+          anniversaire,
+          telephone: cleanedTelephone,
+          dateInscription,
+        });
+        if (savedPlayer && seasonId) {
+          await seasonRegistrationApi.create(seasonId, [
+            savedPlayer.id,
+          ]);
+        }
       }
+
+      if (!savedPlayer) {
+        toast.error("Erreur lors de l'enregistrement du joueur");
+        return;
+      }
+
+      onSave(savedPlayer);
       resetForm();
     } catch (error) {
       setError(`${error}`);
@@ -71,9 +93,9 @@ export default function AddPlayerModal({
   const resetForm = () => {
     setNom("");
     setPrenom("");
-    setEmail(undefined);
-    setAnniversaire(undefined);
-    setTelephone(undefined);
+    setEmail("");
+    setAnniversaire("");
+    setTelephone("");
     onClose();
   };
 
