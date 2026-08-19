@@ -11,9 +11,10 @@ import type { ITrainingScore } from "../types/trainingScore";
 import HeaderTest from "../components/layout/HeaderTest.tsx";
 import PageLoading from "../components/feedback/PageLoading.tsx";
 import PageError from "../components/feedback/PageError.tsx";
-import AddPlayerButton from "../components/players/AddPlayerButton.tsx";
 import { toast } from "sonner";
 import { sortPlayers } from "../utils/sortPlayer.ts";
+import Button from "../components/ui/Button.tsx";
+import { usePlayerModal } from "../hooks/usePlayerModal.tsx";
 
 export default function TrainingScoreEntry() {
   const { seasonId, dayIndex } = useParams();
@@ -37,6 +38,8 @@ export default function TrainingScoreEntry() {
     isLast,
     isFirst,
   } = useScoreEntry<IScore>(players);
+
+  const { openCreateModal, renderPlayerModal } = usePlayerModal();
 
   useEffect(() => {
     async function loadData() {
@@ -123,10 +126,9 @@ export default function TrainingScoreEntry() {
               ? new Date(day.date).toLocaleDateString("fr-FR")
               : ""}{" "}
           </h1>
-          <AddPlayerButton
-            onSave={handlePlayerSaved}
-            seasonId={seasonIdNumber}
-          />
+          <Button onClick={openCreateModal} variant="confirm">
+            Ajouter un licencié
+          </Button>
         </div>
         <p className="text-foreground font-semibold text-lg">
           Joueur {currentIndex + 1} / {players.length}
@@ -153,6 +155,10 @@ export default function TrainingScoreEntry() {
           />
         )}
       </div>
+      {renderPlayerModal({
+        onSave: handlePlayerSaved,
+        seasonId: seasonIdNumber,
+      })}
     </>
   );
 }

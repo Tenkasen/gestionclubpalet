@@ -43,14 +43,14 @@ export default function ConfirmDeleteModal({
           Cette action est irréversible et définitive
         </p>
         <div className="flex justify-center gap-6">
-          <Button onClick={onClose} variant={"cancel"}>
-            Annuler
-          </Button>
           <Button
             onClick={() => onDelete(player.id)}
             variant={"delete"}
           >
             Supprimer
+          </Button>
+          <Button onClick={onClose} variant={"cancel"}>
+            Annuler
           </Button>
         </div>
       </div>

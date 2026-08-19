@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { dayApi } from "../api/day.api";
 import { seasonRegistrationApi } from "../api/seasonRegistration.api";
-import { RotatingLines } from "react-loader-spinner";
 import useScoreEntry, { type IScore } from "../hooks/useScoreEntry";
 import type { IDay } from "../types/day";
 import type { IPlayer } from "../types/player";
@@ -10,11 +9,12 @@ import ChampionshipGrid from "../components/scores/ChampionshipGrid.tsx";
 import { champMatchesApi } from "../api/champMatches.api.ts";
 import type { IChampMatches } from "../types/champMatches.ts";
 import HeaderTest from "../components/layout/HeaderTest.tsx";
-import AddPlayerButton from "../components/players/AddPlayerButton.tsx";
 import { toast } from "sonner";
 import { sortPlayers } from "../utils/sortPlayer.ts";
 import PageLoading from "../components/feedback/PageLoading.tsx";
 import PageError from "../components/feedback/PageError.tsx";
+import { usePlayerModal } from "../hooks/usePlayerModal.tsx";
+import Button from "../components/ui/Button.tsx";
 
 export default function ChampionshipScoreEntry() {
   const { seasonId, dayIndex } = useParams();
@@ -38,6 +38,8 @@ export default function ChampionshipScoreEntry() {
     isFirst,
     isLast,
   } = useScoreEntry<IScore[]>(players);
+
+  const { openCreateModal, renderPlayerModal } = usePlayerModal();
 
   useEffect(() => {
     async function loadData() {
@@ -132,10 +134,9 @@ export default function ChampionshipScoreEntry() {
               ? new Date(day.date).toLocaleDateString("fr-FR")
               : ""}{" "}
           </h1>
-          <AddPlayerButton
-            onSave={handlePlayerSaved}
-            seasonId={seasonIdNumber}
-          />
+          <Button onClick={openCreateModal} variant="confirm">
+            Ajouter un licencié
+          </Button>
         </div>
 
         <p className="text-foreground font-semibold text-lg">
@@ -163,6 +164,10 @@ export default function ChampionshipScoreEntry() {
           />
         )}
       </div>
+      {renderPlayerModal({
+        onSave: handlePlayerSaved,
+        seasonId: seasonIdNumber,
+      })}
     </>
   );
 }

@@ -6,10 +6,10 @@ import PageError from "../components/feedback/PageError.tsx";
 // import Header from "../components/layout/Header.tsx";
 import { toast } from "sonner";
 import HeaderTest from "../components/layout/HeaderTest.tsx";
-import AddPlayerButton from "../components/players/AddPlayerButton.tsx";
 import { sortPlayers } from "../utils/sortPlayer.ts";
 import OptionsModal from "../components/players/OptionsModal.tsx";
 import { usePlayerModal } from "../hooks/usePlayerModal.tsx";
+import Button from "../components/ui/Button.tsx";
 
 export default function Players() {
   const [players, setPlayers] = useState<IPlayer[]>([]);
@@ -119,10 +119,9 @@ export default function Players() {
             </div>
             <div className="flex-end">
               {/* add player button & form */}
-              <AddPlayerButton
-                onSave={handlePlayerSaved}
-                onClick={openCreateModal}
-              />
+              <Button onClick={openCreateModal} variant="confirm">
+                Ajouter un licencié
+              </Button>
             </div>
           </div>
           {/* player roster */}

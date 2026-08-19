@@ -32,7 +32,7 @@ export default function AddPlayerModal({
     player?.telephone || "",
   );
   const [dateInscription, setDateInscription] = useState(
-    player?.dateInscription.split("T")[0] ||
+    player?.dateInscription?.split("T")[0] ||
       new Date().toISOString().split("T")[0],
   );
   const [loading, setLoading] = useState(false);
