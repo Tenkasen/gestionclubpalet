@@ -10,7 +10,7 @@ import { champMatchesApi } from "../api/champMatches.api.ts";
 import type { IChampMatches } from "../types/champMatches.ts";
 import HeaderTest from "../components/layout/HeaderTest.tsx";
 import { toast } from "sonner";
-import { sortPlayers } from "../utils/sortPlayer.ts";
+import { updatePlayerList } from "../utils/playerUtils.ts";
 import PageLoading from "../components/feedback/PageLoading.tsx";
 import PageError from "../components/feedback/PageError.tsx";
 import { usePlayerModal } from "../hooks/usePlayerModal.tsx";
@@ -116,9 +116,9 @@ export default function ChampionshipScoreEntry() {
   };
 
   const handlePlayerSaved = (player: IPlayer) => {
-    setPlayers((prev) => sortPlayers([...prev, player]));
+    setPlayers((prev) => updatePlayerList(prev, player));
 
-    toast.success("Joueur ajouté avec succès !");
+    toast.success("Joueur enregistré avec succès !");
   };
 
   if (loading) return <PageLoading />;

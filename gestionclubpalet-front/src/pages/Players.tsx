@@ -6,7 +6,10 @@ import PageError from "../components/feedback/PageError.tsx";
 // import Header from "../components/layout/Header.tsx";
 import { toast } from "sonner";
 import HeaderTest from "../components/layout/HeaderTest.tsx";
-import { sortPlayers } from "../utils/sortPlayer.ts";
+import {
+  sortPlayers,
+  updatePlayerList,
+} from "../utils/playerUtils.ts";
 import OptionsModal from "../components/players/OptionsModal.tsx";
 import { usePlayerModal } from "../hooks/usePlayerModal.tsx";
 import Button from "../components/ui/Button.tsx";
@@ -58,21 +61,7 @@ export default function Players() {
   };
 
   const handlePlayerSaved = (player: IPlayer) => {
-    setPlayers((prev) => {
-      const existingPlayer = prev.some(
-        (oldPlayer) => oldPlayer.id === player.id,
-      );
-      if (existingPlayer) {
-        // Update : Replace existing player
-        return sortPlayers(
-          prev.map((oldPlayer) =>
-            oldPlayer.id === player.id ? player : oldPlayer,
-          ),
-        );
-      } else {
-        return sortPlayers([...prev, player]);
-      }
-    });
+    setPlayers((prev) => updatePlayerList(prev, player));
 
     toast.success("Joueur enregistré avec succès !");
   };
