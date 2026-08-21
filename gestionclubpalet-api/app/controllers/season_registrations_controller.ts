@@ -23,7 +23,7 @@ export default class SeasonRegistrationsController {
     const players = registrations.map((register) => register.player)
     const season = registrations[0].season
     // Sort players
-    const playersList = players.sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
+    const playersList = [...players].sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
     return {
       message: `Liste des joueurs de la saison "${season?.nom} - ${season?.type}"`,
       playersList,
