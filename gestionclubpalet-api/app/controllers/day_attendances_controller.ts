@@ -8,7 +8,7 @@ export default class DayAttendancesController {
   async index({ params }: HttpContext) {
     // Get one day registration
     const registrations = await DayAttendance.query()
-      .where('day_id', params.dayId)
+      .where('index_jour', params.dayIndex)
       //load associated players
       .preload('player')
       .preload('day')
@@ -50,7 +50,7 @@ export default class DayAttendancesController {
 
     // check existing player in this season
     const existingRegistrations = await DayAttendance.query()
-      .where('day_id', params.dayId)
+      .where('index_jour', params.dayIndex)
       .whereIn('player_id', playerIds)
 
     if (existingRegistrations.length > 0) {
@@ -61,7 +61,7 @@ export default class DayAttendancesController {
     }
 
     const registrations = await DayAttendance.createMany(
-      playerIds.map((id) => ({ dayId: params.dayId, playerId: id }))
+      playerIds.map((id) => ({ dayId: params.dayIndex, playerId: id }))
     )
 
     for (const regi of registrations) {
@@ -70,24 +70,9 @@ export default class DayAttendancesController {
     return response.created(registrations)
   }
 
-  async show({ params }: HttpContext) {
-    const registration = await SeasonRegistration.query()
-      .preload('player')
-      .preload('season')
-      .where('season_id', params.seasonId)
-      .where('player_id', params.playerId)
-      .firstOrFail()
-
-    return {
-      player: registration.player,
-      season: registration.season,
-      registrationDate: registration.createdAt, // ou autres infos de l'inscription
-    }
-  }
-
   async destroy({ params }: HttpContext) {
     const registration = await DayAttendance.query()
-      .where('day_id', params.dayId)
+      .where('index_jour', params.dayIndex)
       .where('player_id', params.playerId)
       .firstOrFail()
     await registration.delete()

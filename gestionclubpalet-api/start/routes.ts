@@ -10,6 +10,7 @@
 const RankingsController = () => import('#controllers/rankings_controller')
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+const DayAttendancesController = () => import('#controllers/day_attendances_controller')
 const ChampMatchesController = () => import('#controllers/champ_matches_controller')
 const PlayersController = () => import('#controllers/players_controller')
 const SeasonsController = () => import('#controllers/seasons_controller')
@@ -42,7 +43,6 @@ router
     // Season Registrations Routes
     router.get('/players', [SeasonRegistrationsController, 'index'])
     router.post('/players', [SeasonRegistrationsController, 'store'])
-    router.get('/players/:playerId', [SeasonRegistrationsController, 'show'])
     router.patch('/players/:playerId', [SeasonRegistrationsController, 'update'])
     router.delete('/players/:playerId', [SeasonRegistrationsController, 'destroy'])
 
@@ -58,6 +58,11 @@ router
     // Champ matches Routes
     router.get('/days/:dayIndex/champ-matches', [ChampMatchesController, 'index'])
     router.post('/days/:dayIndex/champ-matches', [ChampMatchesController, 'store'])
+
+    // Day attendances Routes
+    router.get('/days/:dayIndex/attendances', [DayAttendancesController, 'index'])
+    router.post('/days/:dayIndex/attendances', [DayAttendancesController, 'store'])
+    router.delete('/days/:dayIndex/attendances/:playerId', [DayAttendancesController, 'destroy'])
   })
   .prefix('/seasons/:seasonId')
   .use(middleware.CheckExistingSeason())
