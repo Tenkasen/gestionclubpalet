@@ -61,7 +61,7 @@ export default class DayAttendancesController {
     }
 
     const registrations = await DayAttendance.createMany(
-      playerIds.map((id) => ({ dayId: params.dayIndex, playerId: id }))
+      playerIds.map((id) => ({ dayIndex: params.dayIndex, playerId: id }))
     )
 
     for (const regi of registrations) {
