@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { dayAttendanceApi } from "../../api/dayAttendances.api.ts";
 import type { IPlayer } from "../../types/player.ts";
 import { toast } from "sonner";
+import BaseModal from "../modals/BaseModal.tsx";
+import CloseButton from "../ui/CloseButton.tsx";
+import Button from "../ui/Button.tsx";
 
 export interface IProps {
   isOpen: boolean;
@@ -111,5 +114,52 @@ export default function DayAttendanceModal({
   }
 
   if (!isOpen) return null;
-  return <div>DayAttendanceModal</div>;
+  return (
+    <BaseModal variant="base" maxWidth="max-w-lg">
+      <div className="flex justify-between items-center mb-6 px-2">
+        <h2 className="text-2xl font-semibold text-title">
+          Présences - Journée {dayIndex}
+        </h2>
+        <CloseButton onClose={onClose} />
+      </div>
+
+      <div className="max-h-96 overflow-y-auto mb-6">
+        {allPlayers.map((player) => {
+          const isChecked = selectedPlayerIds.includes(player.id);
+          return (
+            <label
+              key={player.id}
+              className="flex items-center gap-3 p-3 hover:bg-foreground-subtle cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                checked={isChecked}
+                onChange={() => togglePlayer(player.id)}
+                className="w-5 h-5"
+              />
+              <span>
+                {player.nom} {player.prenom}
+              </span>
+            </label>
+          );
+        })}
+      </div>
+
+      <div className="flex justify-center gap-6">
+        <Button
+          type="submit"
+          variant="confirm"
+          onClick={handleSave}
+          disabled={loading}
+        >
+          {loading
+            ? "Enregistrement"
+            : `Valider (${selectedPlayerIds.length} présences)`}
+        </Button>
+        <Button variant="cancel" onClick={onClose}>
+          Annuler
+        </Button>
+      </div>
+    </BaseModal>
+  );
 }
