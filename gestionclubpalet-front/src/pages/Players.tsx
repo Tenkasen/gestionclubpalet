@@ -6,10 +6,7 @@ import PageError from "../components/feedback/PageError.tsx";
 // import Header from "../components/layout/Header.tsx";
 import { toast } from "sonner";
 import HeaderTest from "../components/layout/HeaderTest.tsx";
-import {
-  sortPlayers,
-  updatePlayerList,
-} from "../utils/playerUtils.ts";
+import { updatePlayerList } from "../utils/playerUtils.ts";
 import OptionsModal from "../components/players/OptionsModal.tsx";
 import { usePlayerModal } from "../hooks/usePlayerModal.tsx";
 import Button from "../components/ui/Button.tsx";
