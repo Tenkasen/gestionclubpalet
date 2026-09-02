@@ -71,7 +71,12 @@ export default function ChampionshipScoreEntry() {
         if (!attendances || attendances.length === 0) {
           setShowAttendanceModal(true); // open modal if no attendances
         } else {
-          setPresentPlayerIds(attendances.map((player) => player.id));
+          const sortedAttendances = [...attendances].sort((a, b) =>
+            a.nom.localeCompare(b.nom, "fr"),
+          );
+          setPresentPlayerIds(
+            sortedAttendances.map((player) => player.id),
+          );
         }
       } catch (error) {
         setError("Erreur lors de la récupération des données");

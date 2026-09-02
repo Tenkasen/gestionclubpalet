@@ -21,6 +21,7 @@ export default class DayAttendancesController {
     // Get one day registration
     const registrations = await DayAttendance.query()
       .where('day_id', existingDay.id)
+      .orderBy('created_at', 'asc')
       //load associated players
       .preload('player')
 
@@ -30,9 +31,8 @@ export default class DayAttendancesController {
         playersList: [],
       }
     }
-    const players = registrations.map((register) => register.player)
-    // Sort players
-    const playersList = [...players].sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
+    const playersList = registrations.map((register) => register.player)
+
     return {
       message: `Liste des joueurs de la journée "${existingDay.indexJour}"`,
       playersList,

@@ -32,7 +32,7 @@
 ### v1
 
 - onglet stats ?
-- tri des joueurs
+- tri page liste des joueurs
 - modifs des couleurs
 
 <br>
@@ -41,7 +41,6 @@
 
 _Week-end :_
 
-- table DayPresence pour sélectionner les joueurs présent à cette journée ==> **plus tard**
 - page des joueurs : trie des joueurs par saison
 - style des toasts
 - couleur header à changer (layout + feedback)
@@ -49,4 +48,3 @@ _Week-end :_
 <u>_**Semaine :**_</u>
 
 - page et lien pour meilleur navigation + bouton ajout de saison et journées
-- gestion des joueurs dynamiques

@@ -84,9 +84,9 @@ export default function TrainingScoreEntry() {
   }, [seasonIdNumber, dayIndexNumber]);
 
   // filter players to display only present players
-  const presentPlayers = players.filter((player) =>
-    presentPlayerIds.includes(player.id),
-  );
+  const presentPlayers = presentPlayerIds
+    .map((id) => players.find((player) => player.id === id))
+    .filter((player) => player !== undefined);
 
   const {
     currentPlayer,
@@ -162,13 +162,13 @@ export default function TrainingScoreEntry() {
           </div>
         </div>
         <p className="text-foreground font-semibold text-lg">
-          Joueur {currentIndex + 1} / {players.length}
+          Joueur {currentIndex + 1} / {presentPlayers.length}
         </p>
         <div className="w-full bg-foreground-subtle/30 h-2 rounded mt-2">
           <div
             className="bg-progressbar h-2 rounded transition-all"
             style={{
-              width: `${((currentIndex + 1) / players.length) * 100}%`,
+              width: `${((currentIndex + 1) / presentPlayers.length) * 100}%`,
             }}
           ></div>
         </div>
