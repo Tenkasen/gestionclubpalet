@@ -1,3 +1,4 @@
+import Day from '#models/day'
 import DayAttendance from '#models/day_attendance'
 import Player from '#models/player'
 import { addPlayerInDayValidator } from '#validators/day_attendance'
@@ -5,13 +6,23 @@ import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
 
 export default class DayAttendancesController {
-  async index({ params }: HttpContext) {
+  async index({ params, response }: HttpContext) {
+    const existingDay = await Day.query()
+      .where('season_id', params.seasonId)
+      .where('index_jour', params.dayIndex)
+      .first()
+
+    if (!existingDay) {
+      return response.notFound({
+        message: `Cette journée n'existe pas dans cette saison`,
+      })
+    }
+
     // Get one day registration
     const registrations = await DayAttendance.query()
-      .where('index_jour', params.dayIndex)
+      .where('day_id', existingDay.id)
       //load associated players
       .preload('player')
-      .preload('day')
 
     if (registrations.length === 0) {
       return {
@@ -20,11 +31,10 @@ export default class DayAttendancesController {
       }
     }
     const players = registrations.map((register) => register.player)
-    const day = registrations[0].day
     // Sort players
     const playersList = [...players].sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
     return {
-      message: `Liste des joueurs de la journée "${day?.indexJour}"`,
+      message: `Liste des joueurs de la journée "${existingDay.indexJour}"`,
       playersList,
     }
   }
@@ -48,9 +58,20 @@ export default class DayAttendancesController {
       })
     }
 
+    const existingDay = await Day.query()
+      .where('season_id', params.seasonId)
+      .where('index_jour', params.dayIndex)
+      .first()
+
+    if (!existingDay) {
+      return response.notFound({
+        message: `Cette journée n'existe pas dans cette saison`,
+      })
+    }
+
     // check existing player in this season
     const existingRegistrations = await DayAttendance.query()
-      .where('index_jour', params.dayIndex)
+      .where('day_id', existingDay.id)
       .whereIn('player_id', playerIds)
 
     if (existingRegistrations.length > 0) {
@@ -61,7 +82,7 @@ export default class DayAttendancesController {
     }
 
     const registrations = await DayAttendance.createMany(
-      playerIds.map((id) => ({ dayIndex: params.dayIndex, playerId: id }))
+      playerIds.map((id) => ({ dayId: existingDay.id, playerId: id }))
     )
 
     for (const regi of registrations) {
@@ -70,9 +91,19 @@ export default class DayAttendancesController {
     return response.created(registrations)
   }
 
-  async destroy({ params }: HttpContext) {
-    const registration = await DayAttendance.query()
+  async destroy({ params, response }: HttpContext) {
+    const existingDay = await Day.query()
+      .where('season_id', params.seasonId)
       .where('index_jour', params.dayIndex)
+      .first()
+
+    if (!existingDay) {
+      return response.notFound({
+        message: `Cette journée n'existe pas dans cette saison`,
+      })
+    }
+    const registration = await DayAttendance.query()
+      .where('day_id', existingDay.id)
       .where('player_id', params.playerId)
       .firstOrFail()
     await registration.delete()
