@@ -15,6 +15,8 @@ import { toast } from "sonner";
 import { updatePlayerList } from "../utils/playerUtils.ts";
 import Button from "../components/ui/Button.tsx";
 import { usePlayerModal } from "../hooks/usePlayerModal.tsx";
+import DayAttendanceModal from "../components/players/DayAttendanceModal.tsx";
+import { dayAttendanceApi } from "../api/dayAttendances.api.ts";
 
 export default function TrainingScoreEntry() {
   const { seasonId, dayIndex } = useParams();
@@ -25,19 +27,13 @@ export default function TrainingScoreEntry() {
   >(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const dayIdNumber = Number(dayIndex);
+  const [showAttendanceModal, setShowAttendanceModal] =
+    useState(false);
+  const [presentPlayerIds, setPresentPlayerIds] = useState<number[]>(
+    [],
+  );
+  const dayIndexNumber = Number(dayIndex);
   const seasonIdNumber = Number(seasonId);
-
-  const {
-    currentPlayer,
-    currentIndex,
-    nextPlayer,
-    prevPlayer,
-    saveScore,
-    scores,
-    isLast,
-    isFirst,
-  } = useScoreEntry<IScore>(players);
 
   const { openCreateModal, renderPlayerModal } = usePlayerModal();
 
@@ -46,7 +42,7 @@ export default function TrainingScoreEntry() {
       try {
         const dayData = await dayApi.getOne(
           seasonIdNumber,
-          dayIdNumber,
+          dayIndexNumber,
         );
         const playersData =
           await seasonRegistrationApi.getAll(seasonIdNumber);
@@ -60,12 +56,23 @@ export default function TrainingScoreEntry() {
 
         const existingScores = await trainingScoreApi.getAll(
           seasonIdNumber,
-          dayIdNumber,
+          dayIndexNumber,
         );
 
         setDay(dayData);
         setPlayers(playersData);
         setInitialScores(existingScores);
+
+        const attendances = await dayAttendanceApi.getAll(
+          seasonIdNumber,
+          dayIndexNumber,
+        );
+
+        if (!attendances || attendances.length === 0) {
+          setShowAttendanceModal(true); // open modal if no attendances
+        } else {
+          setPresentPlayerIds(attendances.map((player) => player.id));
+        }
       } catch (error) {
         setError("Erreur lors de la récupération des données");
         console.error(error);
@@ -74,7 +81,23 @@ export default function TrainingScoreEntry() {
       }
     }
     loadData();
-  }, [seasonIdNumber, dayIdNumber]);
+  }, [seasonIdNumber, dayIndexNumber]);
+
+  // filter players to display only present players
+  const presentPlayers = players.filter((player) =>
+    presentPlayerIds.includes(player.id),
+  );
+
+  const {
+    currentPlayer,
+    currentIndex,
+    nextPlayer,
+    prevPlayer,
+    saveScore,
+    scores,
+    isFirst,
+    isLast,
+  } = useScoreEntry<IScore>(presentPlayers);
 
   // Load previously entered scores when the page is refreshed
   useEffect(() => {
@@ -94,7 +117,7 @@ export default function TrainingScoreEntry() {
 
     const registerScore = await trainingScoreApi.create(
       seasonIdNumber,
-      dayIdNumber,
+      dayIndexNumber,
       { ...score, playerId: currentPlayer.id },
     );
 
@@ -121,14 +144,22 @@ export default function TrainingScoreEntry() {
       <div className="container mx-auto py-10 max-w-md mb-6">
         <div className="flex justify-between">
           <h1 className="text-4xl text-title font-bold pb-2">
-            Saisie Entraînement J{dayIdNumber} -{" "}
+            Saisie Entraînement J{dayIndexNumber} -{" "}
             {day?.date
               ? new Date(day.date).toLocaleDateString("fr-FR")
               : ""}{" "}
           </h1>
-          <Button onClick={openCreateModal} variant="confirm">
-            Ajouter un licencié
-          </Button>
+          <div className="flex gap-6">
+            <Button onClick={openCreateModal} variant="confirm">
+              Ajouter un licencié
+            </Button>
+            <Button
+              onClick={() => setShowAttendanceModal(true)}
+              variant="confirm"
+            >
+              Gérer les présences
+            </Button>
+          </div>
         </div>
         <p className="text-foreground font-semibold text-lg">
           Joueur {currentIndex + 1} / {players.length}
@@ -151,7 +182,7 @@ export default function TrainingScoreEntry() {
             isFirst={isFirst}
             isLast={isLast}
             seasonId={seasonIdNumber}
-            dayIndex={dayIdNumber}
+            dayIndex={dayIndexNumber}
           />
         )}
       </div>
@@ -159,6 +190,15 @@ export default function TrainingScoreEntry() {
         onSave: handlePlayerSaved,
         seasonId: seasonIdNumber,
       })}
+
+      <DayAttendanceModal
+        isOpen={showAttendanceModal}
+        onClose={() => setShowAttendanceModal(false)}
+        seasonId={seasonIdNumber}
+        dayIndex={dayIndexNumber}
+        allPlayers={players}
+        onAttendanceSaved={(ids) => setPresentPlayerIds(ids)}
+      />
     </>
   );
 }

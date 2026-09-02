@@ -157,15 +157,17 @@ export default function ChampionshipScoreEntry() {
               ? new Date(day.date).toLocaleDateString("fr-FR")
               : ""}{" "}
           </h1>
-          <Button onClick={openCreateModal} variant="confirm">
-            Ajouter un licencié
-          </Button>
-          <Button
-            onClick={() => setShowAttendanceModal(true)}
-            variant="confirm"
-          >
-            Gérer les présences
-          </Button>
+          <div className="flex gap-6">
+            <Button onClick={openCreateModal} variant="confirm">
+              Ajouter un licencié
+            </Button>
+            <Button
+              onClick={() => setShowAttendanceModal(true)}
+              variant="confirm"
+            >
+              Gérer les présences
+            </Button>
+          </div>
         </div>
         {presentPlayers.length === 0 ? (
           <p className="text-center text-foreground-muted">
