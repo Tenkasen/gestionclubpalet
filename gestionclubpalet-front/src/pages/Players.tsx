@@ -9,7 +9,7 @@ import HeaderTest from "../components/layout/HeaderTest.tsx";
 import { updatePlayerList } from "../utils/playerUtils.ts";
 import OptionsModal from "../components/players/OptionsModal.tsx";
 import { usePlayerModal } from "../hooks/usePlayerModal.tsx";
-import Button from "../components/ui/Button.tsx";
+import Button from "../components/ui/Button-1.tsx";
 
 export default function Players() {
   const [players, setPlayers] = useState<IPlayer[]>([]);

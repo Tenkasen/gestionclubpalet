@@ -87,6 +87,29 @@
   --color-info-bg: #dbeafe;
 }
 
+/* --- Shadcn (préfixé pour éviter toute collision avec les tokens ci-dessus) --- */
+@theme inline {
+  --color-shadcn-card: #ffffff;
+  --color-shadcn-card-foreground: #374151;
+  --color-shadcn-popover: #ffffff;
+  --color-shadcn-popover-foreground: #374151;
+  --color-shadcn-border: #e5e7eb;
+  --color-shadcn-input: #e5e7eb;
+  --color-shadcn-ring: #6366f1;
+  --color-shadcn-muted: #f3f4f6;
+  --color-shadcn-muted-foreground: #6b7280;
+  --color-shadcn-accent: #eef2ff;
+  --color-shadcn-accent-foreground: #3730a3;
+  --color-shadcn-secondary: #dde3f0;
+  --color-shadcn-secondary-foreground: #374151;
+  --color-shadcn-destructive: #b91c1c;
+  --color-shadcn-primary: #2563eb;
+  --color-shadcn-primary-foreground: #ffffff;
+  --radius-lg: 0.625rem;
+  --radius-md: calc(0.625rem * 0.8);
+  --radius-sm: calc(0.625rem * 0.6);
+}
+
 .container {
   @apply max-w-7xl mx-auto p-6;
 }

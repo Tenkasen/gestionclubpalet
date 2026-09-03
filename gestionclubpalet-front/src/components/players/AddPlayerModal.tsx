@@ -5,7 +5,7 @@ import { seasonRegistrationApi } from "../../api/seasonRegistration.api.ts";
 import { toast } from "sonner";
 import BaseModal from "../modals/BaseModal.tsx";
 import CloseButton from "../ui/CloseButton.tsx";
-import Button from "../ui/Button.tsx";
+import Button from "../ui/Button-1.tsx";
 
 interface IProps {
   isOpen: boolean;

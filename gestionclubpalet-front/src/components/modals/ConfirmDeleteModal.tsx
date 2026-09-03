@@ -1,5 +1,5 @@
 import type { IPlayer } from "../../types/player.ts";
-import Button from "../ui/Button.tsx";
+import Button from "../ui/Button-1.tsx";
 import BaseModal from "./BaseModal.tsx";
 import CloseButton from "../ui/CloseButton.tsx";
 import { TriangleAlert } from "lucide-react";
