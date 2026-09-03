@@ -24,14 +24,14 @@ export default function Dashboard() {
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <DashboardCard
-            link="/saisons?type=ENTRAINEMENT"
+            link="/entrainement"
             icon={<Target className="text-training" size={48} />}
             title="Entraînement"
             description="Gérer les scores d'entraînement et suivre la progression"
           />
 
           <DashboardCard
-            link="/saisons?type=CHAMPIONNAT"
+            link="/championnat"
             icon={<Medal className="text-championship" size={48} />}
             title="Championnat"
             description="Saisir les scores de championnat et consulter les

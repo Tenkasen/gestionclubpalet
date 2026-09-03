@@ -12,7 +12,7 @@ export interface ISeason {
 }
 
 export interface ISeasonWithPlayers extends ISeason {
-  registration: ISeasonRegistrationWithPlayers[];
+  registrations: ISeasonRegistrationWithPlayers[];
 }
 
 export interface ISeasonRegistrationWithPlayers {

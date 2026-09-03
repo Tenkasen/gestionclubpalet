@@ -5,10 +5,11 @@ import { api } from "./client";
 export const dayApi = {
   async getAll(seasonId: number): Promise<IDay[] | null> {
     try {
-      const { data } = await api.get<IDay[]>(
-        `/seasons/${seasonId}/days`,
-      );
-      return data;
+      const { data } = await api.get<{
+        message: string;
+        days: IDay[];
+      }>(`/seasons/${seasonId}/days`);
+      return data.days ?? [];
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response?.status === 404) {
         console.warn(

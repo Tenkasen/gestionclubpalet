@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import type { IPlayer } from "../../types/player";
 import { Save } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import Button from "../ui/Button-1.tsx";
+import Button from "../ui/Button.tsx";
 
 interface IProps {
   player: IPlayer;

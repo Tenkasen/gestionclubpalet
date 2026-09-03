@@ -14,7 +14,7 @@ import { updatePlayerList } from "../utils/playerUtils.ts";
 import PageLoading from "../components/feedback/PageLoading.tsx";
 import PageError from "../components/feedback/PageError.tsx";
 import { usePlayerModal } from "../hooks/usePlayerModal.tsx";
-import Button from "../components/ui/Button-1.tsx";
+import Button from "../components/ui/Button.tsx";
 import DayAttendanceModal from "../components/players/DayAttendanceModal.tsx";
 import { dayAttendanceApi } from "../api/dayAttendances.api.ts";
 

@@ -4,7 +4,7 @@ import type { IPlayer } from "../../types/player.ts";
 import { toast } from "sonner";
 import BaseModal from "../modals/BaseModal.tsx";
 import CloseButton from "../ui/CloseButton.tsx";
-import Button from "../ui/Button-1.tsx";
+import Button from "../ui/Button.tsx";
 
 export interface IProps {
   isOpen: boolean;
