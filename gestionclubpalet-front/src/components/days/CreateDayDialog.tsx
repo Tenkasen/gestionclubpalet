@@ -37,7 +37,7 @@ export default function CreateDayDialog({
     }
     setSaving(true);
     try {
-      const created = await dayApi.create(seasonId, { date });
+      const created = await dayApi.create(seasonId, { date: date });
       if (!created) {
         toast.error(
           "Une journée existe déjà à cette date, ou la saison n'existe pas",
