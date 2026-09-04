@@ -67,7 +67,9 @@ export default function CreateSeasonDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Créer une saison</DialogTitle>
+          <DialogTitle className="text-title text-2xl">
+            Créer une saison
+          </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">

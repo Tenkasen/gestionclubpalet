@@ -44,7 +44,7 @@ function CardTitle({
     <div
       data-slot="card-title"
       className={cn(
-        "text-base leading-snug font-medium group-data-[size=sm]/card:text-sm",
+        "text-lg text-foreground leading-snug font-medium group-data-[size=sm]/card:text-sm",
         className,
       )}
       {...props}
@@ -59,7 +59,10 @@ function CardDescription({
   return (
     <div
       data-slot="card-description"
-      className={cn("text-sm text-muted-foreground", className)}
+      className={cn(
+        "text-sm text-shadcn-muted-foreground",
+        className,
+      )}
       {...props}
     />
   );
@@ -102,7 +105,7 @@ function CardFooter({
     <div
       data-slot="card-footer"
       className={cn(
-        "flex items-center rounded-b-xl border-t bg-muted/50 p-(--card-spacing)",
+        "flex items-center rounded-b-xl border-t bg-shadcn-muted/50 p-(--card-spacing)",
         className,
       )}
       {...props}
