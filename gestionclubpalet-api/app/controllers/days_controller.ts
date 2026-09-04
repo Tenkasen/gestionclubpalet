@@ -6,12 +6,6 @@ import { createDayValidator } from '#validators/day'
 export default class DaysController {
   async index({ params }: HttpContext) {
     const days = await Day.query().where('season_id', params.seasonId).orderBy('index_jour', 'asc')
-    if (days.length < 1) {
-      return {
-        message: 'Aucune journée créée pour cette saison',
-        days: [],
-      }
-    }
     return days
   }
 
