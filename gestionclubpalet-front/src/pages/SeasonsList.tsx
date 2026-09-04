@@ -25,6 +25,11 @@ interface Props {
   type: ISeason["type"];
 }
 
+function isSeasonFinished(date: string | null): boolean {
+  if (!date) return false;
+  return new Date().getTime() > new Date(date).getTime();
+}
+
 export default function SeasonsList({ type }: Props) {
   const [seasons, setSeasons] = useState<ISeason[]>([]);
   const [loading, setLoading] = useState(true);
@@ -69,35 +74,36 @@ export default function SeasonsList({ type }: Props) {
         )}
 
         <div className="grid gap-6 sm:grid-cols-3">
-          {seasons.map((season) => (
-            <Link key={season.id} to={`/saisons/${season.id}`}>
-              <Card className="hover:border-primary transition-colors cursor-pointer h-full">
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <CardTitle>{season.nom}</CardTitle>
-                    <Badge
-                      variant={
-                        season.dateFin ? "secondary" : "default"
-                      }
-                    >
-                      {season.dateFin ? "Terminée" : "En cours"}
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-base text-foreground-subtle">
-                    Du{" "}
-                    {new Date(season.dateDebut).toLocaleDateString(
-                      "fr-FR",
-                    )}
-                    {season.dateFin
-                      ? ` au ${new Date(season.dateFin).toLocaleDateString("fr-FR")}`
-                      : ""}
-                  </p>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
+          {seasons.map((season) => {
+            const isFinished = isSeasonFinished(season.dateFin);
+            return (
+              <Link key={season.id} to={`/saisons/${season.id}`}>
+                <Card className="hover:border-primary transition-colors cursor-pointer h-full">
+                  <CardHeader>
+                    <div className="flex justify-between items-start">
+                      <CardTitle>{season.nom}</CardTitle>
+                      <Badge
+                        variant={isFinished ? "secondary" : "default"}
+                      >
+                        {isFinished ? "Terminée" : "En cours"}
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-base text-foreground-subtle">
+                      Du{" "}
+                      {new Date(season.dateDebut).toLocaleDateString(
+                        "fr-FR",
+                      )}
+                      {season.dateFin
+                        ? ` au ${new Date(season.dateFin).toLocaleDateString("fr-FR")}`
+                        : ""}
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+            );
+          })}
         </div>
 
         <CreateSeasonDialog
