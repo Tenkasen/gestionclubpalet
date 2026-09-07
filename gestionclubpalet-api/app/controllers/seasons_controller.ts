@@ -43,7 +43,7 @@ export default class SeasonsController {
         query.preload('player')
       })
       .preload('days', (query) => {
-        query.orderBy('index_jour', 'asc').withCount('dayAttendances')
+        query.orderBy('index_jour', 'asc').withCount('attendances')
       })
       .firstOrFail()
     return season
