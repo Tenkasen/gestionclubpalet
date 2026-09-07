@@ -10,4 +10,5 @@ export interface IDay {
   createdAt: string;
   updatedAt: string;
   trainingScores?: ITrainingScore[];
+  attendancesCount?: number;
 }

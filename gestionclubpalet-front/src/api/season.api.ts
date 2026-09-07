@@ -1,5 +1,5 @@
 import { isAxiosError } from "axios";
-import type { ISeason, ISeasonWithPlayers } from "../types/season";
+import type { ISeason, ISeasonRegistration } from "../types/season";
 import { api } from "./client";
 
 export const seasonsAPI = {
@@ -9,9 +9,9 @@ export const seasonsAPI = {
     });
     return data;
   },
-  async getOne(id: number): Promise<ISeasonWithPlayers | null> {
+  async getOne(id: number): Promise<ISeasonRegistration | null> {
     try {
-      const { data } = await api.get<ISeasonWithPlayers>(
+      const { data } = await api.get<ISeasonRegistration>(
         `/seasons/${id}`,
       );
 

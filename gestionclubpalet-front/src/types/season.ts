@@ -1,3 +1,4 @@
+import type { IDay } from "./day.ts";
 import type { IPlayer } from "./player";
 
 export interface ISeason {
@@ -9,13 +10,13 @@ export interface ISeason {
   clubId: number | null;
   createdAt: string;
   updatedAt: string;
+  daysCount?: number;
+  registrationsCount?: number;
+  registrations?: ISeasonRegistration[];
+  days?: IDay[];
 }
 
-export interface ISeasonWithPlayers extends ISeason {
-  registrations: ISeasonRegistrationWithPlayers[];
-}
-
-export interface ISeasonRegistrationWithPlayers {
+export interface ISeasonRegistration {
   id: number;
   seasonId: number;
   playerId: number;
