@@ -165,7 +165,7 @@ export default function SeasonDetail() {
                       </Badge>
                     </div>
                     <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
+                      <DropdownMenuTrigger>
                         <button
                           type="button"
                           className="p-2 rounded hover:bg-foreground-subtle/10 transition-colors"

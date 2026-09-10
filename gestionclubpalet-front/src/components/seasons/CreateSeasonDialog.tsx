@@ -65,7 +65,7 @@ export default function CreateSeasonDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className={"bg-surface"}>
         <DialogHeader>
           <DialogTitle className="text-title text-2xl">
             Créer une saison

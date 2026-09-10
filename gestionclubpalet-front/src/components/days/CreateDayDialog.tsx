@@ -58,7 +58,7 @@ export default function CreateDayDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className={"bg-surface"}>
         <DialogHeader>
           <DialogTitle>Créer une journée</DialogTitle>
         </DialogHeader>
