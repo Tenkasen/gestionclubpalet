@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import { BaseModel, column, computed, hasMany } from '@adonisjs/lucid/orm'
 import { SeasonType } from '../enums/season_type.js'
 import SeasonRegistration from './season_registration.js'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
@@ -36,4 +36,13 @@ export default class Season extends BaseModel {
 
   @hasMany(() => Day)
   declare days: HasMany<typeof Day>
+
+  @computed()
+  get daysCount() {
+    return this.$extras.days_count
+  }
+  @computed()
+  get registrationsCount() {
+    return this.$extras.registrations_count
+  }
 }

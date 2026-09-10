@@ -5,7 +5,10 @@ import { createSeasonValidator, updateSeasonValidator } from '#validators/season
 export default class SeasonsController {
   async index({ request }: HttpContext) {
     const type = request.qs().type
-    const query = Season.query().orderBy('date_debut', 'desc')
+    const query = Season.query()
+      .orderBy('date_debut', 'desc')
+      .withCount('days')
+      .withCount('registrations')
 
     if (type) {
       query.where('type', type)
@@ -38,6 +41,9 @@ export default class SeasonsController {
       .where('id', params.seasonId)
       .preload('registrations', (query) => {
         query.preload('player')
+      })
+      .preload('days', (query) => {
+        query.orderBy('index_jour').withCount('attendances')
       })
       .firstOrFail()
     return season

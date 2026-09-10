@@ -47,4 +47,4 @@ _Week-end :_
 
 <u>_**Semaine :**_</u>
 
-- page et lien pour meilleur navigation + bouton ajout de saison et journées
+- améliorer l'ux/ui en mixant avec les idées de qwen

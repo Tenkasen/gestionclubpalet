@@ -73,32 +73,68 @@ export default function SeasonsList({ type }: Props) {
           </p>
         )}
 
-        <div className="grid gap-6 sm:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {seasons.map((season) => {
             const isFinished = isSeasonFinished(season.dateFin);
+            const dateDebut = new Date(
+              season.dateDebut,
+            ).toLocaleDateString("fr-FR");
+            const dateFin = season.dateFin
+              ? new Date(season.dateFin).toLocaleDateString("fr-FR")
+              : "En cours";
             return (
               <Link key={season.id} to={`/saisons/${season.id}`}>
-                <Card className="hover:border-primary transition-colors cursor-pointer h-full">
+                <Card className="hover:shadow-md transition-shadow">
                   <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <CardTitle>{season.nom}</CardTitle>
-                      <Badge
-                        variant={isFinished ? "secondary" : "default"}
-                      >
-                        {isFinished ? "Terminée" : "En cours"}
-                      </Badge>
+                    <div className="flex items-start justify-between gap-4">
+                      <CardTitle className="text-title">
+                        {season.nom}
+                      </CardTitle>
+                      <Badge variant="secondary">{season.type}</Badge>
                     </div>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-base text-foreground-subtle">
-                      Du{" "}
-                      {new Date(season.dateDebut).toLocaleDateString(
-                        "fr-FR",
-                      )}
-                      {season.dateFin
-                        ? ` au ${new Date(season.dateFin).toLocaleDateString("fr-FR")}`
-                        : ""}
-                    </p>
+
+                  <CardContent className="space-y-5">
+                    <div className="text-sm text-foreground-muted">
+                      <p>
+                        <span className="font-semibold text-foreground">
+                          Début :
+                        </span>{" "}
+                        {dateDebut}
+                      </p>
+                      <p>
+                        <span className="font-semibold text-foreground">
+                          Fin :
+                        </span>{" "}
+                        {dateFin}
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="rounded-lg border bg-muted/40 p-3">
+                        <p className="text-2xl font-bold text-title">
+                          {season.registrationsCount ?? 0}
+                        </p>
+                        <p className="text-xs text-foreground-muted">
+                          joueurs
+                        </p>
+                      </div>
+
+                      <div className="rounded-lg border bg-muted/40 p-3">
+                        <p className="text-2xl font-bold text-title">
+                          {season.daysCount ?? 0}
+                        </p>
+                        <p className="text-xs text-foreground-muted">
+                          journées
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end">
+                      <Link to={`/saison/${season.id}`}>
+                        Voir détails
+                      </Link>
+                    </div>
                   </CardContent>
                 </Card>
               </Link>

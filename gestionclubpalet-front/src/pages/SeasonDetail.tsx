@@ -165,14 +165,12 @@ export default function SeasonDetail() {
                       </Badge>
                     </div>
                     <DropdownMenu>
-                      <DropdownMenuTrigger>
-                        <button
-                          type="button"
-                          className="p-2 rounded hover:bg-foreground-subtle/10 transition-colors"
-                          aria-label="Actions"
-                        >
-                          <MoreVertical className="h-4 w-4" />
-                        </button>
+                      <DropdownMenuTrigger
+                        type="button"
+                        className="p-2 rounded hover:bg-foreground-subtle/10 transition-colors"
+                        aria-label="Actions"
+                      >
+                        <MoreVertical className="h-4 w-4" />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem

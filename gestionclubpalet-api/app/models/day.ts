@@ -1,10 +1,11 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, computed, hasMany } from '@adonisjs/lucid/orm'
 import { ScoreStatus } from '../enums/score_status.js'
 import Season from './season.js'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import TrainingScore from './training_score.js'
 import ChampMatch from './champ_match.js'
+import DayAttendance from './day_attendance.js'
 
 export default class Day extends BaseModel {
   @column({ isPrimary: true })
@@ -40,4 +41,12 @@ export default class Day extends BaseModel {
 
   @hasMany(() => ChampMatch)
   declare champMatches: HasMany<typeof ChampMatch>
+
+  @hasMany(() => DayAttendance)
+  declare attendances: HasMany<typeof DayAttendance>
+
+  @computed()
+  get attendancesCount() {
+    return this.$extras.attendances_count
+  }
 }

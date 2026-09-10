@@ -39,7 +39,7 @@ export default function Dashboard() {
           />
 
           <DashboardCard
-            link="/saisons?type=COUPE"
+            link="/coupe"
             icon={<Trophy className="text-cup" size={48} />}
             title="Coupe"
             description="Gérer les matchs de coupe en doublette"
@@ -79,7 +79,7 @@ export default function Dashboard() {
               {seasons.slice(0, 6).map((season) => (
                 <Link
                   key={season.id}
-                  to={`/seasons/${season.id}`}
+                  to={`/saisons/${season.id}`}
                   className="block p-4 border border-border rounded-lg hover:bg-foreground-subtle/15 transition"
                 >
                   <div className="flex justify-between items-center">
