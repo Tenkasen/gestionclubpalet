@@ -75,68 +75,9 @@ export default function SeasonsList({ type }: Props) {
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {seasons.map((season) => {
-            const isFinished = isSeasonFinished(season.dateFin);
-            const dateDebut = new Date(
-              season.dateDebut,
-            ).toLocaleDateString("fr-FR");
-            const dateFin = season.dateFin
-              ? new Date(season.dateFin).toLocaleDateString("fr-FR")
-              : "En cours";
             return (
               <Link key={season.id} to={`/saisons/${season.id}`}>
-                <Card className="hover:shadow-md transition-shadow">
-                  <CardHeader>
-                    <div className="flex items-start justify-between gap-4">
-                      <CardTitle className="text-title">
-                        {season.nom}
-                      </CardTitle>
-                      <Badge variant="secondary">{season.type}</Badge>
-                    </div>
-                  </CardHeader>
-
-                  <CardContent className="space-y-5">
-                    <div className="text-sm text-foreground-muted">
-                      <p>
-                        <span className="font-semibold text-foreground">
-                          Début :
-                        </span>{" "}
-                        {dateDebut}
-                      </p>
-                      <p>
-                        <span className="font-semibold text-foreground">
-                          Fin :
-                        </span>{" "}
-                        {dateFin}
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="rounded-lg border bg-muted/40 p-3">
-                        <p className="text-2xl font-bold text-title">
-                          {season.registrationsCount ?? 0}
-                        </p>
-                        <p className="text-xs text-foreground-muted">
-                          joueurs
-                        </p>
-                      </div>
-
-                      <div className="rounded-lg border bg-muted/40 p-3">
-                        <p className="text-2xl font-bold text-title">
-                          {season.daysCount ?? 0}
-                        </p>
-                        <p className="text-xs text-foreground-muted">
-                          journées
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-end">
-                      <Link to={`/saison/${season.id}`}>
-                        Voir détails
-                      </Link>
-                    </div>
-                  </CardContent>
-                </Card>
+                <SeasonCard season={season} />
               </Link>
             );
           })}
@@ -153,4 +94,81 @@ export default function SeasonsList({ type }: Props) {
       </div>
     </>
   );
+
+  function SeasonCard({ season }: { season: ISeason }) {
+    const dateDebut = new Date(season.dateDebut).toLocaleDateString(
+      "fr-FR",
+    );
+    const dateFin = season.dateFin
+      ? new Date(season.dateFin).toLocaleDateString("fr-FR")
+      : " ";
+    const isFinished = isSeasonFinished(season.dateFin);
+    return (
+      <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
+        <CardHeader>
+          <div className="flex justify-between items-start">
+            <CardTitle className="text-title">{season.nom}</CardTitle>
+            <Badge variant={isFinished ? "secondary" : "default"}>
+              {isFinished ? "Terminée" : "En cours"}
+            </Badge>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="flex justify-between gap-10 items-start">
+            <div className="text-sm text-foreground-muted mb-4">
+              <p className="mb-2">
+                <span className="font-semibold text-foreground">
+                  Début :
+                </span>{" "}
+                {dateDebut}
+              </p>
+              <p>
+                <span className="font-semibold text-foreground">
+                  Fin :
+                </span>{" "}
+                {dateFin}
+              </p>
+            </div>
+            <span className="text-sm rounded-lg border border-border bg-accent font-bold italic px-3 py-1 flex items-center justify-center px-3 py-1 text-sm">
+              Division 3
+            </span>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="rounded-lg border border-border bg-muted/40 px-3 py-1 flex items-center gap-2">
+              <p className="text-2xl font-bold text-title">
+                {season.registrationsCount ?? 0}
+              </p>
+              <p className="text-xs text-foreground-muted">joueurs</p>
+            </div>
+
+            <div className="rounded-lg border border-border bg-muted/40 px-3 py-1 flex items-center gap-2">
+              <p className="text-2xl font-bold text-title">
+                {season.daysCount ?? 0}
+              </p>
+              <p className="text-xs text-foreground-muted">
+                journées
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-center items-center mt-6">
+            <p>Voir en détails</p>
+            <svg
+              className="h-4 w-4 text-royal/80 transition-transform duration-300 group-hover:translate-x-0.5"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 12h14M13 5l7 7-7 7"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 }
