@@ -3,9 +3,8 @@ import type { IPlayer } from "../types/player.ts";
 import { playerAPI } from "../api/player.api.ts";
 import PageLoading from "../components/feedback/PageLoading.tsx";
 import PageError from "../components/feedback/PageError.tsx";
-// import Header from "../components/layout/Header.tsx";
+import Header from "../components/layout/Header.tsx";
 import { toast } from "sonner";
-import HeaderTest from "../components/layout/HeaderTest.tsx";
 import { updatePlayerList } from "../utils/playerUtils.ts";
 import OptionsModal from "../components/players/OptionsModal.tsx";
 import { usePlayerModal } from "../hooks/usePlayerModal.tsx";
@@ -68,8 +67,7 @@ export default function Players() {
 
   return (
     <>
-      {/* <Header /> */}
-      <HeaderTest />
+      <Header />
       <div className="container mx-auto ">
         <div className="pb-20">
           <div className="mb-8">

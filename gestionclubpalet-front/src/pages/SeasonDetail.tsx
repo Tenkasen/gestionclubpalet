@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { seasonsAPI } from "../api/season.api";
 import { dayApi } from "../api/day.api";
-import type { ISeasonWithPlayers } from "../types/season";
+import type { ISeason } from "../types/season";
 import type { IDay } from "../types/day";
 import {
   Card,
@@ -11,13 +11,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { MoreVertical } from "lucide-react";
 import Button from "../components/ui/Button.tsx";
 import CreateDayDialog from "../components/days/CreateDayDialog";
 import PageLoading from "../components/feedback/PageLoading.tsx";
@@ -39,9 +32,7 @@ export default function SeasonDetail() {
   const seasonIdNumber = Number(seasonId);
   const navigate = useNavigate();
 
-  const [season, setSeason] = useState<ISeasonWithPlayers | null>(
-    null,
-  );
+  const [season, setSeason] = useState<ISeason | null>(null);
   const [days, setDays] = useState<IDay[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -79,6 +70,7 @@ export default function SeasonDetail() {
   );
   const scoreEntryFor =
     SCORE_ENTRY_ROUTE[season.type] ?? SCORE_ENTRY_ROUTE.ENTRAINEMENT;
+  console.log(days);
 
   return (
     <>
@@ -108,17 +100,17 @@ export default function SeasonDetail() {
         <Card>
           <CardHeader>
             <CardTitle>
-              Joueurs inscrits ({season.registrations.length})
+              Joueurs inscrits ({season.registrations?.length ?? 0})
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {season.registrations.length === 0 ? (
+            {season.registrationsCount === 0 ? (
               <p className="text-foreground-subtle">
                 Aucun joueur inscrit.
               </p>
             ) : (
               <div className="flex flex-wrap gap-2">
-                {season.registrations.map((reg) => (
+                {season.registrations?.map((reg) => (
                   <Badge key={reg.id} variant="secondary">
                     {reg.player.prenom} {reg.player.nom}
                   </Badge>
@@ -146,54 +138,31 @@ export default function SeasonDetail() {
               Aucune journée pour l'instant.
             </p>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-2 grid grid-cols-3 gap-4">
               {sortedDays.map((day) => (
-                <Card key={day.id}>
-                  <CardContent className="flex justify-between items-center py-4">
-                    <div>
-                      <p className="font-semibold">
-                        Journée {day.indexJour} —{" "}
-                        {new Date(day.date).toLocaleDateString(
-                          "fr-FR",
-                        )}
-                      </p>
-                      <Badge
-                        variant={day.closed ? "secondary" : "default"}
-                        className="mt-1"
-                      >
-                        {day.status}
-                      </Badge>
-                    </div>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger
-                        type="button"
-                        className="p-2 rounded hover:bg-foreground-subtle/10 transition-colors"
-                        aria-label="Actions"
-                      >
-                        <MoreVertical className="h-4 w-4" />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem
-                          onClick={() =>
-                            navigate(
-                              scoreEntryFor(season.id, day.indexJour),
-                            )
-                          }
-                        >
-                          Saisie des scores
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() =>
-                            navigate(
-                              `/classements/${season.id}/journées/${day.indexJour}`,
-                            )
-                          }
-                        >
-                          Classement de la journée
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                <Card key={day.id} className="max-w-sm">
+                  <CardContent className="flex justify-between items-center py-2">
+                    <p className="font-semibold text-base">
+                      Journée {day.indexJour} —{" "}
+                      {new Date(day.date).toLocaleDateString("fr-FR")}
+                    </p>
+                    <p className="italic">{} joueurs</p>
                   </CardContent>
+                  <div className="flex justify-between px-4">
+                    <Button
+                      variant="confirm"
+                      onClick={() =>
+                        navigate(
+                          scoreEntryFor(season.id, day.indexJour),
+                        )
+                      }
+                    >
+                      Saisie des scores
+                    </Button>
+                    <Button variant="export">
+                      Classement de la journée
+                    </Button>
+                  </div>
                 </Card>
               ))}
             </div>
