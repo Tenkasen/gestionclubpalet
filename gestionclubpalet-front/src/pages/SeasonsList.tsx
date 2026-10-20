@@ -50,7 +50,6 @@ export default function SeasonsList({ type }: Props) {
 
   if (loading) return <PageLoading />;
   if (error) return <PageError error={error} />;
-  console.log(seasons);
 
   return (
     <>

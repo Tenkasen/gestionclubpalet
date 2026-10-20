@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { seasonsAPI } from "../api/season.api";
-import { dayApi } from "../api/day.api";
 import type { ISeason } from "../types/season";
 import type { IDay } from "../types/day";
 import {
@@ -46,9 +45,8 @@ export default function SeasonDetail() {
         setError("Cette saison n'existe pas");
         return;
       }
-      const daysData = await dayApi.getAll(seasonIdNumber);
       setSeason(seasonData);
-      setDays(daysData ?? []);
+      setDays(seasonData.days);
     } catch (err) {
       setError("Erreur lors du chargement de la saison");
       console.error(err);
@@ -146,7 +144,9 @@ export default function SeasonDetail() {
                       Journée {day.indexJour} —{" "}
                       {new Date(day.date).toLocaleDateString("fr-FR")}
                     </p>
-                    <p className="italic">{} joueurs</p>
+                    <p className="italic">
+                      {day.attendancesCount ?? 0} joueurs
+                    </p>
                   </CardContent>
                   <div className="flex justify-between px-4">
                     <Button
@@ -159,7 +159,14 @@ export default function SeasonDetail() {
                     >
                       Saisie des scores
                     </Button>
-                    <Button variant="export">
+                    <Button
+                      variant="export"
+                      onClick={() =>
+                        navigate(
+                          `/classements/${seasonIdNumber}/journées/${day.indexJour}`,
+                        )
+                      }
+                    >
                       Classement de la journée
                     </Button>
                   </div>

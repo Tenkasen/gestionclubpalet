@@ -9,5 +9,6 @@ export interface IDay {
   closed: boolean;
   createdAt: string;
   updatedAt: string;
+  attendancesCount: number;
   trainingScores?: ITrainingScore[];
 }
