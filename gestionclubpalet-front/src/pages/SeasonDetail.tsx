@@ -46,7 +46,7 @@ export default function SeasonDetail() {
         return;
       }
       setSeason(seasonData);
-      setDays(seasonData.days);
+      setDays(seasonData.days ?? []);
     } catch (err) {
       setError("Erreur lors du chargement de la saison");
       console.error(err);
